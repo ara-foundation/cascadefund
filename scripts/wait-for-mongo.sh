@@ -26,7 +26,7 @@ echo -e "${CYAN}${PREFIX} Waiting for MongoDB to be ready...${NC}"
 
 while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
   # Check if container is healthy using docker inspect
-  HEALTH=$(docker inspect --format='{{.State.Health.Status}}' ara-mongo 2>/dev/null)
+  HEALTH=$(docker inspect --format='{{.State.Health.Status}}' cascadefund-mongo 2>/dev/null)
   
   if [ "$HEALTH" = "healthy" ]; then
     echo -e "${GREEN}${PREFIX} MongoDB is ready!${NC}"
@@ -34,7 +34,7 @@ while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
   fi
   
   # Also check if container exists and is running
-  if ! docker ps --format '{{.Names}}' | grep -q ara-mongo; then
+  if ! docker ps --format '{{.Names}}' | grep -q cascadefund-mongo; then
     if [ $ATTEMPT -eq 0 ]; then
       echo -e "${YELLOW}${PREFIX} MongoDB container not found. Make sure docker compose up was successful.${NC}" >&2
     fi

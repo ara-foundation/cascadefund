@@ -1,2259 +1,1072 @@
 ---
 import MinimalDarkLayout from "@/layouts/MinimalDarkLayout.astro";
 import { companyInfo } from "@/types/ara";
+import AddProjectModal from "@/components/cascadefund/AddProjectModal.astro";
+import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro";
 ---
 
-<MinimalDarkLayout title="Ara">
-  <div class="ara-main">
-    <div class="hero">
-      <p class="hero-mono">ara.foundation</p>
-      <h1 class="hero-slogan">
-        <em>Creative workspace</em> 💻<br />
-        on collective wisdom 🌐
-      </h1>
-      <p class="hero-subtitle">
-        Ara is a set open-source technologies and protocols to organize Web
-        semantically. <br />It brings ownership over computer to users. Lead
-        designer is
-        <a href="https://ahmetson.com/">Medet Ahmetson</a>.
-      </p>
-    </div>
-
-    <section id="pillars">
-      <p class="s-label reveal">What it means for You?</p>
-      <div class="pillars reveal">
-        <div class="pillar pillar-wide">
-          <p class="pillar-num">01</p>
-          <span class="pillar-icon">💻</span>
-          <h3 class="pillar-title">Your device is your creative workspace</h3>
-          <p class="pillar-body">
-            Your computer is the center. A workspace where you create, compose,
-            share and optionally earn on what you make.
-          </p>
-          <p class="pillar-body pillar-body-top">
-            To see how it will look, check out
-            <a href="https://flipbook.page" target="_blank" rel="noopener"
-              >Flipbook.page</a
-            >: upload an image and it turns into a "page". Click on any object
-            in the page and you get a new image exploring that thing in more
-            depth. Pages are generated on demand. <br /><br />Ara is similar,
-            but instead of images, it is software interfaces. UX researchers
-            call this a
-            <a
-              href="https://www.inkandswitch.com/malleable-software/"
-              target="_blank"
-              rel="noopener">malleable system</a
-            >: software that reshapes around how you actually work.
-          </p>
-        </div>
-        <div class="pillar">
-          <p class="pillar-num">02</p>
-          <span class="pillar-icon">🧱</span>
-          <h3 class="pillar-title">
-            Your data local. Apps & UI are Lego bricks
-          </h3>
-          <p class="pillar-body">
-            Your data always stays on your local computer.
-          </p>
-          <p class="pillar-body pillar-body-mid">
-            Meanwhile, you can create, move, and combine visual interfaces and
-            pipe apps in whatever way you want.
-            <br /><br />
-            Ara is complementary with existing OS and Web. Turning existing apps into
-            malleable, personalizable building blocks for you.
-            <br /><br />
-            <strong>The apps are required to be open-source.</strong>
-          </p>
-        </div>
-        <div class="pillar">
-          <p class="pillar-num">03</p>
-          <span class="pillar-icon">🌐</span>
-          <h3 class="pillar-title">Blockchain is collective wisdom</h3>
-          <p class="pillar-body">
-            The blockchain stores app <strong>semantics</strong>: what app is
-            composed of, relationships to other apps, and to the user.
-          </p>
-          <p class="pillar-body pillar-body-mid">
-            Additionally, this blockchain is a p2p recommendation engine, that
-            lets you share and discover apps built with lego bricks.
-            <br /><br />
-            Blockchain means discoveribility by user intent, instead of attention
-            grabbing.
-          </p>
-        </div>
+<MinimalDarkLayout title="Cascadefund">
+  <section slot="hero" class="w-full">
+    <section
+      class="hero-cascade-bg relative flex min-h-[75vh] w-full items-center overflow-hidden bg-gradient-to-br from-sky-50 via-white to-cyan-50 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/40"
+    >
+      <div
+        class="pointer-events-none absolute -top-20 -right-16 h-56 w-56 rounded-full bg-sky-300/25 blur-3xl dark:bg-cyan-400/10"
+      >
       </div>
-    </section>
-
-    <section id="examples" class="examples-section">
-      <h2 class="examples-heading reveal text-center">Use cases</h2>
-      <p class="example-label">
-        Computers communicate each other via blockchain. How you personalize
-        your apps is helped by people who have same apps and similar situation.
-      </p>
-      <div class="example-cards reveal">
-        <button class="example-card" data-comic-id="teacher" type="button">
-          <div class="ec-corner ec-corner-teacher" aria-hidden="true">
-            <div class="ec-window-head">
-              <span class="ec-dot ec-dot-red"></span>
-              <span class="ec-dot ec-dot-yellow"></span>
-              <span class="ec-dot ec-dot-green"></span>
-              <span class="ec-window-title">presentation.ara — slide 4</span>
-            </div>
-            <div class="ec-teacher-tools">
-              <span class="ec-tool-cell">T</span>
-              <span class="ec-tool-cell">⬜</span>
-              <span class="ec-tool-cell">📷</span>
-              <span class="ec-tool-cell">≡</span>
-            </div>
-          </div>
-          <p class="ec-who">A teacher</p>
-          <h3 class="ec-title">
-            Building a presentation about ancient scripts
-          </h3>
-        </button>
-        <button class="example-card" data-comic-id="programmer" type="button">
-          <div class="ec-corner ec-corner-student" aria-hidden="true">
-            <div class="ec-window-head">
-              <span class="ec-dot ec-dot-red"></span>
-              <span class="ec-dot ec-dot-yellow"></span>
-              <span class="ec-dot ec-dot-green"></span>
-              <span class="ec-window-title">tutorial-player</span>
-            </div>
-            <div class="ec-student-tools">
-              <span class="ec-play-chip">▶</span>
-              <span class="ec-terminal-chip">
-                <span class="ec-terminal-head">main.rs</span>
-                <span class="ec-terminal-row">
-                  <span class="ec-terminal-prompt">&gt;</span>
-                  <span class="ec-terminal-input"></span>
-                  <span class="ec-terminal-cursor"></span>
-                </span>
-              </span>
-            </div>
-          </div>
-          <p class="ec-who">A student</p>
-          <h3 class="ec-title">Tired of pausing a video every time he types</h3>
-        </button>
+      <div
+        class="pointer-events-none absolute -bottom-24 -left-20 h-64 w-64 rounded-full bg-violet-300/20 blur-3xl dark:bg-indigo-500/10"
+      >
       </div>
-    </section>
 
-    <div class="comic-overlay" id="comicOverlay">
-      <div class="comic-header">
-        <button class="comic-close" id="comicCloseBtn" type="button"
-          >Back</button
+      <div class="mx-auto w-full max-w-6xl px-6 py-12 md:px-8 md:py-16">
+        <div
+          class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,500px)]"
         >
-      </div>
-      <div class="comic-scroll" id="comicScroll"></div>
-    </div>
-
-    <section id="ai" class="ai-section">
-      <p class="s-label reveal">Foundation for empowering AI</p>
-      <div class="ai-inner">
-        <div class="reveal">
-          <h2 class="ai-heading">
-            Ara is a foundation for local-first AI & public training data.
-          </h2>
-          <p class="ai-body">
-            Your data stays on your device. Your computer uses open-source apps
-            with semantics.
-            <br /><br />
-            Then any AI keeps data locally & knows all app functionality: no need
-            for MCP, no need for complicated screenshot analyzing.
-            <br /><br />
-            The blockchain keeps the public semantics and intent-tracking data available
-            for verifiable training. <strong
-              >Ara blockchains becomes the first public training data for AI.</strong
+          <div class="space-y-8">
+            <h1
+              class="text-4xl font-semibold leading-tight text-transparent md:text-5xl md:leading-tight bg-gradient-to-r from-sky-600 via-cyan-500 to-violet-600 bg-clip-text bg-[length:300%_100%] animate-gradient dark:from-sky-300 dark:via-cyan-200 dark:to-violet-300"
             >
-          </p>
-        </div>
-        <div class="ai-diagram reveal reveal-d">
-          <svg
-            viewBox="0 0 1200 520"
-            role="img"
-            aria-label="Balanced architecture diagram showing robot, app UI, semantic layer, and GitHub/blockchain inputs."
-          >
-            <title>
-              Robot assistant uses app semantics from GitHub and blockchain
-            </title>
-            <defs>
-              <marker
-                id="aiArrow"
-                viewBox="0 0 10 10"
-                refX="9"
-                refY="5"
-                markerWidth="8"
-                markerHeight="8"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
-              </marker>
-            </defs>
-
-            <g class="diagram-wires">
-              <line
-                x1="1020"
-                y1="195"
-                x2="840"
-                y2="278"
-                marker-end="url(#aiArrow)"></line>
-              <line
-                x1="1020"
-                y1="322"
-                x2="850"
-                y2="340"
-                marker-end="url(#aiArrow)"></line>
-              <line
-                x1="640"
-                y1="266"
-                x2="210"
-                y2="255"
-                marker-end="url(#aiArrow)"></line>
-            </g>
-
-            <g class="diagram-robot">
-              <circle cx="130" cy="220" r="55"></circle>
-              <rect x="70" y="280" width="120" height="120" rx="36"></rect>
-              <circle cx="112" cy="215" r="7"></circle>
-              <circle cx="148" cy="215" r="7"></circle>
-              <path d="M 108 240 Q 130 258 152 240"></path>
-              <line x1="130" y1="160" x2="130" y2="145"></line>
-              <circle cx="130" cy="138" r="8"></circle>
-            </g>
-            <text x="130" y="430" class="diagram-label" text-anchor="middle"
-              >Robot Assistant</text
+              Cascadefund
+            </h1>
+            <div
+              class="max-w-3xl space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
             >
+              <p>
+                Google, Apple, Facebook... tech giants are coherent ecosystems
+                with the dozens of the apps and services.
+              </p>
+              <p>
+                Open-source is not. Their only marketing is "open-source
+                alternative", lacks polished UX, incompatible with each other
+                and <strong>unsustainable</strong>.
+              </p>
+              <p>
+                Cascadefund changes this by forming a semantic web of
+                open-source. The goal is maintainer's sustainability, reduced
+                OSS complexity and increased OSS popularity.
+              </p>
+            </div>
+            <p
+              class="max-w-3xl rounded-xl bg-white/70 px-4 py-3 text-xl font-medium leading-relaxed text-transparent md:text-2xl bg-gradient-to-r from-sky-600 via-cyan-500 to-violet-600 bg-clip-text dark:border-cyan-400/20 dark:bg-slate-900/50 dark:from-sky-300 dark:via-cyan-200 dark:to-violet-300"
+            >
+              We are onboarding the first projects. Join us, to turn the web
+              into an open-source ecosystem.
+            </p>
+            <button
+              type="button"
+              data-open-dialog="add-project-modal"
+              class="inline-flex items-center justify-center rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 transition-colors hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+            >
+              Add your project
+            </button>
+          </div>
 
-            <g
-              class="diagram-screen-ghost"
-              transform="translate(80 24) skewX(7) skewY(5)"
+          <div class="hero-network flex justify-center lg:justify-end">
+            <svg
+              viewBox="0 0 600 500"
+              class="h-auto w-full max-w-[600px]"
+              role="img"
+              aria-label="Connected big-tech app ecosystems contrasted with scattered open-source tools"
             >
-              <rect x="448" y="138" width="280" height="220" rx="18"></rect>
-              <rect x="534" y="224" width="172" height="36" rx="10"></rect>
-              <rect x="534" y="272" width="172" height="36" rx="10"></rect>
-              <text x="636" y="247" class="diagram-chip" text-anchor="middle"
-                >Interface</text
-              >
-              <text x="636" y="295" class="diagram-chip" text-anchor="middle"
-                >Logic</text
-              >
-            </g>
-            <text
-              x="808"
-              y="418"
-              class="diagram-label diagram-label-skew"
-              text-anchor="end"
-              transform="skewX(7) skewY(5)"
-            >
-              Semantic
-            </text>
+              <defs>
+                <style>
+                  .diagram-text {
+                    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+                  }
+                </style>
+              </defs>
 
-            <g
-              class="diagram-screen-main"
-              transform="translate(52 22) skewX(7) skewY(5)"
-            >
-              <g class="diagram-cube">
-                <polygon points="246,250 276,232 308,250 278,268"></polygon>
-                <polygon points="246,250 246,288 278,306 278,268"></polygon>
-                <polygon points="278,268 308,250 308,288 278,306"></polygon>
-                <text
-                  x="266"
-                  y="295"
-                  class="diagram-cube-face-label"
-                  text-anchor="middle"
-                  transform="rotate(30 286 283)"
+              <g class="connectors">
+                <line x1="100" y1="66" x2="208" y2="66"></line>
+                <line x1="100" y1="66" x2="258" y2="66"></line>
+                <line x1="100" y1="66" x2="308" y2="66"></line>
+                <line x1="100" y1="66" x2="358" y2="66"></line>
+                <line x1="100" y1="66" x2="408" y2="66"></line>
+                <line x1="100" y1="66" x2="458" y2="66"></line>
+                <line x1="100" y1="152" x2="208" y2="152"></line>
+                <line x1="100" y1="152" x2="258" y2="152"></line>
+                <line x1="100" y1="152" x2="308" y2="152"></line>
+                <line x1="100" y1="152" x2="358" y2="152"></line>
+                <line x1="100" y1="152" x2="408" y2="152"></line>
+                <line x1="100" y1="152" x2="458" y2="152"></line>
+                <line x1="100" y1="238" x2="208" y2="238"></line>
+                <line x1="100" y1="238" x2="258" y2="238"></line>
+                <line x1="100" y1="238" x2="308" y2="238"></line>
+                <line x1="100" y1="238" x2="358" y2="238"></line>
+                <line x1="100" y1="238" x2="408" y2="238"></line>
+                <line x1="100" y1="238" x2="458" y2="238"></line>
+                <line x1="100" y1="324" x2="208" y2="324"></line>
+                <line x1="100" y1="324" x2="258" y2="324"></line>
+                <line x1="100" y1="324" x2="308" y2="324"></line>
+                <line x1="100" y1="324" x2="358" y2="324"></line>
+                <line x1="100" y1="324" x2="408" y2="324"></line>
+                <line x1="100" y1="324" x2="458" y2="324"></line>
+              </g>
+
+              <g class="row-dim row-google">
+                <text x="26" y="74" class="diagram-text company-label"
+                  >Google</text
                 >
-                  data
-                </text>
+                <image
+                  class="company-logo"
+                  href="https://cdn.simpleicons.org/google"
+                  x="72"
+                  y="52"
+                  width="28"
+                  height="28"
+                />
+                <g class="app-bases">
+                  <rect x="206" y="50" width="32" height="32" rx="10"></rect>
+                  <rect x="256" y="50" width="32" height="32" rx="10"></rect>
+                  <rect x="306" y="50" width="32" height="32" rx="10"></rect>
+                  <rect x="356" y="50" width="32" height="32" rx="10"></rect>
+                  <rect x="406" y="50" width="32" height="32" rx="10"></rect>
+                  <rect x="456" y="50" width="32" height="32" rx="10"></rect>
+                </g>
+                <g class="small-app">
+                  <image
+                    href="https://cdn.simpleicons.org/gmail"
+                    x="208"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/googledrive"
+                    x="258"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/googledocs"
+                    x="308"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/googlecalendar"
+                    x="358"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/googlemaps"
+                    x="408"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/youtube"
+                    x="458"
+                    y="52"
+                    width="28"
+                    height="28"
+                  />
+                </g>
               </g>
-              <text
-                x="277"
-                y="328"
-                class="diagram-note diagram-cube-label"
-                text-anchor="middle"
-              >
-                Kept locally
-              </text>
-              <rect x="320" y="152" width="310" height="250" rx="18"></rect>
-              <rect x="340" y="172" width="270" height="26" rx="10"></rect>
-              <rect x="340" y="212" width="270" height="150" rx="14"></rect>
-              <polygon points="450,262 450,312 500,287"></polygon>
-              <rect x="340" y="375" width="180" height="10" rx="5"></rect>
-              <circle cx="352" cy="185" r="4"></circle>
-              <circle cx="366" cy="185" r="4"></circle>
-              <circle cx="380" cy="185" r="4"></circle>
-            </g>
-            <text
-              x="500"
-              y="440"
-              class="diagram-label diagram-label-skew"
-              text-anchor="middle"
-              transform="skewX(7) skewY(5)"
-            >
-              App UI
-            </text>
 
-            <g class="diagram-source">
-              <g>
-                <circle cx="1020" cy="180" r="54"></circle>
-                <path d="M 990 200 Q 992 168 1020 168 Q 1048 168 1050 200"
-                ></path>
-                <path d="M 1000 165 L 1008 153 L 1016 165"></path>
-                <path d="M 1024 165 L 1032 153 L 1040 165"></path>
+              <g class="row-dim row-apple">
+                <text x="30" y="160" class="diagram-text company-label"
+                  >Apple</text
+                >
+                <image
+                  class="company-logo"
+                  href="https://cdn.simpleicons.org/apple"
+                  x="72"
+                  y="138"
+                  width="28"
+                  height="28"
+                />
+                <g class="app-bases">
+                  <rect x="206" y="136" width="32" height="32" rx="10"></rect>
+                  <rect x="256" y="136" width="32" height="32" rx="10"></rect>
+                  <rect x="306" y="136" width="32" height="32" rx="10"></rect>
+                  <rect x="356" y="136" width="32" height="32" rx="10"></rect>
+                  <rect x="406" y="136" width="32" height="32" rx="10"></rect>
+                  <rect x="456" y="136" width="32" height="32" rx="10"></rect>
+                </g>
+                <g class="small-app">
+                  <image
+                    href="https://cdn.simpleicons.org/appstore"
+                    x="208"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/safari"
+                    x="258"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/imessage"
+                    x="308"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/facetime.png"
+                    x="358"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/icloud"
+                    x="408"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/applemusic"
+                    x="458"
+                    y="138"
+                    width="28"
+                    height="28"
+                  />
+                </g>
               </g>
-              <text x="1020" y="245" class="diagram-label" text-anchor="middle"
-                >GitHub</text
-              >
-              <text x="1020" y="266" class="diagram-note" text-anchor="middle"
-                >source code of app</text
-              >
-            </g>
 
-            <g class="diagram-source">
-              <g>
-                <rect x="960" y="290" width="120" height="72" rx="18"></rect>
-                <rect x="970" y="302" width="100" height="14" rx="7"></rect>
-                <rect x="970" y="324" width="100" height="14" rx="7"></rect>
-                <rect x="970" y="346" width="100" height="14" rx="7"></rect>
+              <g class="row-dim row-microsoft">
+                <text x="10" y="246" class="diagram-text company-label"
+                  >Microsoft</text
+                >
+                <image
+                  class="company-logo"
+                  href="https://img.icons8.com/color/48/microsoft.png"
+                  x="72"
+                  y="224"
+                  width="28"
+                  height="28"
+                />
+                <g class="app-bases">
+                  <rect x="206" y="222" width="32" height="32" rx="10"></rect>
+                  <rect x="256" y="222" width="32" height="32" rx="10"></rect>
+                  <rect x="306" y="222" width="32" height="32" rx="10"></rect>
+                  <rect x="356" y="222" width="32" height="32" rx="10"></rect>
+                  <rect x="406" y="222" width="32" height="32" rx="10"></rect>
+                  <rect x="456" y="222" width="32" height="32" rx="10"></rect>
+                </g>
+                <g class="small-app">
+                  <image
+                    href="https://img.icons8.com/color/48/azure-1.png"
+                    x="208"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/xbox.png"
+                    x="258"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/microsoft-outlook-2019.png"
+                    x="308"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/microsoft-teams.png"
+                    x="358"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/microsoft-onedrive-2019.png"
+                    x="408"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://img.icons8.com/color/48/windows-11.png"
+                    x="458"
+                    y="224"
+                    width="28"
+                    height="28"
+                  />
+                </g>
               </g>
-              <text x="1020" y="390" class="diagram-label" text-anchor="middle"
-                >Blockchain</text
-              >
-              <text x="1020" y="411" class="diagram-note" text-anchor="middle"
-                >semantic of app</text
-              >
-            </g>
-          </svg>
+
+              <g class="row-dim row-meta">
+                <text x="27" y="332" class="diagram-text company-label"
+                  >Meta</text
+                >
+                <image
+                  class="company-logo"
+                  href="https://cdn.simpleicons.org/meta"
+                  x="72"
+                  y="310"
+                  width="28"
+                  height="28"
+                />
+                <g class="app-bases">
+                  <rect x="206" y="308" width="32" height="32" rx="10"></rect>
+                  <rect x="256" y="308" width="32" height="32" rx="10"></rect>
+                  <rect x="306" y="308" width="32" height="32" rx="10"></rect>
+                  <rect x="356" y="308" width="32" height="32" rx="10"></rect>
+                  <rect x="406" y="308" width="32" height="32" rx="10"></rect>
+                  <rect x="456" y="308" width="32" height="32" rx="10"></rect>
+                </g>
+                <g class="small-app">
+                  <image
+                    href="https://cdn.simpleicons.org/facebook"
+                    x="208"
+                    y="310"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/instagram"
+                    x="258"
+                    y="310"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/messenger"
+                    x="308"
+                    y="310"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/threads"
+                    x="358"
+                    y="310"
+                    width="28"
+                    height="28"
+                  />
+                  <image
+                    href="https://cdn.simpleicons.org/whatsapp"
+                    x="408"
+                    y="310"
+                    width="28"
+                    height="28"
+                  />
+                  <g transform="translate(458 310)">
+                    <rect x="0" y="0" width="28" height="28" rx="7"></rect>
+                    <ellipse cx="14" cy="14" rx="8.5" ry="5.5"></ellipse>
+                    <circle cx="10.5" cy="14" r="1.1"></circle>
+                    <circle cx="17.5" cy="14" r="1.1"></circle>
+                  </g>
+                </g>
+              </g>
+
+              <g class="row-os">
+                <text x="30" y="432" class="diagram-text os-label">OSS</text>
+                <image
+                  href="/ara_logo.png"
+                  x="72"
+                  y="408"
+                  width="28"
+                  height="28"
+                />
+
+                <g class="os-app">
+                  <g transform="translate(210 400)">
+                    <rect
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                      rx="8"
+                      class="os-placeholder-icon"></rect>
+                    <path d="M18 10v16M10 18h16" class="os-placeholder-mark"
+                    ></path>
+                    <text x="-8" y="52" class="diagram-text os-placeholder-text"
+                      >Your project</text
+                    >
+                  </g>
+                  <g transform="translate(286 448)">
+                    <image
+                      href="https://cdn.simpleicons.org/firefox/22c55e"
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                    />
+                  </g>
+                  <g transform="translate(352 390)">
+                    <image
+                      href="https://cdn.simpleicons.org/vlcmediaplayer/22c55e"
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                    />
+                  </g>
+                  <g transform="translate(422 444)">
+                    <image
+                      href="https://cdn.simpleicons.org/libreoffice/22c55e"
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                    />
+                  </g>
+                  <g transform="translate(492 402)">
+                    <image
+                      href="https://cdn.simpleicons.org/gimp/22c55e"
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                    />
+                  </g>
+                  <g transform="translate(545 446)">
+                    <image
+                      href="https://cdn.simpleicons.org/blender/22c55e"
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="36"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </section>
+  </section>
 
-    <section id="people">
-      <p class="s-label reveal">For whom and why</p>
-      <div class="people-header reveal">
-        <h2 class="people-heading">Technology is not the point. People are.</h2>
-        <p class="people-sub">
-          <em>Ara</em> from Turkmen language translated as a "space in between", or
-          medium as abstract. That's goal of Ara to be abstract and invisible without
-          pointing out to any technology or protocol. Instead, it's pointing on alignment
-          of four groups of people who build, run, and semantically align the Web
-          for the benefit of all.
+  <div
+    class="mx-auto max-w-3xl px-6 pb-24 pt-12 text-left md:px-8 [&_p]:text-pretty [&_li]:text-pretty"
+  >
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        Are you using open-source products?
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        <p>
+          There is a monthly subscription fee for the users. Subscription fee is
+          distributed among maintainers across the world. In return, in every
+          week, Cascadefund sends your to your email options to direct the apps
+          you use.
         </p>
       </div>
-      <div class="people-grid reveal">
-        <div class="person">
-          <div class="person-role-row">
-            <p class="person-role">Users</p>
-            <span class="person-bust person-bust-user" aria-hidden="true">
-              <svg viewBox="0 0 80 92" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="40" cy="28" rx="18" ry="19" fill="#c8a87a"
-                ></ellipse>
-                <path d="M22 24 Q 24 8 40 6 Q 56 8 58 24" fill="#1a1408"></path>
-                <ellipse cx="33" cy="27" rx="3" ry="4" fill="#1a1408"></ellipse>
-                <ellipse cx="47" cy="27" rx="3" ry="4" fill="#1a1408"></ellipse>
-                <rect x="34" y="44" width="12" height="10" rx="3" fill="#b89060"
-                ></rect>
-                <rect x="18" y="52" width="44" height="28" rx="8" fill="#2a3545"
-                ></rect>
-                <path d="M18 58 Q 40 70 62 58 L 62 80 L 18 80 Z" fill="#242e3e"
-                ></path>
-              </svg>
-            </span>
-          </div>
-          <h3 class="person-title">You are king of computer</h3>
-          <p class="person-desc">
-            Your device adapts to you and work on your terms
-            <br /><i
-              >user sama &ndash; thats how <strong>you</strong> are called by AI minions</i
-            >
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+        <article class="px-4 py-3 text-center md:col-span-1 lg:col-span-2">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mx-auto h-12 w-12 text-[#52c7ce]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M12 3 5 6v6c0 4.2 2.6 8 7 9 4.4-1 7-4.8 7-9V6z"></path>
+            <path d="m9.5 12 1.8 1.8L15 10"></path>
+          </svg>
+          <h3
+            class="mt-3 text-base font-semibold text-neutral-900 dark:text-white"
+          >
+            Prevent breaking changes
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Can you be sure tech giants won't make you adapt to them?
           </p>
-        </div>
-        <div class="person">
-          <div class="person-role-row">
-            <p class="person-role">Designers</p>
-            <span class="person-bust person-bust-designer" aria-hidden="true">
-              <svg viewBox="0 0 80 92" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="40" cy="29" rx="17" ry="18" fill="#e8c49a"
-                ></ellipse>
-                <path
-                  d="M22 24 Q 25 11 40 9 Q 55 11 58 24 Q 53 15 40 15 Q 27 15 22 24"
-                  fill="#432918"></path>
-                <ellipse cx="33" cy="29" rx="2.8" ry="3.6" fill="#2a1a10"
-                ></ellipse>
-                <ellipse cx="47" cy="29" rx="2.8" ry="3.6" fill="#2a1a10"
-                ></ellipse>
-                <rect x="34" y="46" width="12" height="9" rx="3" fill="#d4a87a"
-                ></rect>
-                <rect x="18" y="54" width="44" height="26" rx="8" fill="#5b2f52"
-                ></rect>
-                <path d="M18 62 Q 40 52 62 62 L 62 80 L 18 80 Z" fill="#47213f"
-                ></path>
-              </svg>
-            </span>
-          </div>
-          <h3 class="person-title">Experiment and go viral</h3>
-          <p class="person-desc">
-            Build interfaces as an Art. Get funds and go viral by users who
-            appreciate your work and use it as lego brick.
+        </article>
+        <article class="px-4 py-3 text-center md:col-span-1 lg:col-span-2">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mx-auto h-12 w-12 text-[#52c7ce]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              d="M9 14a4 4 0 1 1 6 0l-1.1.8A2.5 2.5 0 0 0 13 16.8V18h-2v-1.2a2.5 2.5 0 0 0-.9-2z"
+            ></path>
+            <path d="M10 21h4"></path>
+            <path d="m14 5 4-2"></path>
+          </svg>
+          <h3
+            class="mt-3 text-base font-semibold text-neutral-900 dark:text-white"
+          >
+            Suggest new features
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Will tech giants listen to you?
           </p>
-        </div>
-        <div class="person">
-          <div class="person-role-row">
-            <p class="person-role">Open Source Developers</p>
-            <span class="person-bust person-bust-dev" aria-hidden="true">
-              <svg viewBox="0 0 80 92" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="40" cy="28" rx="17" ry="18" fill="#d6b182"
-                ></ellipse>
-                <path d="M22 25 Q 25 8 40 7 Q 55 8 58 25" fill="#1a1408"></path>
-                <rect
-                  x="28"
-                  y="25"
-                  width="24"
-                  height="10"
-                  rx="5"
-                  fill="none"
-                  stroke="#3a4a5a"
-                  stroke-width="3"></rect>
-                <ellipse cx="34" cy="30" rx="2.5" ry="3.5" fill="#1a1408"
-                ></ellipse>
-                <ellipse cx="46" cy="30" rx="2.5" ry="3.5" fill="#1a1408"
-                ></ellipse>
-                <rect x="34" y="45" width="12" height="9" rx="3" fill="#bc9668"
-                ></rect>
-                <rect x="18" y="54" width="44" height="26" rx="8" fill="#2a3a4a"
-                ></rect>
-                <rect x="26" y="61" width="28" height="7" rx="3" fill="#1f2c3b"
-                ></rect>
-                <rect x="56" y="60" width="8" height="10" rx="2" fill="#78c878"
-                ></rect>
-              </svg>
-            </span>
-          </div>
-          <h3 class="person-title">Build the backbone, set the protocols</h3>
-          <p class="person-desc">
-            No worry about sophisticated UI. Make your source code as a craft.
-            Design data models to connect with other apps and set protocol
-            standard without consortiums.
-
-            <br /><br />
-            Get funds and go viral by users who appreciate your work and use it as
-            lego brick.
+        </article>
+        <article class="px-4 py-3 text-center md:col-span-2 lg:col-span-2">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mx-auto h-12 w-12 text-[#52c7ce]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M7 9h3V6h4v3h3v4h-3v3h-4v-3H7z"></path>
+            <path d="m4 17 4-4"></path>
+            <path d="m16 11 4-4"></path>
+          </svg>
+          <h3
+            class="mt-3 text-base font-semibold text-neutral-900 dark:text-white"
+          >
+            Plug-in compatible apps with your open-source stack
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Tech giants will "kill" you for that.
           </p>
-        </div>
-        <div class="person">
-          <p class="person-role">Node Operators</p>
-          <h3 class="person-title">Find the best path between all three</h3>
-          <p class="person-desc">
-            You are the connective tissue. Your work routes meaning through the
-            network, keeping users, designers, and developers in alignment.
+        </article>
+        <article
+          class="px-4 py-3 text-center md:col-span-1 lg:col-span-2 lg:col-start-2"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mx-auto h-12 w-12 text-[#52c7ce]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="M4 19c1.8-3.8 4.4-6 8-6s6.2 2.2 8 6"></path>
+            <path d="M7 13c.2-3 1.9-5 5-5s4.8 2 5 5"></path>
+            <path d="M10 8c.2-2 1.3-3 2-3s1.8 1 2 3"></path>
+          </svg>
+          <h3
+            class="mt-3 text-base font-semibold text-neutral-900 dark:text-white"
+          >
+            3 apps or 3 million apps, same subscription
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Your subscription grows Amazon forest. Tech giants build walled
+            gardens.
           </p>
-        </div>
+        </article>
+        <article
+          class="px-4 py-3 text-center md:col-span-2 lg:col-span-2 lg:col-start-4"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="mx-auto h-12 w-12 text-[#52c7ce]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path d="m12 3 1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"
+            ></path>
+            <path d="M19 15v6"></path>
+            <path d="M16 18h6"></path>
+          </svg>
+          <h3 class="text-base font-semibold text-neutral-900 dark:text-white">
+            Start using Open Source
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Email will be sent to you when subscription will be available.
+          </p>
+          <button
+            type="button"
+            data-open-dialog="join-waitlist-modal"
+            class="mt-4 inline-flex items-center justify-center rounded-lg border border-neutral-900 bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-neutral-50 transition-colors hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+          >
+            Join waitlist
+          </button>
+        </article>
       </div>
     </section>
 
-    <section id="pilot" class="pilot-section">
-      <p class="s-label reveal">Now</p>
-      <div class="pilot-inner">
-        <div class="reveal">
-          <div class="pilot-tag">Pilot version</div>
-          <h2 class="pilot-heading">Join us.</h2>
-          <p class="pilot-body">
-            Before making computers communicate and share user experience on
-            software use, we need to solve another problem: open-source is not
-            sustainable. Our current phase is solving that and seeks a grant.
-            For more information reach out to me on
-            <a href="mailto:medet@ara.foundation">medet@ara.foundation</a>.
-          </p>
-          <p class="pilot-body pilot-body-extra">
-            For technical readers to dig deeper check out our
-            <a href="/ara.pdf" target="_blank" rel="noopener">whitepaper</a>.
-            Otherwise follow on
-          </p>
-          <div class="pilot-social">
-            <a
-              href="https://www.linkedin.com/in/ahmetson"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              class="pilot-social-link"
-            >
-              in
-            </a>
-            <a
-              href="https://x.com/MAhmetson"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              class="pilot-social-link"
-            >
-              X
-            </a>
-            <a
-              href="https://bsky.app/profile/ahmetson.bsky.social"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Bluesky"
-              class="pilot-social-link"
-            >
-              B
-            </a>
-          </div>
-          <p class="pilot-signoff">With passion, Medet Ahmetson!</p>
-        </div>
-        <div class="reveal reveal-d">
-          <div class="pilot-roadmap">
-            <article class="pilot-roadmap-item">
-              <h3 class="pilot-roadmap-title">1. Whitepaper foundation</h3>
-              <p class="pilot-roadmap-desc">
-                Design and all code details are ready after
-                <strong>3 years of experiment</strong>. Result is whitepaper.
-              </p>
-            </article>
-            <article class="pilot-roadmap-item pilot-roadmap-item-current">
-              <h3 class="pilot-roadmap-title">
-                2. Pilot version: cascadefund
-                <span class="pilot-current-badge">current</span>
-              </h3>
-              <p class="pilot-roadmap-desc">
-                Pre-blockchain, pre-holographic. Onboard open-source developers
-                and users to make the open-source ecosystem sustainable and
-                user-centric.
-              </p>
-            </article>
-            <article class="pilot-roadmap-item">
-              <h3 class="pilot-roadmap-title">
-                3. Local data project management
-              </h3>
-              <p class="pilot-roadmap-desc">
-                Local data version for project management made from open-source
-                with local AI. Onboarding the node operators on your browser.
-              </p>
-            </article>
-            <article class="pilot-roadmap-item">
-              <h3 class="pilot-roadmap-title">
-                4. Recommendation engine and desktop shell
-              </h3>
-              <p class="pilot-roadmap-desc">
-                Recommendation engine and desktop shell, onboarding designers.
-              </p>
-            </article>
-            <p class="pilot-roadmap-note">
-              More information on the <a href="/roadmap">roadmap page</a>.
-            </p>
-          </div>
-        </div>
+    <section class="mt-12 space-y-8 md:mt-16">
+      <div class="mx-auto max-w-3xl space-y-4 text-center">
+        <h2
+          class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+        >
+          Are you maintaining an open-source project?
+        </h2>
+        <p
+          class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+        >
+          To make a semantic web, all projects agree on a user-centric protocol
+          which means received user funds can be used for:
+        </p>
       </div>
+
+      <div class="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <article class="rounded-xl bg-white/80 p-5 dark:bg-[#0b1f22]/70">
+          <div class="flex items-center justify-between gap-3">
+            <h3
+              class="text-base font-semibold text-neutral-900 dark:text-white"
+            >
+              User-centric rule 1
+            </h3>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 shrink-0 text-[#52c7ce]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="5" width="18" height="4" rx="1"></rect>
+              <rect x="3" y="10" width="18" height="4" rx="1"></rect>
+              <rect x="3" y="15" width="18" height="4" rx="1"></rect>
+            </svg>
+          </div>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Decouple your app into data, logic, and code. It doesn&apos;t have
+            to be now, but slowly on demand as more funds come to you.
+          </p>
+        </article>
+
+        <article class="rounded-xl bg-white/80 p-5 dark:bg-[#0b1f22]/70">
+          <div class="flex items-center justify-between gap-3">
+            <h3
+              class="text-base font-semibold text-neutral-900 dark:text-white"
+            >
+              User-centric rule 2
+            </h3>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 shrink-0 text-[#52c7ce]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <circle cx="6.5" cy="12" r="2.5"></circle>
+              <circle cx="17.5" cy="7" r="2.5"></circle>
+              <circle cx="17.5" cy="17" r="2.5"></circle>
+              <path d="M9 11 15 8.2"></path>
+              <path d="M9 13 15 15.8"></path>
+            </svg>
+          </div>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Every week, Cascadefund will send an email with the suggested
+            projects used in tandem with your project. Discuss, share and create
+            protocol with other projects.
+          </p>
+          <p
+            class="mt-3 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400"
+          >
+            Communication between projects is out of scope of Cascadefund.
+          </p>
+        </article>
+
+        <article class="rounded-xl bg-white/80 p-5 dark:bg-[#0b1f22]/70">
+          <div class="flex items-center justify-between gap-3">
+            <h3
+              class="text-base font-semibold text-neutral-900 dark:text-white"
+            >
+              User-centric rule 3
+            </h3>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="h-6 w-6 shrink-0 text-[#52c7ce]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="4" y="6" width="16" height="12" rx="2"></rect>
+              <path d="m4 9 8 5 8-5"></path>
+            </svg>
+          </div>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Every week at most we will send a feature request needed for the
+            project that users need. It&apos;s optional to implement but
+            increases the demand for your app.
+          </p>
+        </article>
+      </div>
+
+      <div
+        class="mx-auto max-w-3xl rounded-xl border border-[#1f4f54]/30 bg-white/70 p-4 text-sm leading-relaxed text-neutral-700 dark:border-[#2f6b70] dark:bg-[#0b1f22]/60 dark:text-neutral-300"
+      >
+        Don&apos;t worry about polished UI. The user-centric protocol allows
+        designers to build polished UI on it later.
+      </div>
+    </section>
+
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        What Cascadefund is
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        <div class="grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-start">
+          <p>
+            Apps grouped into application stacks: writing workflow, a dev
+            workflow, a design workflow, etc. For each user there is a stack of
+            apps. Each stack is described by web semantics: &quot;what is the
+            relationship between the apps, and in which order they are
+            used?&quot;. Open source projects are mapped semantically to the
+            stacks made by users. When a developer makes their project
+            compatible with others, and used by the users, the project is
+            included in the semantics of the stack. Users subscription flows
+            according to the semantics, and the project receives their share of
+            the fee.
+          </p>
+          <svg
+            viewBox="0 0 400 300"
+            aria-label="User stack semantics diagram"
+            class="h-auto w-full rounded-xl"
+            fill="none"
+            stroke="#52c7ce"
+            stroke-width="2"
+          >
+            <defs>
+              <marker
+                id="stack-arrow"
+                markerWidth="8"
+                markerHeight="8"
+                refX="7"
+                refY="4"
+                orient="auto"
+              >
+                <path d="M0 0L8 4L0 8z" fill="#52c7ce"></path>
+              </marker>
+            </defs>
+            <circle cx="70" cy="150" r="28"></circle>
+            <circle cx="70" cy="138" r="7"></circle>
+            <path d="M54 168c4-10 28-10 32 0"></path>
+            <text x="48" y="198" fill="#52c7ce" stroke="none" font-size="14">
+              user
+            </text>
+
+            <line x1="98" y1="138" x2="154" y2="94"></line>
+            <line x1="100" y1="150" x2="154" y2="150"></line>
+            <line x1="98" y1="162" x2="154" y2="206"></line>
+
+            <rect x="154" y="68" width="98" height="52" rx="12"></rect>
+            <ellipse cx="203" cy="89" rx="17" ry="8"></ellipse>
+            <path d="M186 89v8c0 4 34 4 34 0v-8"></path>
+            <text x="180" y="138" fill="#52c7ce" stroke="none" font-size="12">
+              storage
+            </text>
+
+            <rect x="154" y="124" width="98" height="52" rx="12"></rect>
+            <path d="M184 160v-20h22"></path>
+            <path d="M203 140h14"></path>
+            <text x="183" y="194" fill="#52c7ce" stroke="none" font-size="12">
+              writing
+            </text>
+
+            <rect x="154" y="180" width="98" height="52" rx="12"></rect>
+            <path d="M182 201h26a6 6 0 0 1 6 6v7h-32z"></path>
+            <path d="M214 214h10a5 5 0 0 0 5-5v-8h-15z"></path>
+            <path d="m202 214-6 6"></path>
+            <text x="160" y="250" fill="#52c7ce" stroke="none" font-size="12">
+              communication
+            </text>
+
+            <line
+              x1="284"
+              y1="120"
+              x2="284"
+              y2="124"
+              marker-end="url(#stack-arrow)"></line>
+            <line
+              x1="284"
+              y1="176"
+              x2="284"
+              y2="180"
+              marker-end="url(#stack-arrow)"></line>
+          </svg>
+        </div>
+        <p>
+          Decoupling and interoperability means projects can be re-used in
+          multiple stacks in various semantics. More modular your app, more
+          likely it will be used in multiple stacks.
+        </p>
+        <p>
+          The funding flow by semantics is described by the hyperpayment
+          protocol, executed on blockchain. Blockchain removes the middleman,
+          stores the semantics of the OSS and its execution, and is used for
+          reputation and trust earning. A dishonest app marks reputation lost
+          permanently on the web. More information about the hyperpayment
+          protocol on the website.
+        </p>
+        <p>
+          To sustain the advisor role, Cascadefund receives a portion of the
+          subscription fee, used for semantic analysis and communication between
+          users and projects. Cascadefund is not a middleman in semantics or
+          payment flows - semantic building and payments work without a
+          middleman who can interfere with it.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        Founding projects
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        <p>
+          We are onboarding founding projects now. The first projects in shape
+          how the alliance works.
+        </p>
+        <p>
+          At this stage the weekly digest is curated by hand and advising will
+          happen via emails.
+        </p>
+      </div>
+      <button
+        type="button"
+        data-open-dialog="add-project-modal"
+        class="inline-flex items-center justify-center rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 transition-colors hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+      >
+        Add your project
+      </button>
     </section>
 
     <footer
-      class="mt-20 border-t border-neutral-200 pb-10 pt-10 text-center text-sm text-neutral-600 dark:border-white/10 dark:text-neutral-500"
+      class="mt-20 border-t border-neutral-200 pt-10 text-sm text-neutral-600 dark:border-white/10 dark:text-neutral-500"
       aria-label="Home page footer"
     >
       <p class="text-neutral-600 dark:text-neutral-500">
-        © {companyInfo.copyrightYear} Ara Foundation.
+        © 2026 CascadeFund is part of the &quot;Ara&quot; project. Visit
+        <a
+          href="https://ara.foundation"
+          target="_blank"
+          rel="noreferrer"
+          class="underline decoration-neutral-400 underline-offset-4 transition-colors hover:text-neutral-800 dark:decoration-neutral-500 dark:hover:text-neutral-300"
+        >
+          Ara Foundation
+        </a>
+        to know more about vision, and to see people behind it.
       </p>
     </footer>
   </div>
 
+  <AddProjectModal />
+  <JoinWaitlistModal />
+
   <script>
-    // @ts-nocheck
-    const revealElements = document.querySelectorAll(".ara-main .reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-    revealElements.forEach((element) => observer.observe(element));
-
-    import { comics } from "@/data/comics";
-
-    const overlay = document.getElementById("comicOverlay");
-    const scroll = document.getElementById("comicScroll");
-    const closeBtn = document.getElementById("comicCloseBtn");
-    const cards = document.querySelectorAll("[data-comic-id]");
-    let currentComicId = "";
-
-    const openComic = (id = "") => {
-      const comic = comics[id];
-      if (!comic || !overlay || !scroll) return;
-      currentComicId = id;
-      const panelsHtml = comic.panels
-        .map(
-          (panel, index) => `
-        <div class="comic-panel ${panel.bg}">
-          <div class="panel-illustration">${panel.html}</div>
-          <div class="panel-text">
-            <p class="panel-caption">${panel.caption}</p>
-          </div>
-        </div>
-      `,
-        )
-        .join("");
-      const nextButtonHtml =
-        id === "teacher"
-          ? `<div class="comic-footer-nav show-next" style="display:flex;justify-content:center;padding:1.25rem 1.2rem 1.6rem;background:#000;">
-               <button class="comic-next-btn" id="comicNextBtn" type="button" style="appearance:none;border:1px solid #4bb18b;background:#1f6f55;color:#e7fff5;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.11em;text-transform:uppercase;padding:0.75rem 1.3rem;cursor:pointer;">
-                 Next Example
-               </button>
-             </div>`
-          : "";
-      scroll.innerHTML = panelsHtml + nextButtonHtml;
-      scroll.scrollTop = 0;
-      overlay.classList.add("open");
-      document.body.style.overflow = "hidden";
-
-      const nextBtn = document.getElementById("comicNextBtn");
-      nextBtn?.addEventListener("click", () => {
-        if (currentComicId !== "teacher") return;
-        const nextComicId = comics.student ? "student" : "programmer";
-        openComic(nextComicId);
+    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
+    dialogButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const dialogId = button.getAttribute("data-open-dialog");
+        if (!dialogId) return;
+        const dialog = document.getElementById(dialogId);
+        if (!(dialog instanceof HTMLDialogElement)) return;
+        dialog.showModal();
       });
-    };
+    });
 
-    const closeComic = () => {
-      if (!overlay) return;
-      overlay.classList.remove("open");
-      currentComicId = "";
-      document.body.style.overflow = "";
-    };
-
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-        const comicId = card.getAttribute("data-comic-id");
-        if (comicId) {
-          openComic(comicId);
+    const dialogs = document.querySelectorAll("dialog");
+    dialogs.forEach((dialog) => {
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) {
+          dialog.close();
         }
       });
     });
-
-    closeBtn?.addEventListener("click", closeComic);
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeComic();
-      }
-    });
   </script>
+
+  <style>
+    .hero-network svg {
+      overflow: hidden;
+      background: transparent;
+      border-radius: 16px;
+      stroke: #7dd3d8;
+      fill: none;
+    }
+
+    .hero-network .diagram-text {
+      fill: #7dd3d8;
+      stroke: none;
+    }
+
+    .hero-network .row-dim {
+      opacity: 1;
+    }
+
+    .hero-network .connectors line {
+      stroke-width: 1.4;
+      opacity: 0.4;
+    }
+
+    .hero-network .row-dim .app-bases rect {
+      fill: rgba(15, 23, 42, 0.75);
+      stroke: rgba(148, 163, 184, 0.35);
+      stroke-width: 1;
+      opacity: 0.7;
+    }
+
+    .hero-network .row-dim .small-app image,
+    .hero-network .row-dim .company-logo {
+      opacity: 0.4;
+    }
+
+    .hero-network .row-dim .small-app image {
+      filter: drop-shadow(0 1px 4px rgba(15, 23, 42, 0.2));
+    }
+
+    .hero-network .row-meta .small-app > g:last-child rect {
+      fill: #1f2937;
+      stroke: none;
+    }
+
+    .hero-network .row-meta .small-app > g:last-child ellipse,
+    .hero-network .row-meta .small-app > g:last-child circle {
+      stroke: #a5f3fc;
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .hero-network .row-meta .small-app > g:last-child circle {
+      fill: #a5f3fc;
+      stroke: none;
+    }
+
+    .hero-network .company-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      fill: #9de2e6;
+      opacity: 0.92;
+    }
+
+    .hero-network .row-os {
+      opacity: 1;
+    }
+
+    .hero-network .os-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      fill: #a5f3fc;
+    }
+
+    .hero-network .row-os .os-app * {
+      stroke: #7dd3d8;
+      stroke-width: 2.1;
+    }
+
+    .hero-network .row-os .os-dot {
+      fill: #a5f3fc;
+      stroke: none;
+    }
+
+    .hero-network .row-os .os-app g {
+      filter: drop-shadow(0 0 8px rgba(125, 211, 216, 0.24));
+    }
+
+    .hero-network .os-placeholder-icon {
+      fill: rgba(20, 184, 166, 0.12);
+      stroke: #7dd3d8;
+      stroke-width: 2;
+    }
+
+    .hero-network .os-placeholder-mark {
+      stroke: #99f6e4;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+
+    .hero-network .os-placeholder-text {
+      fill: #99f6e4;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      stroke: none;
+    }
+
+    @media (max-width: 1023px) {
+      .hero-network {
+        margin-top: 0.5rem;
+      }
+
+      .hero-network svg {
+        max-width: 560px;
+      }
+    }
+
+    .hero-cascade-bg::before {
+      content: "";
+      position: absolute;
+      inset: -14% -12% -20% -10%;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 72% 40%,
+          rgba(125, 211, 216, 0.1),
+          transparent 42%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(5, 150, 105, 0) 0%,
+          rgba(13, 148, 136, 0.05) 34%,
+          rgba(6, 95, 70, 0.13) 64%,
+          rgba(8, 47, 73, 0.2) 100%
+        );
+      animation: hero-cascade-flow 12s ease-in-out infinite;
+    }
+
+    .hero-cascade-bg::after {
+      content: "";
+      position: absolute;
+      inset: 42% -10% -24% -6%;
+      pointer-events: none;
+      background: linear-gradient(
+        120deg,
+        rgba(125, 211, 216, 0) 0%,
+        rgba(125, 211, 216, 0.05) 42%,
+        rgba(165, 243, 252, 0.1) 58%,
+        rgba(125, 211, 216, 0) 100%
+      );
+      filter: blur(28px);
+      animation: hero-cascade-flow 12s ease-in-out infinite reverse;
+    }
+
+    @keyframes hero-cascade-flow {
+      0%,
+      100% {
+        transform: translateX(0) translateY(0) scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateX(12px) translateY(-8px) scale(1.02);
+        opacity: 1;
+      }
+    }
+  </style>
 </MinimalDarkLayout>
-
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap");
-
-  .ara-main {
-    --bg: #0d0d0d;
-    --bg2: #141414;
-    --bg3: #1a1a1a;
-    --line: rgba(255, 255, 255, 0.07);
-    --line2: rgba(255, 255, 255, 0.12);
-    --text: #e8e2d8;
-    --dim: #807a70;
-    --dimmer: #4a4540;
-    --accent: #d4824a;
-    --gold: #c9a84c;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Source Serif 4", Georgia, serif;
-    font-size: 18px;
-    line-height: 1.7;
-  }
-
-  .ara-main * {
-    box-sizing: border-box;
-  }
-
-  .ara-main a {
-    color: inherit;
-  }
-
-  .ara-main .hero {
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10rem 4rem 6rem;
-    position: relative;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .ara-main .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    mask-image: radial-gradient(
-      ellipse 80% 80% at 50% 50%,
-      black 30%,
-      transparent 100%
-    );
-  }
-
-  .ara-main .hero-mono {
-    font-family: "DM Mono", monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2.5rem;
-  }
-
-  .ara-main .hero-slogan {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(2.4rem, 5.2vw, 4.8rem);
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    max-width: 900px;
-    margin: 0;
-  }
-
-  .ara-main .hero-slogan em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .ara-main .hero-subtitle {
-    margin: 1.8rem 0 0;
-    max-width: 860px;
-    font-size: 1rem;
-    line-height: 1.85;
-    color: var(--dim);
-  }
-
-  .ara-main .hero-subtitle a {
-    margin-left: 0.35rem;
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .ara-main section {
-    padding: 6rem 4rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .ara-main .s-label {
-    font-family: "DM Mono", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--text);
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    text-align: center;
-  }
-
-  .ara-main .example-label {
-    color: var(--text);
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .ara-main .s-label::before {
-    content: "";
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--line2);
-  }
-
-  .ara-main .s-label::after {
-    content: "";
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--line2);
-  }
-
-  .ara-main .pillars {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
-
-  .ara-main .pillar {
-    background: var(--bg);
-    padding: 3rem 2.5rem;
-    transition: background 0.3s;
-  }
-
-  .ara-main .pillar:hover {
-    background: var(--bg2);
-  }
-
-  .ara-main .pillar-wide {
-    padding: 3.5rem 3rem;
-  }
-
-  .ara-main .pillar-num {
-    font-family: "DM Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--dimmer);
-    margin-bottom: 2rem;
-  }
-
-  .ara-main .pillar-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    display: block;
-    line-height: 1;
-  }
-
-  .ara-main .pillar-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-
-  .ara-main .pillar-body {
-    font-size: 0.97rem;
-    color: var(--dim);
-    line-height: 1.75;
-    margin: 0;
-  }
-
-  .ara-main .pillar-body + .pillar-body {
-    margin-top: 0.8rem;
-  }
-
-  .ara-main .pillar-body-top {
-    margin-top: 1rem;
-  }
-
-  .ara-main .pillar-body a {
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .ara-main .examples-section {
-    background: var(--bg2);
-  }
-
-  .ara-main .examples-heading {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-    font-weight: 400;
-    margin-bottom: 3rem;
-    line-height: 1.2;
-  }
-
-  .ara-main .example-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
-
-  .ara-main .example-card {
-    appearance: none;
-    border: 0;
-    text-align: left;
-    width: 100%;
-    background: var(--bg);
-    padding: 3rem 12.4rem 5.2rem 2.5rem;
-    cursor: pointer;
-    transition: background 0.25s;
-    position: relative;
-    user-select: none;
-    color: inherit;
-    font: inherit;
-  }
-
-  .ara-main .example-card:hover {
-    background: var(--bg3);
-  }
-
-  .ara-main .example-card::after {
-    content: "View Comics →";
-    position: absolute;
-    bottom: 2rem;
-    right: 2.5rem;
-    font-family: "DM Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--dimmer);
-    transition: color 0.2s;
-  }
-
-  .ara-main .example-card:hover::after {
-    color: var(--accent);
-  }
-
-  .ara-main .ec-who {
-    font-family: "DM Mono", monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.6rem;
-  }
-
-  .ara-main .ec-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 1rem;
-  }
-
-  .ara-main .ec-summary {
-    font-size: 0.92rem;
-    color: var(--dim);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  .ara-main .ec-corner {
-    position: absolute;
-    top: 1.3rem;
-    right: 1.5rem;
-    width: 168px;
-    border: 1px solid var(--line2);
-    border-radius: 6px;
-    overflow: hidden;
-    background: #0f1520;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
-    pointer-events: none;
-  }
-
-  .ara-main .ec-corner-teacher {
-    background: #101824;
-  }
-
-  .ara-main .ec-corner-student {
-    background: #0d141f;
-  }
-
-  .ara-main .ec-window-head {
-    height: 20px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 0 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: #1a2538;
-  }
-
-  .ara-main .ec-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-  }
-
-  .ara-main .ec-dot-red {
-    background: #ff5f57;
-  }
-
-  .ara-main .ec-dot-yellow {
-    background: #ffbd2e;
-  }
-
-  .ara-main .ec-dot-green {
-    background: #28c840;
-  }
-
-  .ara-main .ec-window-title {
-    margin-left: 2px;
-    max-width: 126px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-family: "DM Mono", monospace;
-    font-size: 0.43rem;
-    color: #7fa4d2;
-  }
-
-  .ara-main .ec-teacher-tools {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    padding: 8px;
-  }
-
-  .ara-main .ec-tool-cell {
-    height: 18px;
-    border-radius: 3px;
-    border: 1px solid #2a4466;
-    background: #173152;
-    color: #74a0d3;
-    font-size: 0.55rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ara-main .ec-student-tools {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px;
-  }
-
-  .ara-main .ec-play-chip {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
-    border: 1px solid #2f4d7d;
-    background: #13243f;
-    color: #6a8fff;
-    font-size: 0.68rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ara-main .ec-terminal-chip {
-    flex: 1;
-    min-width: 0;
-    border: 1px solid #2f5a37;
-    border-radius: 4px;
-    background: #0f1d12;
-    padding: 3px 5px;
-    display: grid;
-    gap: 2px;
-  }
-
-  .ara-main .ec-terminal-head {
-    font-family: "DM Mono", monospace;
-    font-size: 0.42rem;
-    color: #7caf7a;
-  }
-
-  .ara-main .ec-terminal-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.18rem;
-  }
-
-  .ara-main .ec-terminal-prompt {
-    color: #8fd38f;
-  }
-
-  .ara-main .ec-terminal-input {
-    position: relative;
-    width: 23px;
-    height: 0.45rem;
-    background: linear-gradient(
-      to right,
-      transparent 0,
-      transparent 7px,
-      rgba(255, 255, 255, 0.38) 7px,
-      rgba(255, 255, 255, 0.38) 12px,
-      transparent 12px,
-      transparent 18px,
-      rgba(255, 255, 255, 0.22) 18px,
-      rgba(255, 255, 255, 0.22) 24px,
-      transparent 24px
-    );
-    animation: terminalInputPulse 1.1s steps(3, end) infinite;
-  }
-
-  .ara-main .ec-terminal-cursor {
-    width: 5px;
-    height: 0.66rem;
-    background: #7cff8a;
-    animation: terminalCursorBlink 0.9s steps(1, end) infinite;
-  }
-
-  .ara-main .ec-panels {
-    display: flex;
-    gap: 4px;
-    margin-top: 1.5rem;
-  }
-
-  .ara-main .ec-panel-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 1px;
-    background: var(--line2);
-  }
-
-  .ara-main .ec-panel-dot.active {
-    background: var(--accent);
-  }
-
-  .ara-main .comic-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  .ara-main .comic-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .ara-main .comic-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 1.2rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    flex-shrink: 0;
-  }
-
-  .ara-main .comic-close {
-    background: none;
-    border: 1px solid var(--line2);
-    color: var(--dim);
-    font-family: "DM Mono", monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .ara-main .comic-close:hover {
-    color: var(--text);
-    border-color: var(--text);
-  }
-
-  .ara-main .comic-scroll {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0;
-  }
-
-  .ara-main .comic-footer-nav {
-    position: static;
-    display: none;
-    justify-content: center;
-    padding: 1rem 1.2rem 1.3rem;
-    background: linear-gradient(to top, #000 70%, rgba(0, 0, 0, 0));
-    pointer-events: none;
-  }
-
-  .ara-main .comic-footer-nav.show-next {
-    display: flex;
-    pointer-events: auto;
-  }
-
-  .ara-main .comic-next-btn {
-    background: #1f6f55;
-    border: 1px solid #4bb18b;
-    color: #e7fff5;
-    font-family: "DM Mono", monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    padding: 0.75rem 1.3rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .ara-main .comic-next-btn:hover {
-    background: #298166;
-    border-color: #69d3aa;
-  }
-
-  .ara-main .comic-panel {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: stretch;
-    border-bottom: 2px solid #111;
-    position: relative;
-  }
-
-  .ara-main .panel-illustration {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ara-main .panel-text {
-    width: 320px;
-    flex-shrink: 0;
-    border-left: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 3rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #050505;
-  }
-
-  .ara-main .panel-num {
-    font-family: "DM Mono", monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.25em;
-    color: var(--dimmer);
-    margin-bottom: 1.5rem;
-  }
-
-  .ara-main .panel-caption {
-    font-family: "Source Serif 4", serif;
-    font-size: 1.05rem;
-    color: var(--text);
-    line-height: 1.75;
-    margin: 0;
-  }
-
-  .ara-main .panel-1 {
-    background: #0a0a0f;
-  }
-  .ara-main .panel-2 {
-    background: #0d0d0d;
-  }
-  .ara-main .panel-3 {
-    background: #0f0a05;
-  }
-  .ara-main .panel-4 {
-    background: #050f0a;
-  }
-  .ara-main .panel-5 {
-    background: #0a080f;
-  }
-
-  .ara-main .mock-window {
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-  }
-
-  .ara-main .mock-titlebar {
-    background: #1a1a1a;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .ara-main .mock-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-  .ara-main .mock-dot.r {
-    background: #ff5f57;
-  }
-  .ara-main .mock-dot.y {
-    background: #ffbd2e;
-  }
-  .ara-main .mock-dot.g {
-    background: #28c840;
-  }
-
-  .ara-main .mock-title-text {
-    font-family: "DM Mono", monospace;
-    font-size: 0.6rem;
-    color: var(--dimmer);
-    margin-left: 6px;
-  }
-
-  .ara-main .mock-body {
-    padding: 16px;
-  }
-
-  .ara-main .slide-canvas {
-    width: 340px;
-    background: #1a1a1a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .ara-main .slide-inner {
-    padding: 20px;
-  }
-
-  .ara-main .slide-heading-bar {
-    height: 10px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
-    width: 60%;
-    margin-bottom: 12px;
-  }
-
-  .ara-main .slide-line {
-    height: 5px;
-    background: rgba(255, 255, 255, 0.07);
-    border-radius: 2px;
-    margin-bottom: 6px;
-  }
-
-  .ara-main .slide-line.w90 {
-    width: 90%;
-  }
-  .ara-main .slide-line.w70 {
-    width: 70%;
-  }
-  .ara-main .slide-line.w50 {
-    width: 50%;
-  }
-
-  .ara-main .slide-image-placeholder {
-    height: 80px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12px;
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.15);
-  }
-
-  .ara-main .search-ui {
-    width: 320px;
-  }
-
-  .ara-main .search-bar {
-    background: #1a1a1a;
-    border: 1px solid var(--line2);
-    border-radius: 4px;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .ara-main .search-icon {
-    color: var(--dimmer);
-    font-size: 0.9rem;
-  }
-
-  .ara-main .search-text {
-    font-family: "DM Mono", monospace;
-    font-size: 0.72rem;
-    color: var(--text);
-  }
-
-  .ara-main .search-cursor {
-    color: var(--accent);
-    animation: blink 1s infinite;
-  }
-
-  .ara-main .search-result {
-    background: #111;
-    border: 1px solid rgba(212, 130, 74, 0.2);
-    border-radius: 4px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: slideIn 0.4s ease;
-  }
-
-  .ara-main .sr-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #c9a84c, #8a5c20);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-  }
-
-  .ara-main .sr-body {
-    flex: 1;
-  }
-
-  .ara-main .sr-name {
-    font-family: "DM Mono", monospace;
-    font-size: 0.65rem;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-
-  .ara-main .sr-tags {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-
-  .ara-main .sr-tag {
-    font-family: "DM Mono", monospace;
-    font-size: 0.5rem;
-    padding: 2px 6px;
-    border: 1px solid rgba(212, 130, 74, 0.3);
-    color: var(--accent);
-    border-radius: 2px;
-  }
-
-  .ara-main .sr-blockchain {
-    font-family: "DM Mono", monospace;
-    font-size: 0.5rem;
-    color: var(--dimmer);
-    margin-top: 6px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .ara-main .sr-blockchain::before {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    background: var(--accent);
-    opacity: 0.5;
-  }
-
-  .ara-main .papyrus-slide {
-    width: 340px;
-    background: linear-gradient(135deg, #2a1a06, #1e1408);
-    border: 1px solid rgba(201, 168, 76, 0.25);
-    border-radius: 2px;
-    padding: 20px;
-    position: relative;
-  }
-
-  .ara-main .papyrus-slide::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23000' opacity='0.1'/%3E%3Crect x='0' y='2' width='4' height='1' fill='%23c9a84c' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-
-  .ara-main .papyrus-heading {
-    font-family: "Playfair Display", serif;
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 12px;
-    font-style: italic;
-  }
-
-  .ara-main .papyrus-glyphs {
-    font-size: 1.6rem;
-    letter-spacing: 0.3em;
-    color: rgba(201, 168, 76, 0.8);
-    margin-bottom: 8px;
-  }
-
-  .ara-main .papyrus-subglyphs {
-    font-size: 1rem;
-    letter-spacing: 0.4em;
-    color: rgba(201, 168, 76, 0.5);
-  }
-
-  .ara-main .papyrus-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 10px;
-    font-family: "DM Mono", monospace;
-    font-size: 0.55rem;
-    color: var(--accent);
-    background: rgba(212, 130, 74, 0.1);
-    border: 1px solid rgba(212, 130, 74, 0.2);
-    padding: 3px 8px;
-    border-radius: 2px;
-  }
-
-  .ara-main .split-screen {
-    width: 420px;
-    display: flex;
-    gap: 3px;
-  }
-
-  .ara-main .split-half {
-    flex: 1;
-    background: #0d0d0d;
-    border: 1px solid var(--line2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .ara-main .split-half.video-half {
-    background: #08080f;
-  }
-  .ara-main .split-half.code-half {
-    background: #080f08;
-  }
-
-  .ara-main .split-titlebar {
-    background: #1a1a1a;
-    padding: 5px 8px;
-    font-family: "DM Mono", monospace;
-    font-size: 0.5rem;
-    color: var(--dimmer);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .ara-main .video-thumb {
-    padding: 16px;
-    text-align: center;
-  }
-
-  .ara-main .video-play {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.3);
-  }
-
-  .ara-main .video-play.paused {
-    color: var(--accent);
-  }
-
-  .ara-main .video-prog {
-    height: 3px;
-    background: var(--line);
-    margin: 8px;
-    border-radius: 1px;
-  }
-
-  .ara-main .video-prog-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 1px;
-  }
-
-  .ara-main .code-lines {
-    padding: 10px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .ara-main .code-line {
-    height: 4px;
-    background: rgba(100, 200, 100, 0.15);
-    border-radius: 1px;
-  }
-
-  .ara-main .code-line.w80 {
-    width: 80%;
-  }
-  .ara-main .code-line.w60 {
-    width: 60%;
-  }
-  .ara-main .code-line.w70 {
-    width: 70%;
-  }
-  .ara-main .code-line.w40 {
-    width: 40%;
-  }
-  .ara-main .code-line.indent {
-    margin-left: 10px;
-  }
-
-  .ara-main .frustration-bar {
-    background: rgba(212, 130, 74, 0.1);
-    border-top: 1px solid rgba(212, 130, 74, 0.2);
-    padding: 4px 8px;
-    font-family: "DM Mono", monospace;
-    font-size: 0.5rem;
-    color: var(--accent);
-    text-align: center;
-  }
-
-  .ara-main .split-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .ara-main .combine-ui {
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .ara-main .combine-chips {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .ara-main .chip {
-    background: #1a1a1a;
-    border: 1px solid var(--line2);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 0.8rem;
-    color: var(--dim);
-  }
-
-  .ara-main .combine-plus {
-    color: var(--dimmer);
-  }
-
-  .ara-main .combine-arrow {
-    color: var(--dimmer);
-    font-size: 1.2rem;
-  }
-
-  .ara-main .combine-result {
-    background: rgba(212, 130, 74, 0.08);
-    border: 1px solid rgba(212, 130, 74, 0.35);
-    border-radius: 4px;
-    padding: 10px 18px;
-  }
-
-  .ara-main .combine-label {
-    font-family: "DM Mono", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-  }
-
-  .ara-main .combine-sub {
-    font-size: 0.75rem;
-    color: var(--dimmer);
-    margin-top: 3px;
-    font-family: "DM Mono", monospace;
-  }
-
-  .ara-main .agent-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 10px;
-    background: rgba(100, 200, 100, 0.08);
-    border: 1px solid rgba(100, 200, 100, 0.2);
-    border-radius: 3px;
-    font-family: "DM Mono", monospace;
-    font-size: 0.55rem;
-    color: #6dc86d;
-    margin-top: 8px;
-  }
-
-  .ara-main .agent-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #6dc86d;
-    animation: pulse 1.5s infinite;
-  }
-
-  .ara-main .ai-section {
-    background: var(--bg2);
-  }
-
-  .ara-main .ai-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: start;
-  }
-
-  .ara-main .ai-heading {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-  }
-
-  .ara-main .ai-body {
-    font-size: 1rem;
-    color: var(--dim);
-    line-height: 1.8;
-    margin: 0;
-  }
-
-  .ara-main .ai-diagram {
-    border: 1px solid var(--line2);
-    background: color-mix(in srgb, var(--bg) 70%, transparent);
-    overflow: hidden;
-  }
-
-  .ara-main .ai-diagram svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .ara-main .ai-diagram .diagram-label {
-    fill: var(--text);
-    font-family: "DM Mono", monospace;
-    font-size: 18px;
-    letter-spacing: 0.04em;
-  }
-
-  .ara-main .ai-diagram .diagram-note {
-    fill: color-mix(in srgb, var(--text) 70%, var(--dimmer));
-    font-size: 15px;
-  }
-
-  .ara-main .ai-diagram .diagram-cube-label {
-    fill: #fff;
-  }
-
-  .ara-main .ai-diagram .diagram-chip {
-    fill: var(--text);
-    font-size: 17px;
-    font-weight: 500;
-  }
-
-  .ara-main .ai-diagram .diagram-wires {
-    color: color-mix(in srgb, var(--line2) 58%, transparent);
-  }
-
-  .ara-main .ai-diagram .diagram-wires line {
-    stroke: currentColor;
-    stroke-width: 3.5;
-  }
-
-  .ara-main .ai-diagram .diagram-robot circle,
-  .ara-main .ai-diagram .diagram-robot rect {
-    fill: color-mix(in srgb, var(--bg3) 70%, var(--bg));
-    stroke: var(--line2);
-    stroke-width: 2.5;
-  }
-
-  .ara-main .ai-diagram .diagram-robot path,
-  .ara-main .ai-diagram .diagram-robot line {
-    fill: none;
-    stroke: var(--text);
-    stroke-width: 3;
-    stroke-linecap: round;
-  }
-
-  .ara-main .ai-diagram .diagram-robot circle:nth-child(3),
-  .ara-main .ai-diagram .diagram-robot circle:nth-child(4),
-  .ara-main .ai-diagram .diagram-robot circle:nth-child(7) {
-    fill: var(--text);
-    stroke: none;
-  }
-
-  .ara-main .ai-diagram .diagram-screen-main rect:first-child,
-  .ara-main .ai-diagram .diagram-screen-ghost rect:first-child {
-    fill: color-mix(in srgb, var(--bg3) 72%, var(--bg));
-    stroke: var(--line2);
-    stroke-width: 2;
-  }
-
-  .ara-main .ai-diagram .diagram-screen-main rect:not(:first-child) {
-    fill: color-mix(in srgb, var(--bg2) 65%, transparent);
-    stroke: var(--line);
-    stroke-width: 1.5;
-  }
-
-  .ara-main .ai-diagram .diagram-screen-main polygon {
-    fill: color-mix(in srgb, var(--text) 75%, transparent);
-  }
-
-  .ara-main .ai-diagram .diagram-screen-main circle {
-    fill: var(--line2);
-  }
-
-  .ara-main .ai-diagram .diagram-screen-ghost rect:not(:first-child) {
-    fill: color-mix(in srgb, #47ffd8 12%, transparent);
-    stroke: color-mix(in srgb, #47ffd8 55%, var(--line2));
-    stroke-width: 1.5;
-  }
-
-  .ara-main .ai-diagram .diagram-screen-ghost {
-    opacity: 0.88;
-  }
-
-  .ara-main .ai-diagram .diagram-cube polygon {
-    stroke: var(--line2);
-    stroke-width: 1.8;
-  }
-
-  .ara-main .ai-diagram .diagram-cube polygon:nth-child(1) {
-    fill: color-mix(in srgb, #47ffd8 35%, var(--bg));
-  }
-
-  .ara-main .ai-diagram .diagram-cube polygon:nth-child(2) {
-    fill: color-mix(in srgb, #47ffd8 20%, var(--bg3));
-  }
-
-  .ara-main .ai-diagram .diagram-cube polygon:nth-child(3) {
-    fill: color-mix(in srgb, #47ffd8 10%, var(--bg2));
-  }
-
-  .ara-main .ai-diagram .diagram-cube-face-label {
-    fill: var(--text);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    pointer-events: none;
-  }
-
-  .ara-main .ai-diagram .diagram-source circle,
-  .ara-main .ai-diagram .diagram-source rect {
-    fill: color-mix(in srgb, var(--bg3) 68%, var(--bg));
-    stroke: var(--line2);
-    stroke-width: 2.5;
-  }
-
-  .ara-main .ai-diagram .diagram-source path {
-    fill: none;
-    stroke: var(--text);
-    stroke-width: 2.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .ara-main .people-header {
-    max-width: 700px;
-    margin-bottom: 4rem;
-  }
-
-  .ara-main .people-heading {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 1.2rem;
-  }
-
-  .ara-main .people-sub {
-    font-size: 1.05rem;
-    color: var(--dim);
-    line-height: 1.8;
-    margin: 0;
-  }
-
-  .ara-main .people-sub em {
-    font-style: italic;
-    color: var(--text);
-  }
-
-  .ara-main .people-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
-
-  .ara-main .person {
-    background: var(--bg);
-    padding: 2.5rem 2rem;
-    transition: background 0.25s;
-    position: relative;
-  }
-
-  .ara-main .person::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: transparent;
-    transition: background 0.25s;
-  }
-
-  .ara-main .person:hover {
-    background: var(--bg2);
-  }
-
-  .ara-main .person:hover::before {
-    background: var(--accent);
-  }
-
-  .ara-main .person-role {
-    font-family: "DM Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-
-  .ara-main .person-role-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .ara-main .person-bust {
-    width: 66px;
-    height: 74px;
-    margin-top: -1.5rem;
-    margin-right: -0.25rem;
-    flex-shrink: 0;
-    pointer-events: none;
-    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.32));
-  }
-
-  .ara-main .person-bust svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .ara-main .person-bust-user {
-    transform: rotate(-2deg);
-  }
-
-  .ara-main .person-bust-designer {
-    transform: rotate(2deg);
-  }
-
-  .ara-main .person-bust-dev {
-    transform: rotate(-1deg);
-  }
-
-  .ara-main .person-title {
-    font-family: "Playfair Display", serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 1.3;
-    margin-bottom: 0.8rem;
-  }
-
-  .ara-main .person-desc {
-    font-size: 0.92rem;
-    color: var(--dim);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  .ara-main .pilot-section {
-    background: var(--bg3);
-  }
-
-  .ara-main .pilot-inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 6rem;
-    align-items: start;
-  }
-
-  .ara-main .pilot-tag {
-    display: inline-block;
-    font-family: "DM Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    padding: 0.35rem 0.9rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .ara-main .pilot-heading {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-  }
-
-  .ara-main .pilot-body {
-    font-size: 1rem;
-    color: var(--dim);
-    line-height: 1.8;
-    margin: 0;
-  }
-
-  .ara-main .pilot-body-extra {
-    margin-top: 1.1rem;
-  }
-
-  .ara-main .pilot-body-extra a,
-  .ara-main .pilot-roadmap-note a {
-    color: var(--text);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .ara-main .pilot-social {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-  }
-
-  .ara-main .pilot-social-link {
-    width: 2.8rem;
-    height: 2.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--line2);
-    color: var(--text);
-    font-family: "DM Mono", monospace;
-    font-size: 1.05rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.2s;
-    background: rgba(255, 255, 255, 0.02);
-  }
-
-  .ara-main .pilot-social-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-1px);
-  }
-
-  .ara-main .pilot-signoff {
-    margin: 1.1rem 0 0;
-    font-family: "Playfair Display", serif;
-    font-size: 1.08rem;
-    color: var(--text);
-  }
-
-  .ara-main .pilot-roadmap {
-    display: grid;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    margin-top: 3rem;
-  }
-
-  .ara-main .pilot-roadmap-item {
-    background: var(--bg3);
-    padding: 1.2rem 1.35rem;
-  }
-
-  .ara-main .pilot-roadmap-item-current {
-    padding: 1.45rem 1.5rem;
-    border-left: 2px solid var(--accent);
-    background: #141617;
-  }
-
-  .ara-main .pilot-roadmap-title {
-    margin: 0;
-    font-family: "DM Mono", monospace;
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-  }
-
-  .ara-main .pilot-current-badge {
-    border: 1px solid rgba(75, 177, 139, 0.65);
-    color: #8fd8b7;
-    background: rgba(75, 177, 139, 0.16);
-    border-radius: 999px;
-    padding: 0.2rem 0.55rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-
-  .ara-main .pilot-roadmap-desc {
-    margin: 0.58rem 0 0;
-    font-size: 0.92rem;
-    line-height: 1.7;
-    color: var(--dim);
-  }
-
-  .ara-main .pilot-roadmap-note {
-    margin: 0;
-    padding: 1rem 1.35rem;
-    font-size: 0.88rem;
-    color: var(--dimmer);
-    background: var(--bg);
-  }
-
-  .ara-main .pilot-roadmap-item:hover {
-    background: #111;
-    transition: background 0.2s;
-  }
-
-  .ara-main .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.65s ease,
-      transform 0.65s ease;
-  }
-
-  .ara-main .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  .ara-main .reveal-d {
-    transition-delay: 0.15s;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.5;
-      transform: scale(0.8);
-    }
-  }
-
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes terminalCursorBlink {
-    0%,
-    45% {
-      opacity: 1;
-    }
-    46%,
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes terminalInputPulse {
-    0% {
-      transform: translateX(0);
-      opacity: 0.45;
-    }
-    50% {
-      transform: translateX(1px);
-      opacity: 0.95;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 0.45;
-    }
-  }
-
-  @media (max-width: 960px) {
-    .ara-main section {
-      padding: 4rem 2rem;
-    }
-
-    .ara-main .hero {
-      padding: 9rem 2rem 5rem;
-    }
-
-    .ara-main .pillars {
-      grid-template-columns: 1fr;
-    }
-
-    .ara-main .pillar-wide {
-      padding: 3rem 2.5rem;
-    }
-
-    .ara-main .ai-inner {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .ara-main .people-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .ara-main .person-bust {
-      width: 60px;
-      height: 68px;
-    }
-
-    .ara-main .pilot-inner {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .ara-main .example-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .ara-main .example-card {
-      padding-right: 11rem;
-    }
-
-    .ara-main .ec-corner {
-      width: 154px;
-      right: 1.2rem;
-    }
-
-    .ara-main .panel-illustration {
-      padding: 2rem;
-    }
-
-    .ara-main .panel-text {
-      width: 260px;
-      padding: 2rem 1.5rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .ara-main .example-card {
-      padding-right: 2.5rem;
-    }
-
-    .ara-main .ec-corner {
-      display: none;
-    }
-
-    .ara-main .people-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .ara-main .person-bust {
-      width: 56px;
-      height: 64px;
-    }
-
-    .ara-main .comic-panel {
-      flex-direction: column;
-    }
-
-    .ara-main .panel-text {
-      width: 100%;
-      border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .ara-main .panel-illustration {
-      min-height: 50vh;
-    }
-
-    .ara-main .split-screen {
-      width: 100%;
-      max-width: 340px;
-    }
-  }
-</style>

@@ -1,0 +1,223 @@
+---
+import MinimalDarkLayout from "@/layouts/MinimalDarkLayout.astro";
+import { companyInfo } from "@/types/ara";
+
+const contactEmail = "medet@ara.foundation";
+const contactUrl = `mailto:${contactEmail}`;
+const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
+---
+
+<MinimalDarkLayout title="Support Cascadefund">
+  <div
+    class="mx-auto max-w-3xl px-6 pb-24 pt-12 text-left md:px-8 md:pt-16 [&_p]:text-pretty [&_li]:text-pretty"
+  >
+    <section class="space-y-8">
+      <p
+        class="text-xs font-medium uppercase tracking-[0.2em] text-neutral-600 dark:text-neutral-500"
+      >
+        Support Cascadefund
+      </p>
+      <h1
+        class="text-3xl font-normal leading-tight text-neutral-900 md:text-4xl md:leading-tight dark:text-white"
+      >
+        Towards semantic web of open source.
+      </h1>
+      <p
+        class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        Every funding goes toward making that work possible.
+      </p>
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2">
+          <p
+            class="inline-flex items-center rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 dark:border-white dark:bg-white dark:text-neutral-900"
+          >
+            {walletAddress}
+          </p>
+          <button
+            id="copy-wallet-address"
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-300 text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-800"
+            aria-label="Copy wallet address"
+            title="Copy wallet address"
+          >
+            <svg
+              id="copy-wallet-icon-copy"
+              viewBox="0 0 24 24"
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg
+              id="copy-wallet-icon-check"
+              viewBox="0 0 24 24"
+              class="hidden h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+          </button>
+        </div>
+        <p
+          id="copy-wallet-hint"
+          class="text-xs text-emerald-600 opacity-0 transition-opacity dark:text-emerald-400"
+          aria-live="polite"
+        >
+          Wallet address copied.
+        </p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          EVM on Ethereum Layer 2s, BNB Chain, or Tron.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        Where your support goes
+      </h2>
+      <div class="grid gap-4 md:grid-cols-3">
+        <article
+          class="rounded-xl border border-neutral-200 p-5 dark:border-neutral-800 dark:bg-neutral-900/40"
+        >
+          <h3 class="text-lg font-medium text-neutral-900 dark:text-white">
+            Infrastructure
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Servers, tooling, and the systems that keep Cascadefund running -
+            the graph, the weekly digest, and the hyperpayment protocol.
+          </p>
+        </article>
+        <article
+          class="rounded-xl border border-neutral-200 p-5 dark:border-neutral-800 dark:bg-neutral-900/40"
+        >
+          <h3 class="text-lg font-medium text-neutral-900 dark:text-white">
+            Semantic design
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Building and curating the web ontologies - mapping how apps in each
+            domain relate, defining how subscription flows move through them,
+            and aligning new projects into existing bundles.
+          </p>
+        </article>
+        <article
+          class="rounded-xl border border-neutral-200 p-5 dark:border-neutral-800 dark:bg-neutral-900/40"
+        >
+          <h3 class="text-lg font-medium text-neutral-900 dark:text-white">
+            Visibility
+          </h3>
+          <p
+            class="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+          >
+            Organizing workshops, outreach, and events that bring OSS
+            maintainers and users together around the alliance.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        Other ways to support
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        <p>
+          Have a different idea for how to contribute? Contact us. We typically
+          reply within a day.
+        </p>
+      </div>
+      <a
+        href={contactUrl}
+        class="inline-flex items-center justify-center rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 transition-colors hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+      >
+        Contact us
+      </a>
+    </section>
+
+    <section class="mt-12 space-y-8 md:mt-16">
+      <h2
+        class="text-2xl font-normal leading-tight text-neutral-900 md:text-3xl dark:text-white"
+      >
+        Full transparency on blockchain
+      </h2>
+      <div
+        class="space-y-4 text-base leading-relaxed text-neutral-700 dark:text-neutral-300"
+      >
+        <p>
+          Every allocation is recorded on blockchain. Immutable, public, visible
+          to anyone. You always know where your contribution went and which
+          projects it reached.
+        </p>
+      </div>
+    </section>
+
+    <footer
+      class="mt-20 border-t border-neutral-200 pt-10 text-sm text-neutral-600 dark:border-white/10 dark:text-neutral-500"
+      aria-label="Support page footer"
+    >
+      <p class="text-neutral-600 dark:text-neutral-500">
+        © {companyInfo.copyrightYear} Ara Foundation.
+      </p>
+    </footer>
+  </div>
+
+  <script is:inline define:vars={{ walletAddress }}>
+    const copyButton = document.querySelector("#copy-wallet-address");
+    const copyHint = document.querySelector("#copy-wallet-hint");
+    const copyIcon = document.querySelector("#copy-wallet-icon-copy");
+    const checkIcon = document.querySelector("#copy-wallet-icon-check");
+    let hintTimeout;
+
+    const showCopyHint = (message) => {
+      if (!copyHint) return;
+      copyHint.textContent = message;
+      copyHint.classList.remove("opacity-0");
+      copyHint.classList.add("opacity-100");
+      clearTimeout(hintTimeout);
+      hintTimeout = setTimeout(() => {
+        copyHint.classList.remove("opacity-100");
+        copyHint.classList.add("opacity-0");
+      }, 1800);
+    };
+
+    if (copyButton) {
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(walletAddress);
+          copyButton.setAttribute("title", "Copied");
+          if (copyIcon && checkIcon) {
+            copyIcon.classList.add("hidden");
+            checkIcon.classList.remove("hidden");
+          }
+          showCopyHint("Wallet address copied.");
+          setTimeout(() => copyButton.setAttribute("title", "Copy wallet address"), 1500);
+        } catch {
+          copyButton.setAttribute("title", "Copy failed");
+          showCopyHint("Could not copy wallet address.");
+          setTimeout(() => copyButton.setAttribute("title", "Copy wallet address"), 1500);
+        }
+      });
+    }
+  </script>
+</MinimalDarkLayout>

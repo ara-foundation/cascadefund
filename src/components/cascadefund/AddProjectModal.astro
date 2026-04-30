@@ -1,0 +1,372 @@
+---
+import { socialLinks } from "@/types/ara";
+import SocialLink from "@/components/utilitified_decorations/SocialLink";
+---
+
+<dialog
+  id="add-project-modal"
+  class="m-auto w-[min(680px,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto rounded-2xl border border-neutral-200 bg-neutral-50 p-0 text-neutral-900 shadow-xl backdrop:bg-neutral-900/60 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+>
+  <div class="space-y-5 p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="text-xl font-medium">Add new project</h3>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-white"
+          aria-label="Close add project dialog"
+        >
+          ×
+        </button>
+      </form>
+    </div>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+      Our service is just kicstarting, we will email you once CascadeFund gets
+      launched.
+    </p>
+
+    <form id="add-project-form" class="space-y-6">
+      <section
+        class="space-y-4 rounded-xl border border-neutral-200 bg-white/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/40"
+      >
+        <h4
+          class="text-sm font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-300"
+        >
+          Maintainer information
+        </h4>
+        <div class="space-y-2">
+          <label
+            for="project-email"
+            class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >Maintainer&apos;s email</label
+          >
+          <input
+            id="project-email"
+            name="email"
+            type="email"
+            required
+            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+          />
+        </div>
+        <fieldset class="space-y-2">
+          <legend
+            class="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >Preferred way of receiving funds</legend
+          >
+          <div
+            class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-700 dark:text-neutral-300"
+          >
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="fundsMethod"
+                value="crypto"
+                required
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>As a crypto</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="fundsMethod"
+                value="non-crypto"
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>Non Crypto</span>
+            </label>
+          </div>
+        </fieldset>
+      </section>
+
+      <section
+        class="space-y-4 rounded-xl border border-neutral-200 bg-white/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/40"
+      >
+        <h4
+          class="text-sm font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-300"
+        >
+          Project
+        </h4>
+        <div class="space-y-2">
+          <label
+            for="project-name"
+            class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >Name (spaces are allowed)</label
+          >
+          <input
+            id="project-name"
+            name="projectName"
+            type="text"
+            required
+            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+          />
+        </div>
+        <div class="space-y-2">
+          <label
+            for="repo-url"
+            class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >URL (Must be any git hosting, public repository only)</label
+          >
+          <input
+            id="repo-url"
+            name="repositoryUrl"
+            type="url"
+            required
+            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+          />
+        </div>
+        <fieldset class="space-y-2">
+          <legend
+            class="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >Is it</legend
+          >
+          <div
+            class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-700 dark:text-neutral-300"
+          >
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="projectType"
+                value="side-project"
+                required
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>Side project</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="projectType"
+                value="shared-tool"
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>A tool you use yourself and share</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="projectType"
+                value="full-time"
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>Full-time project</span>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset class="space-y-2">
+          <legend
+            class="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+            >Who is using your project</legend
+          >
+          <div
+            class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-700 dark:text-neutral-300"
+          >
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="targetAudience"
+                value="developers"
+                required
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>Developers</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="targetAudience"
+                value="end-users"
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>End users</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="targetAudience"
+                value="both"
+                class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+              />
+              <span>Both</span>
+            </label>
+          </div>
+        </fieldset>
+      </section>
+
+      <div class="space-y-3">
+        <p
+          id="add-project-form-error"
+          class="hidden text-sm text-red-600 dark:text-red-400"
+          aria-live="polite"
+        ></p>
+        <button
+          id="add-project-submit-button"
+          type="submit"
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 transition-colors hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-70 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+        >
+          <span
+            id="add-project-submit-spinner"
+            class="hidden h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+            aria-hidden="true"
+          ></span>
+          <span id="add-project-submit-label">Add your project</span>
+        </button
+        >
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<dialog
+  id="add-project-success-modal"
+  class="m-auto w-[min(680px,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto rounded-2xl border border-neutral-200 bg-neutral-50 p-0 text-neutral-900 shadow-xl backdrop:bg-neutral-900/60 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+>
+  <div class="space-y-5 p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="text-xl font-medium">Thank you</h3>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-white"
+          aria-label="Close thank you dialog"
+        >
+          ×
+        </button>
+      </form>
+    </div>
+
+    <div
+      class="space-y-4 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+    >
+      <p>
+        Submit and wait for our email. Meanwhile, please, share about us with
+        other maintainers, or tell about us on social media.
+      </p>
+      <p>CascadeFund is part of Ara.</p>
+      <div class="space-y-2">
+        <p class="font-medium text-neutral-900 dark:text-neutral-100">
+          More about Ara:
+        </p>
+        <ul class="flex flex-wrap items-center gap-3">
+          {
+            Object.values(socialLinks)
+              .filter((link) => link.type !== "telegram" && link.type !== "discord")
+              .map((link) => (
+              <li>
+                <SocialLink
+                  link={link}
+                  className="flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 bg-white/70 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900/70 dark:hover:bg-neutral-800"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const addProjectForm = document.getElementById("add-project-form");
+  const addProjectModal = document.getElementById("add-project-modal");
+  const addProjectSuccessModal = document.getElementById(
+    "add-project-success-modal",
+  );
+  const addProjectSubmitButton = document.getElementById(
+    "add-project-submit-button",
+  );
+  const addProjectSubmitSpinner = document.getElementById(
+    "add-project-submit-spinner",
+  );
+  const addProjectSubmitLabel = document.getElementById("add-project-submit-label");
+  const addProjectFormError = document.getElementById("add-project-form-error");
+
+  function setAddProjectLoading(isLoading: boolean) {
+    if (addProjectSubmitButton instanceof HTMLButtonElement) {
+      addProjectSubmitButton.disabled = isLoading;
+    }
+    if (addProjectSubmitSpinner) {
+      addProjectSubmitSpinner.classList.toggle("hidden", !isLoading);
+    }
+    if (addProjectSubmitLabel) {
+      addProjectSubmitLabel.textContent = isLoading
+        ? "Submitting..."
+        : "Add your project";
+    }
+  }
+
+  function setAddProjectError(message: string) {
+    if (!addProjectFormError) {
+      return;
+    }
+
+    addProjectFormError.textContent = message;
+    addProjectFormError.classList.toggle("hidden", !message);
+  }
+
+  addProjectForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(addProjectForm instanceof HTMLFormElement)) {
+      return;
+    }
+
+    setAddProjectError("");
+    setAddProjectLoading(true);
+
+    const formData = new FormData(addProjectForm);
+    const payload = {
+      email: String(formData.get("email") ?? ""),
+      fundsMethod: String(formData.get("fundsMethod") ?? ""),
+      projectName: String(formData.get("projectName") ?? ""),
+      repositoryUrl: String(formData.get("repositoryUrl") ?? ""),
+      projectType: String(formData.get("projectType") ?? ""),
+      targetAudience: String(formData.get("targetAudience") ?? ""),
+    };
+
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch("/api/cascadefund/add-project", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+
+      if (response.status === 409) {
+        setAddProjectError(
+          "This email already submitted an add project request.",
+        );
+        return;
+      }
+
+      if (!response.ok) {
+        setAddProjectError("We could not save your request. Please try again.");
+        return;
+      }
+
+      addProjectForm.reset();
+      if (addProjectModal instanceof HTMLDialogElement) {
+        addProjectModal.close();
+      }
+      if (addProjectSuccessModal instanceof HTMLDialogElement) {
+        addProjectSuccessModal.showModal();
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setAddProjectError(
+          "Request timed out after 10 seconds. Please try again.",
+        );
+        return;
+      }
+
+      setAddProjectError("Network error. Please try again.");
+    } finally {
+      window.clearTimeout(timeoutId);
+      setAddProjectLoading(false);
+    }
+  });
+</script>

@@ -1,13 +1,13 @@
 services:
-  ara-mongo:
+  cascadefund-mongo:
     image: mongo:latest
-    container_name: ara-mongo
+    container_name: cascadefund-mongo
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
       # Bind mount host directory to persist MongoDB data
-      - /data/ara-mongo:/data/db
+      - /data/cascadefund-mongo:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -18,18 +18,18 @@ services:
       retries: 5
       start_period: 40s
 
-  ara-mongo-express:
+  cascadefund-mongo-express:
     image: mongo-express:latest
-    container_name: ara-mongo-express
+    container_name: cascadefund-mongo-express
     restart: unless-stopped
     ports:
       - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
-      ME_CONFIG_MONGODB_URL: mongodb://root:password@ara-mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:password@cascadefund-mongo:27017/
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin
     depends_on:
-      ara-mongo:
+      cascadefund-mongo:
         condition: service_healthy

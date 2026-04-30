@@ -90,7 +90,7 @@ const mockGalaxies = [
 ];
 ---
 
-<Layout hideLinks={Object.keys(MenuName)}>
+<Layout hideLinks={Object.keys(MenuName)} hideAuth={true}>
   <Hyperspeed
     effectOptions={{
       onSpeedUp: () => {},
@@ -161,21 +161,14 @@ const mockGalaxies = [
     <p
       class="text-xl md:text-3xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl"
     >
-      Your URI not recognized by Ara.
+      🥺 Page not found<br />Here is your 404 page 🥺.
     </p>
     <div class="flex flex-col items-center gap-4 mt-8">
-      <Link
-        uri="/all-stars"
-        className="text-lg font-medium underline underline-offset-4"
-      >
-        Check out all stars page to explore projects
-      </Link>
-      <span class="text-slate-500 dark:text-slate-500">or</span>
       <Link
         uri="/"
         className="text-lg font-medium underline underline-offset-4"
       >
-        learn more about Ara: /main page
+        Go to main page 👈
       </Link>
     </div>
   </div>
@@ -191,5 +184,18 @@ const mockGalaxies = [
     height: 100vh;
     overflow: hidden;
   }
-</style>
 
+  /* 404 page: hide header/footer textual content */
+  header .navbar-center,
+  header .navbar-end,
+  header .navbar-start .badge,
+  header .navbar-start #logo {
+    display: none !important;
+  }
+
+  footer > div:first-child,
+  footer > div:nth-child(2),
+  footer > div:last-child {
+    display: none !important;
+  }
+</style>

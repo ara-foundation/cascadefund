@@ -1,0 +1,295 @@
+---
+import { socialLinks } from "@/types/ara";
+import SocialLink from "@/components/utilitified_decorations/SocialLink";
+---
+
+<dialog
+  id="join-waitlist-modal"
+  class="m-auto w-[min(680px,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto rounded-2xl border border-neutral-200 bg-neutral-50 p-0 text-neutral-900 shadow-xl backdrop:bg-neutral-900/60 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+>
+  <div class="space-y-5 p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="text-xl font-medium">Join the waitlist</h3>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-white"
+          aria-label="Close join waitlist dialog"
+        >
+          ×
+        </button>
+      </form>
+    </div>
+
+    <form id="join-waitlist-form" class="space-y-5">
+      <div class="space-y-2">
+        <label
+          for="waitlist-email"
+          class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+          >Email</label
+        >
+        <input
+          id="waitlist-email"
+          name="email"
+          type="email"
+          required
+          class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+        />
+      </div>
+      <div class="space-y-2">
+        <label
+          for="occupation"
+          class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+          >What is your work or occupation?</label
+        >
+        <input
+          id="occupation"
+          name="occupation"
+          type="text"
+          required
+          placeholder="For example: Backend developer, Product designer, Student"
+          class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+        />
+      </div>
+      <div class="space-y-2">
+        <label
+          for="work-apps"
+          class="block text-sm font-medium text-neutral-800 dark:text-neutral-200"
+          >What apps did you use for work in the last week?</label
+        >
+        <textarea
+          id="work-apps"
+          name="workApps"
+          required
+          rows={4}
+          placeholder="For example: VS Code, Figma, Notion, Slack, Chrome"
+          class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900/70 dark:text-neutral-100 dark:focus:border-neutral-500"
+        ></textarea>
+      </div>
+      <fieldset class="space-y-2">
+        <legend
+          class="text-sm font-medium text-neutral-800 dark:text-neutral-200"
+          >How much would you give monthly to open source projects if possible:
+          $1, $5, $10, or more?</legend
+        >
+        <div
+          class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-700 dark:text-neutral-300"
+        >
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="monthlyAmount"
+              value="$1"
+              required
+              class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+            />
+            <span>$1</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="monthlyAmount"
+              value="$5"
+              class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+            />
+            <span>$5</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="monthlyAmount"
+              value="$10"
+              class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+            />
+            <span>$10</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="monthlyAmount"
+              value="more"
+              class="h-4 w-4 border-neutral-400 text-neutral-900 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100"
+            />
+            <span>More</span>
+          </label>
+        </div>
+      </fieldset>
+      <div class="space-y-3">
+        <p
+          id="join-waitlist-form-error"
+          class="hidden text-sm text-red-600 dark:text-red-400"
+          aria-live="polite"
+        ></p>
+        <button
+          id="join-waitlist-submit-button"
+          type="submit"
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-neutral-300 px-6 py-3 text-sm font-medium text-neutral-900 transition-colors hover:border-neutral-400 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-70 dark:border-white/20 dark:text-white dark:hover:border-white/40 dark:hover:bg-white/[0.06]"
+        >
+          <span
+            id="join-waitlist-submit-spinner"
+            class="hidden h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+            aria-hidden="true"
+          ></span>
+          <span id="join-waitlist-submit-label">Join the waitlist</span>
+        </button
+        >
+        <p
+          class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400"
+        >
+          We will send you updates as we launch.
+        </p>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<dialog
+  id="join-waitlist-success-modal"
+  class="m-auto w-[min(680px,calc(100vw-2rem))] max-h-[85vh] overflow-y-auto rounded-2xl border border-neutral-200 bg-neutral-50 p-0 text-neutral-900 shadow-xl backdrop:bg-neutral-900/60 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100"
+>
+  <div class="space-y-5 p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="text-xl font-medium">Thank you</h3>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-neutral-300 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-white"
+          aria-label="Close thank you dialog"
+        >
+          ×
+        </button>
+      </form>
+    </div>
+    <div
+      class="space-y-4 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300"
+    >
+      <p>
+        We will email you when it&apos;s launched. Meanwhile share about us with
+        people you know in IT.
+      </p>
+      <p>CascadeFund is part of Ara, visit Ara or follow our social links.</p>
+      <div class="space-y-2">
+        <p class="font-medium text-neutral-900 dark:text-neutral-100">
+          More about Ara:
+        </p>
+        <ul class="flex flex-wrap items-center gap-3">
+          {
+            Object.values(socialLinks)
+              .filter((link) => link.type !== "telegram" && link.type !== "discord")
+              .map((link) => (
+              <li>
+                <SocialLink
+                  link={link}
+                  className="flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 bg-white/70 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900/70 dark:hover:bg-neutral-800"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const waitlistForm = document.getElementById("join-waitlist-form");
+  const waitlistModal = document.getElementById("join-waitlist-modal");
+  const waitlistSuccessModal = document.getElementById(
+    "join-waitlist-success-modal",
+  );
+  const waitlistSubmitButton = document.getElementById(
+    "join-waitlist-submit-button",
+  );
+  const waitlistSubmitSpinner = document.getElementById(
+    "join-waitlist-submit-spinner",
+  );
+  const waitlistSubmitLabel = document.getElementById(
+    "join-waitlist-submit-label",
+  );
+  const waitlistFormError = document.getElementById("join-waitlist-form-error");
+
+  function setWaitlistLoading(isLoading: boolean) {
+    if (waitlistSubmitButton instanceof HTMLButtonElement) {
+      waitlistSubmitButton.disabled = isLoading;
+    }
+    if (waitlistSubmitSpinner) {
+      waitlistSubmitSpinner.classList.toggle("hidden", !isLoading);
+    }
+    if (waitlistSubmitLabel) {
+      waitlistSubmitLabel.textContent = isLoading
+        ? "Submitting..."
+        : "Join the waitlist";
+    }
+  }
+
+  function setWaitlistError(message: string) {
+    if (!waitlistFormError) {
+      return;
+    }
+
+    waitlistFormError.textContent = message;
+    waitlistFormError.classList.toggle("hidden", !message);
+  }
+
+  waitlistForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(waitlistForm instanceof HTMLFormElement)) {
+      return;
+    }
+
+    setWaitlistError("");
+    setWaitlistLoading(true);
+
+    const formData = new FormData(waitlistForm);
+    const payload = {
+      email: String(formData.get("email") ?? ""),
+      occupation: String(formData.get("occupation") ?? ""),
+      workApps: String(formData.get("workApps") ?? ""),
+      monthlyAmount: String(formData.get("monthlyAmount") ?? ""),
+    };
+
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch("/api/cascadefund/join-waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+
+      if (response.status === 409) {
+        setWaitlistError("This email already joined the waitlist.");
+        return;
+      }
+
+      if (!response.ok) {
+        setWaitlistError("We could not save your request. Please try again.");
+        return;
+      }
+
+      waitlistForm.reset();
+      if (waitlistModal instanceof HTMLDialogElement) {
+        waitlistModal.close();
+      }
+      if (waitlistSuccessModal instanceof HTMLDialogElement) {
+        waitlistSuccessModal.showModal();
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setWaitlistError(
+          "Request timed out after 10 seconds. Please try again.",
+        );
+        return;
+      }
+
+      setWaitlistError("Network error. Please try again.");
+    } finally {
+      window.clearTimeout(timeoutId);
+      setWaitlistLoading(false);
+    }
+  });
+</script>
