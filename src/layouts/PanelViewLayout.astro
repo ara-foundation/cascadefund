@@ -18,8 +18,9 @@ interface Props {
   hideLinks?: string[];
   hideAuth?: boolean;
   additional?: MenuItemProps[];
+  title?: string;
 }
-const { hideLinks, hideAuth, additional } = Astro.props;
+const { hideLinks, hideAuth, additional, title = "CascadeFund" } = Astro.props;
 
 if (Astro.locals.session) {
   console.log("User is authenticated");
@@ -36,7 +37,7 @@ if (Astro.locals.session) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/ara_logo.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Ara</title>
+    <title>{title}</title>
     <style is:global>
       @import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
     </style>
