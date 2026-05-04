@@ -4,7 +4,7 @@ services:
     container_name: cascadefund-mongo
     restart: unless-stopped
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       # Bind mount host directory to persist MongoDB data
       - /data/cascadefund-mongo:/data/db
@@ -23,7 +23,7 @@ services:
     container_name: cascadefund-mongo-express
     restart: unless-stopped
     ports:
-      - "8081:8081"
+      - "8082:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
