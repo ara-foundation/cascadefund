@@ -104,81 +104,118 @@ export const maintainerDialog: Dialog[] = [
     },
     {
         id: "maintainer-9",
-        content: "You make your software user-centric, but we aggregate all things and communicate via emails.",
-        q: "Weekly email to communicate with the users for feedback and movement",
+        content: <>How do users communicate with the ecosystem and with you?<p className="mt-2">CascadeFund aggregates all user feedbacks to cut to the chase.</p></>,
+        q: "Generally, the communication is a weekly email in your inbox",
         a: [
-            { label: "Tell me more", goto: "maintainer-10" },
-            { label: "Sounds good", goto: "maintainer-10" }
+            { label: "Sounds good 😲", goto: "maintainer-10" }
         ]
     },
     {
         id: "maintainer-10",
-        content: "There are only three things users ask for monthly funding" +
-            "1) Whenever you want to push a breaking change in interface or API, before starting code please inform us via email." +
-            "We ask user's opinion, aggregate feedback.",
-        q: "If your changes affect them badly, they are funding you not to code. How is it, paid not to code?",
+        content: (
+            <>
+                <p className="leading-relaxed">
+                    Users fund the ecosystem monthly. To be part of the ecosystem, there are only three things you need to do.
+                </p>
+                <ul className="mt-3 list-disc space-y-2 pl-5 leading-relaxed">
+                    <li>
+                        <span className="font-medium">1)</span> Before coding a breaking change, inform CascadeFund by replying to the weekly email.
+                    </li>
+                </ul>
+                We collect user votes and aggregate feedback for you.
+            </>
+        ),
+        q: "If 51% vote no, the change doesn't ship",
         a: [
-            { label: "Thats fair", goto: "maintainer-12" },
-            { label: "Thats too much, I can't guarantee", goto: "maintainer-11" },
+            { label: "No worries 👌🏼, what's second?", goto: "maintainer-13" },
+            { label: "Thats too much", goto: "maintainer-11" },
         ]
     },
     {
         id: "maintainer-11",
-        content: "If it's too much, then people lose interest in your code." +
-            "You don't get momentum with the code changes, as Perl programming language did",
-        q: "Would you use code, that after update breaks your workflow or makes you adapt after six month of working?",
+        content: <>People don't like breaking changes.
+            <p className="mt-2">I was spending days with updating code after version upgrade 🤯.<br /> It's annoying to see a warning that I use a deprecated API 🫩.</p></>,
+        q: "Remember from your own experience, is it nice?",
         a: [
-            { label: "No, you wouldn't like when function you use is deprecated", goto: "maintainer-12" },
+            { label: "No 🎯", goto: "maintainer-12" },
         ]
     },
     {
         id: "maintainer-12",
-        q: "People don't want code that deprecates functions they use, and it happens in ecosystem constantly without notice",
+        content: <>In Tech world breaking changes happens constantly without hearing users desires.
+            <p className="mt-2">Even in user interfaces too. If I want to use app after a year, with some I need to re-learn it again</p></>,
+        q: "Let's create together the first open-source ecosystem with stable apps that don't break unless it's absolutely necessary",
         a: [
-            { label: "Fair, what's the second thing you receive funding for?", goto: "maintainer-13" }
+            { label: "Agree 🙂‍↕️, what's the second?", goto: "maintainer-13" }
         ]
     },
     {
         id: "maintainer-13",
-        content: "We will message you weekly via email, by gathering user feedback and requests and submit a function or feature request",
-        q: "You either reject it, or implement, or say to us wish to have a contributor for it. Thats all",
+        content: <>Weekly emails include the features needed by users.
+            <p className="mt-2">You could reject it, implement by yourself, or reply to an email wishing a contributor for it.</p></>,
+        q: "The second thing is implementing the features, together, that's all.",
         a: [
-            { label: "What's third thing?", goto: "maintainer-14" },
-            { label: "That works", goto: "maintainer-14" }
+            { label: "What's the last thing?", goto: "maintainer-14" },
         ]
     },
     {
         id: "maintainer-14",
-        content: "Weekly email also could have one recommendation for partnership." +
-            "What apps users use along with your app, we gather them and send their contact to connect them.",
-        q: "And a third thing is one request how to make your app work seamlessly with the recommended app",
+        content: <>Weekly emails could include other OSS projects users use along with your project.
+            <p className="mt-2">Contact them, and build your own standard, protocols together.</p></>,
+        q: "The third and last thing is to make your app work seamlessly with other apps. You build ecosystem together 🤝.",
         a: [
-            { label: "That makes sense", goto: "maintainer-15" },
+            { label: "Sounds great", goto: "maintainer-15" },
         ]
     },
     {
         id: "maintainer-15",
-        content: "Thats why it's alliance. CascadeFund is not a leader. It's a community of maintainers and users." +
-            "To prove it, the payment flow from users are going via blockchain. Immutability is reputation itself. " +
-            "You get funds from users, and you have other developers who build community.",
-        q: "Would I can take open-source project and users without breaking my reputation if its imprintend on blockchain?",
+        content: <>Do you worry about CascadeFund?
+            <p className="mt-2">Maybe someone might fork your app and get funds from users directly? <br />
+                Maybe CascadeFund is a bottleneck, or centralizes it's power?</p>
+            <p className="mt-2">CascadeFund is a community of maintainers and users, while emails are advisory for each side.</p>
+            <p className="mt-2">To assure you, CascadeFund uses blockchain for reputation. It's immutable by nature, which means once project loses reputation, its permanent on Internet.</p>
+            <p className="mt-2">Users funding flow is also tracked on blockchain too. <br />CascadeFund emails are advisory for each side.</p></>,
+        q: "Code is cheap. Reputation, community and coordination of random people are priceless.",
         a: [
-            { label: "Code is cheap, but reputation, community and users are hard.", goto: "maintainer-16" },
+            { label: "Unexpected 😲. Why not?", goto: "maintainer-16" },
         ]
     },
     {
         id: "maintainer-16",
-        content: "After all, it's a decade long dream of Ara: malleable systems on computer, based on open-source software. CascadeFund is the project of Ara to achieve it." +
-            "Connect open-source projects and together with other projects together reach out users?",
-        q: "And start receiving funds by users community? 😊",
+        content: (
+            <>
+                <p className="leading-relaxed text-slate-600 dark:text-slate-300">
+                    After all, CascadeFund is part of{" "}
+                    <a
+                        href="https://ara.foundation"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 font-semibold text-sky-700 underline decoration-sky-500/50 underline-offset-2 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-200"
+                    >
+                        <img
+                            src="/ara_logo.png"
+                            alt="Ara logo"
+                            className="h-4 w-4 rounded-sm object-contain"
+                        />
+                        <span>Ara</span>
+                    </a>
+                    . It's a decade-long researched dream: malleable systems on computers, based on an open-source internet.
+                </p>
+                <p className="mt-2 leading-relaxed text-slate-600 dark:text-slate-300">
+                    Let's build open-source into an ecosystem 😊
+                </p>
+            </>
+        ),
+        q: "Together we can make computers owned by users 😊",
         a: [
-            { label: "Yes", goto: "maintainer-18" },
-            { label: "Not yet", goto: "maintainer-17" },
+            { label: "Join", goto: "maintainer-18" },
+            { label: "Nah", goto: "maintainer-17" },
         ]
     },
+    // When modal submits data: Thanks for your feedback. Comeback later, I'll try to convince you!
     {
         id: "maintainer-17",
-        content: "Okay, could you say what's not convincing? <forum field> ",
+        content: "I'm so sad I couldn't make you part of CascadeFund community. Could you tell me what didn't convince you? <forum field> ",
         q: "Come back later, I'll try to convince you",
         a: [
             { label: "Submit", goto: "maintainer-19" }
@@ -186,9 +223,8 @@ export const maintainerDialog: Dialog[] = [
     },
     {
         id: "maintainer-19",
-        content: "Thanks for feedback I'm so sad I couldn't make you part of grand community. :( " +
-            "open source running the world together as default for users would be fine. Both users win and maintainers too. " +
-            "If you still think about it, you can always add project on top right button.",
+        content: "Thanks for your dialog with me. :)" +
+            "If you still think to join us, you can register project to be part of ecosystem on top right button.",
         q: "Our social media: <>",
         a: []
     },
