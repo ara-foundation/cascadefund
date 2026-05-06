@@ -4,14 +4,12 @@ import GalaxyLayout from "@/layouts/GalaxyLayout.astro";
 import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 import BackButton from "@/components/custom-ui/BackButton";
 import GalaxyAutoZoom from "@/components/all-stars/GalaxyAutoZoom";
-import StarProfileHero from "@/components/user/StarProfileHero";
+import StarRpgDialogPanel from "@/components/star/StarRpgDialogPanel";
+import CascadeFundHeroTitle from "@/components/cascadefund/CascadeFundHeroTitle";
 import ConditionalSignOutButton from "@/components/auth/ConditionalSignOutButton";
-import UserAccountPanel from "@/components/user/UserAccountPanel";
-import StarBar from "@/components/user/StarBar";
 import { getStarById, getStarByUserId } from "@/server-side/star";
 import { getAuthUserById } from "@/server-side/auth";
 import { getGalaxiesByMaintainer } from "@/server-side/galaxy";
-import { getBlogsByAuthor } from "@/server-side/blog";
 import type { AuthUser } from "@/types/auth";
 
 // Get user identifier from query params
@@ -37,9 +35,6 @@ if (!user) {
 
 // Get user's galaxies (where user is maintainer)
 const userGalaxies = await getGalaxiesByMaintainer(user._id!);
-
-// Get user's blogs
-const userBlogs = await getBlogsByAuthor(user._id!);
 
 // Prepare galaxies for display in the virtual screen with random positions
 const allGalaxies = userGalaxies.map((galaxy, index) => {
@@ -112,23 +107,9 @@ if (user?.userId) {
         client:load
     />
 
-    <UserAccountPanel
-        slot="right"
-        user={user}
-        authUser={starAuthUser}
-        client:only="react"
-    />
+    <CascadeFundHeroTitle slot="center" client:only="react" />
 
-    <StarProfileHero
-        slot="center"
-        user={user}
-        galaxies={userGalaxies}
-        blogs={userBlogs}
-        authUser={starAuthUser}
-        client:only="react"
-    />
-
-    <StarBar slot="footer" authorId={user._id!} client:only="react" />
+    <StarRpgDialogPanel slot="footer" client:only="react" />
 
     <GalaxyAutoZoom client:only="react" galaxyX={0} galaxyY={0} />
 </GalaxyLayout>
