@@ -13,7 +13,6 @@ import Galaxy from "@/components/Galaxy";
 import GalaxyLayoutBody from "@/components/all-stars/GalaxyLayoutBody";
 import Space from "@/components/all-stars/Space";
 import { UserStar as UserStarData } from "@/types/all-stars";
-import BrowseTracker from "@/components/navigation/BrowseTracker";
 import PageTransitionProvider from "@/components/navigation/PageTransitionProvider";
 import Analytics from "./Analytics.astro";
 import RandomSlotDistributor from "@/components/layout/RandomSlotDistributor";
@@ -90,7 +89,6 @@ if (Astro.locals.session) {
   <body
     class="min-h-screen bg-slate-200 dark:bg-slate-800 border-1 border-red-500/10"
   >
-    <BrowseTracker client:load />
     <!-- Background Container - Will be transformed by GalaxyZoomWrapper -->
     <div
       data-galaxy-backgrounds
@@ -207,17 +205,6 @@ if (Astro.locals.session) {
       <slot name="footer" />
       <Footer />
     </div>
-
-    <!-- Meta UI -->
-    <GalaxyLayoutBody
-      client:only="react"
-      projectName={projectName}
-      initialZoom={initialZoom}
-      minZoom={minZoom}
-      maxZoom={maxZoom}
-      maxGalaxyContent={maxGalaxyContent}
-      projectId={projectId}
-    />
     <PageTransitionProvider client:load />
   </body>
 </html>
