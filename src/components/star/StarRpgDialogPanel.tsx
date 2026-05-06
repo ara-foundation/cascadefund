@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import BasePanel from '@/components/panel/Panel'
 import Button from '@/components/custom-ui/Button'
 import Link from '@/components/custom-ui/Link'
+import AttentionBadge from '@/components/badge/AttentionBadge'
 import { dialog, grieetingDialog, type Dialog } from '@/data/dialog'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
@@ -140,7 +141,10 @@ const StarRpgDialogPanel: React.FC = () => {
                 <>
                   <div className="space-y-2">
                     {renderContentField(step.content)}
-                    {renderTextField(step.q)}
+                    <div className="flex items-start gap-2 truncate text-base font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-lg">
+                      {renderTextField(step.q)}
+                      <AttentionBadge className="mt-2 shrink-0" />
+                    </div>
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-1">
