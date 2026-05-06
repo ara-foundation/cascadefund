@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState, isValidElement } from 'react'
+import React, { useEffect, useMemo, useState, isValidElement } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import NumberFlow from '@number-flow/react'
 import BasePanel from '@/components/panel/Panel'
@@ -14,6 +14,15 @@ import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
 
 const INITIAL_ID = greetingDialog[0].id
+const DIALOG_PORTRAITS: string[] = [
+  '/images/ahmetson/dialog/01-dsc02548-edit.webp',
+  '/images/ahmetson/dialog/02-dsc02658-edit.webp',
+  '/images/ahmetson/dialog/03-dsc02663-edit.webp',
+  '/images/ahmetson/dialog/04-dsc02665-edit.webp',
+  '/images/ahmetson/dialog/05-dsc02666-edit.webp',
+  '/images/ahmetson/dialog/06-dsc02671-edit.webp',
+  '/images/ahmetson/dialog/07-dsc02680-edit.webp',
+]
 type BranchType = 'user' | 'maintainer'
 
 function buildDialogMap(entries: Dialog[]): Map<string | number, Dialog> {
@@ -76,24 +85,29 @@ function buildFirstAnswerPath(byId: Map<string | number, Dialog>, rootId: string
   return path
 }
 
-/** Neutral frame (no warm/orange border); placeholder fill */
-function CharacterPortrait() {
+/** Small circular avatar with subtle ring; image optional */
+function CharacterPortrait({ imageSrc }: { imageSrc?: string }) {
   return (
     <div
       className={cn(
-        'relative z-10 shrink-0 overflow-hidden rounded-md ml-2.5',
-        'h-[5.5rem] w-[5.5rem] sm:h-28 sm:w-28',
-        'border-2 border-slate-400/55 dark:border-slate-500/60',
-        'shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_4px_12px_rgba(0,0,0,0.25)]',
+        'relative z-10 shrink-0 overflow-hidden rounded-xl',
+        'h-12 w-12 sm:h-14 sm:w-14 ml-2.5',
+        'border border-slate-400/55 dark:border-slate-500/60',
+        'shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_3px_10px_rgba(0,0,0,0.22)]',
         'ring-1 ring-slate-950/15 dark:ring-white/10',
         'bg-gradient-to-br from-slate-500/45 via-slate-600/40 to-sky-800/50 dark:from-slate-600/55 dark:to-sky-950/55',
       )}
       aria-hidden
     >
+      {imageSrc ? (
+        <img src={imageSrc} alt="" className="absolute inset-px h-[calc(100%-2px)] w-[calc(100%-2px)] rounded-[0.7rem] object-cover" />
+      ) : null}
       <div
         className={cn(
-          'absolute inset-[2px] rounded-sm border border-slate-300/25 dark:border-slate-600/35',
-          'bg-gradient-to-br from-slate-400/35 via-slate-500/30 to-sky-700/40 dark:from-slate-600/45 dark:to-sky-900/45',
+          'absolute inset-px rounded-[0.7rem] border border-slate-300/25 dark:border-slate-600/35',
+          imageSrc
+            ? 'bg-gradient-to-b from-white/5 via-transparent to-black/20'
+            : 'bg-gradient-to-br from-slate-400/35 via-slate-500/30 to-sky-700/40 dark:from-slate-600/45 dark:to-sky-900/45',
         )}
       />
     </div>
@@ -106,6 +120,7 @@ const StarRpgDialogPanel: React.FC = () => {
   const userFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'user-1'), [byId])
   const [currentId, setCurrentId] = useState<string | number>(INITIAL_ID)
   const [branchStepCount, setBranchStepCount] = useState(0)
+  const [portraitSrc, setPortraitSrc] = useState<string | undefined>(undefined)
 
   const step = byId.get(currentId)
   const hasChoices = step && step.a && step.a.length > 0
@@ -132,6 +147,15 @@ const StarRpgDialogPanel: React.FC = () => {
     setBranchStepCount(0)
   }
 
+  useEffect(() => {
+    if (DIALOG_PORTRAITS.length === 0) {
+      setPortraitSrc(undefined)
+      return
+    }
+    const randomIndex = Math.floor(Math.random() * DIALOG_PORTRAITS.length)
+    setPortraitSrc(DIALOG_PORTRAITS[randomIndex])
+  }, [currentId])
+
   return (
     <div
       className={cn(
@@ -141,16 +165,16 @@ const StarRpgDialogPanel: React.FC = () => {
       role="region"
       aria-label="Dialogue"
     >
-      {/* Character row: portrait + title; panel below overlaps bottom 15% of portrait (z-20) */}
-      <div className="flex flex-row items-end gap-3 sm:gap-4">
-        <CharacterPortrait />
-        <div className="min-w-0 flex-1 pb-5 sm:pb-6">
-          <p className="truncate text-base font-bold leading-tight text-slate-900/50 dark:text-slate-100/50 sm:text-lg">
+      {/* Character row: small avatar with inline name/title; panel remains below */}
+      <div className="flex flex-row items-center gap-3 sm:gap-4">
+        <CharacterPortrait imageSrc={portraitSrc} />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-base font-bold leading-tight text-slate-900/60 dark:text-slate-100/60 sm:text-lg">
             Medet Ahmetson
           </p>
-          <div className="mt-1 flex items-center justify-between gap-2 text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
+          <div className="mt-0.5 flex items-center justify-between gap-2 text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
             <p className="min-w-0 truncate">
-              Maintainer of CascadeFund {' '}
+              Maintainer of CascadeFund{' '}
               <Tooltip content="About Ara Foundation">
                 <Link
                   uri="https://ara.foundation/about"
@@ -198,8 +222,7 @@ const StarRpgDialogPanel: React.FC = () => {
           key={String(currentId)}
           className={cn(
             'relative z-20',
-            /* 15% of portrait height: 5.5rem→0.825rem, sm 7rem→1.05rem — panel covers bottom strip */
-            '-mt-[0.825rem] sm:-mt-[1.05rem]',
+            '-mt-1',
           )}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
