@@ -36,7 +36,7 @@ const CascadeFundHeroTitle: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
       >
-        building open source into an ecosystem with no-draining communication to users
+        building open source into an ecosystem with minimal burnout communication to users
       </motion.p>
     </div>
   )
