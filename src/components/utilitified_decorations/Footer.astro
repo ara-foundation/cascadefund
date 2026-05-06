@@ -1,47 +1,35 @@
 ---
 import Link from "@/components/custom-ui/Link";
-import { companyInfo } from "@/types/ara";
-import { motion } from "framer-motion";
-import { socialLinks } from "@/types/ara";
-import SocialLink from "./SocialLink";
 ---
 
 <footer
-  class={`backdrop-blur-lg text-slate-500 dark:text-slate-500 flex justify-between p-2 items-center overflow-hidden `}
+  class={`backdrop-blur-lg text-slate-500 dark:text-slate-500 flex justify-between p-2 items-center overflow-hidden`}
 >
   <div class={`flex space-x-4`}>
     <Link
-      uri="/how-it-works"
+      uri="/"
       className=" text-slate-600 dark:text-slate-400 transition-colors"
-      >How it Works?</Link
+      >Main page</Link
     >
     <Link
-      uri="/people"
+      uri="/landing"
       className=" text-slate-600 dark:text-slate-400 transition-colors"
-      >People</Link
+      >Landing Page</Link
     >
     <Link
-      uri="/privacy-policy"
+      uri="/support"
       className=" text-slate-600 dark:text-slate-400 transition-colors"
-      >Privacy Policy (fun-storylike-edition)</Link
+      >Support Us</Link
     >
-  </div>
-
-  <div>
-    <motion.div className="flex flex-row items-center space-x-2 ml-4 w-full">
-      {
-        Object.values(socialLinks).map((link) => (
-          <SocialLink className="flex rounded-sm w-8 h-8 mt-3" link={link} />
-        ))
-      }
-    </motion.div>
   </div>
 
   <div class="text-sm">
-    (c) {companyInfo.copyrightYear}, <a
-      href={"mailto:" + companyInfo.email}
+    (c) Part of <a
+      href="https://ara.foundation"
+      target="_blank"
+      rel="noreferrer"
       class="text-slate-600 dark:text-slate-400 transition-colors hover:text-blue-600 dark:hover:text-blue-400"
-      >{companyInfo.email}</a
-    >, registered: {companyInfo.registeredName}, {companyInfo.address}
+      >Ara Project</a
+    >.
   </div>
 </footer>
