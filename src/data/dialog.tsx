@@ -3,8 +3,15 @@
  * If main page receives ?inspector=true and msgId=id|number to show the message.
  */
 import { type ReactNode } from "react";
+import { MaintainerConvinceFeedback } from "@/components/star/MaintainerConvinceFeedback";
+import { MaintainerJoinRegistration } from "@/components/star/MaintainerJoinRegistration";
+import SocialLink from "@/components/utilitified_decorations/SocialLink";
+import { socialLinks } from "@/types/ara";
 
 export const title = "Cascadefund &ndash; building into open source ecosystem with minimal burnout communication to users.";
+
+const maintainerEndSocialIconClass =
+    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-400/40 bg-transparent transition-colors hover:bg-white/25 dark:border-slate-500/45 dark:hover:bg-white/10";
 
 export type Answer = {
     label: string;
@@ -72,7 +79,7 @@ export const maintainerDialog: Dialog[] = [
         a: [
             { label: "Yes 😃", goto: "maintainer-6" },
             { label: "Not important", goto: "maintainer-6" },
-            { label: "Sceptical?", goto: "maintainer-5" }
+            { label: "Skeptical?", goto: "maintainer-5" }
         ]
     },
     {
@@ -212,44 +219,109 @@ export const maintainerDialog: Dialog[] = [
             { label: "Nah", goto: "maintainer-17" },
         ]
     },
-    // When modal submits data: Thanks for your feedback. Comeback later, I'll try to convince you!
     {
         id: "maintainer-17",
-        content: "I'm so sad I couldn't make you part of CascadeFund community. Could you tell me what didn't convince you? <forum field> ",
-        q: "Come back later, I'll try to convince you",
+        content: <>I'm so sad I couldn't make you part of CascadeFund community.
+            <p className="mt-2">Could you tell me what didn't convince you? <MaintainerConvinceFeedback /></p>
+        </>,
+        q: "End dialog?",
         a: [
-            { label: "Submit", goto: "maintainer-19" }
+            { label: "End", goto: "maintainer-19" }
         ]
     },
     {
         id: "maintainer-19",
-        content: "Thanks for your dialog with me. :)" +
-            "If you still think to join us, you can register project to be part of ecosystem on top right button.",
-        q: "Our social media: <>",
+        content: (
+            <>
+                <p className="leading-relaxed text-slate-600 dark:text-slate-300">
+                    Thanks for reading the dialogue to the end. 😊
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                    Sincerely,
+                    Medet Ahmetson!
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <span className="text-sm text-slate-800 dark:text-slate-100">From </span>
+                    <a
+                        href="https://ara.foundation"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-700 underline decoration-sky-500/50 underline-offset-2 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-200"
+                    >
+                        <img
+                            src="/ara_logo.png"
+                            alt="Ara logo"
+                            className="h-4 w-4 rounded-sm object-contain"
+                        />
+                        <span>Ara</span>
+                    </a>
+                    <span className="text-sm text-slate-800 dark:text-slate-100">project</span>
+                    <span className="text-slate-400 dark:text-slate-500" aria-hidden="true">
+                        ·
+                    </span>
+                    <SocialLink link={socialLinks.twitter} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.bluesky} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.linkedin} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.github} className={maintainerEndSocialIconClass} />
+                </div>
+            </>
+        ),
+        q: "If you change your mind, you can register project in ecosystem on top right button.",
         a: []
     },
     {
         id: "maintainer-18",
-        content: "Our project is in development stage yet. All open source on GitHub." +
-            "For now, could you keep your project so that we start manual check similar apps and begin reaching out to potential users who might use it? " +
-            "Your name, email, project url (git host, public repository)." +
-            "Will you allow us to use it on our social media to tag you <checkbox>",
-        q: "Join us?",
+        content: (
+            <>
+                <p className="leading-relaxed text-slate-600 dark:text-slate-300">
+                    CascadeFund is launching soon. Be one of the first maintainers to join the ecosystem.
+                </p>
+                <p className="mt-2">
+                    Add your email and public repository URL below.{" "}
+                    <MaintainerJoinRegistration />. {" "}
+                </p><p className="mt-2">In a short while, I will review manually, then begin reaching out new users for your project
+                </p>
+            </>
+        ),
+        q: "Did you register your project?",
         a: [
-            { label: "Submit", goto: "maintainer-20" },
+            { label: "Yes", goto: "maintainer-20" },
         ]
     },
     {
-        id: "maintainer-19",
-        content: "Thanks for feedback I'm so sad I couldn't make you part of grand community. :( " +
-            "open source running the world together as default for users would be fine. Both users win and maintainers too. " +
-            "If you still think about it, you can always add project on top right button.",
-        q: "Our social media: <>",
-        a: []
-    },
-    {
         id: "maintainer-20",
-        q: "Good. I will. Meanwhile follow us on social media. You'll see your project mentioned there. 😊",
+        content: <>
+            Thank you for becoming part of CascadeFund ecosystem 😊.
+            <p className="mt-2">While I'm reaching out new users and other maintainers,<br />could you shout out on social media that you are in CascadeFund. <br /><strong>Let's get more maintainers in our ecosystem.</strong></p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                Sincerely,
+                Medet Ahmetson!
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="text-sm text-slate-800 dark:text-slate-100">From </span>
+                <a
+                    href="https://ara.foundation"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-700 underline decoration-sky-500/50 underline-offset-2 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-200"
+                >
+                    <img
+                        src="/ara_logo.png"
+                        alt="Ara logo"
+                        className="h-4 w-4 rounded-sm object-contain"
+                    />
+                    <span>Ara</span>
+                </a>
+                <span className="text-sm text-slate-800 dark:text-slate-100">project</span>
+                <span className="text-slate-400 dark:text-slate-500" aria-hidden="true">
+                    ·
+                </span>
+                <SocialLink link={socialLinks.twitter} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.bluesky} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.linkedin} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.github} className={maintainerEndSocialIconClass} />
+            </div></>,
+        q: "Click on social media links to see how to tag CascadeFund. 😊",
         a: []
     }
 ]

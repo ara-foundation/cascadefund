@@ -384,9 +384,9 @@ const StarRpgDialogPanel: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {hasChoices ? (
-                      step.a.map((answer, i) => (
+                  {hasChoices ? (
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {step.a.map((answer, i) => (
                         <Button
                           key={`${answer.label}-${i}`}
                           variant="secondary"
@@ -396,18 +396,9 @@ const StarRpgDialogPanel: React.FC = () => {
                         >
                           {answer.label}
                         </Button>
-                      ))
-                    ) : (
-                      <>
-                        <p className="mb-1 w-full text-xs text-slate-500 dark:text-slate-400">
-                          End of this branch.
-                        </p>
-                        <Button variant="default" size="sm" outline onClick={resetDialog}>
-                          Start again
-                        </Button>
-                      </>
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </>
               )}
             </div>
