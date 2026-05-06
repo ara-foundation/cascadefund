@@ -18,7 +18,7 @@ export type Dialog = {
     content?: ReactNode;
 }
 
-export const grieetingDialog: Dialog[] = [
+export const greetingDialog: Dialog[] = [
     {
         id: 1,
         q: "Are you maintaining an open source project?",
@@ -61,8 +61,8 @@ export const maintainerDialog: Dialog[] = [
         content: "You want your app to be popular?",
         q: "Maybe another one million users use it, and you receive 'thank you' with it?",
         a: [
-            { label: "Yeah, no one can", goto: "maintainer-4" },
-            { label: "You don't care", goto: "maintainer-4" }
+            { label: "You want", goto: "maintainer-4" },
+            { label: "Not important", goto: "maintainer-4" }
         ]
     },
     {
@@ -471,7 +471,7 @@ export const userHelpfulDialog: Dialog[] = [
 ]
 
 export const dialog: Dialog[] = [
-    ...grieetingDialog,
+    ...greetingDialog,
     ...maintainerDialog,
     ...userDialogs,
     ...userSpecticalDialog,

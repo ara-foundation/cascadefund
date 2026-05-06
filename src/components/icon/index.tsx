@@ -90,6 +90,7 @@ export type IconType =
   | 'copy'
   | 'console'
   | 'search'
+  | 'globe'
 
 export type IconProps = {
   iconType: IconType
@@ -115,6 +116,14 @@ export const getIcon = (props: IconProps | IconType): React.ReactNode => {
           viewBox="0 0 20 20"
         >
           <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+        </svg>
+      )
+    case 'globe':
+      return (
+        <svg className={className} fill={fill} stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" strokeWidth="1.8" />
+          <path strokeWidth="1.8" d="M3 12h18" />
+          <path strokeWidth="1.8" d="M12 3c2.5 2.25 4 5.55 4 9s-1.5 6.75-4 9c-2.5-2.25-4-5.55-4-9s1.5-6.75 4-9z" />
         </svg>
       )
     case 'console':

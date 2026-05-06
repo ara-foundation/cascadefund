@@ -2,15 +2,19 @@
 
 import React, { useMemo, useState, isValidElement } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import NumberFlow from '@number-flow/react'
 import BasePanel from '@/components/panel/Panel'
 import Button from '@/components/custom-ui/Button'
 import Link from '@/components/custom-ui/Link'
+import Tooltip from '@/components/custom-ui/Tooltip'
 import AttentionBadge from '@/components/badge/AttentionBadge'
-import { dialog, grieetingDialog, type Dialog } from '@/data/dialog'
+import { getIcon } from '@/components/icon'
+import { dialog, greetingDialog, type Dialog } from '@/data/dialog'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
 
-const INITIAL_ID = grieetingDialog[0].id
+const INITIAL_ID = greetingDialog[0].id
+type BranchType = 'user' | 'maintainer'
 
 function buildDialogMap(entries: Dialog[]): Map<string | number, Dialog> {
   const m = new Map<string | number, Dialog>()
@@ -33,7 +37,7 @@ function renderContentField(content: Dialog['content']) {
   if (content == null || content === '') return null
   if (typeof content === 'string') {
     return (
-      <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed whitespace-pre-wrap mb-2 border-l-2 border-sky-500/40 pl-3">
+      <p className="text-slate-500 dark:text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap mb-2">
         {content}
       </p>
     )
@@ -44,12 +48,40 @@ function renderContentField(content: Dialog['content']) {
   return <div className="mb-2 text-sm">{content as React.ReactNode}</div>
 }
 
+function getBranchFromStepId(stepId: string | number): BranchType | null {
+  if (typeof stepId !== 'string') return null
+  if (stepId.startsWith('maintainer-')) return 'maintainer'
+  if (stepId.startsWith('user-') || stepId.startsWith('helpful-') || stepId.startsWith('sceptic-')) {
+    return 'user'
+  }
+  return null
+}
+
+function buildFirstAnswerPath(byId: Map<string | number, Dialog>, rootId: string): Array<string | number> {
+  const path: Array<string | number> = []
+  const seen = new Set<string | number>()
+  let current: string | number | undefined = rootId
+
+  while (current != null && byId.has(current) && !seen.has(current)) {
+    seen.add(current)
+    path.push(current)
+
+    const step = byId.get(current)
+    if (!step || !step.a || step.a.length === 0) {
+      break
+    }
+    current = step.a[0].goto
+  }
+
+  return path
+}
+
 /** Neutral frame (no warm/orange border); placeholder fill */
 function CharacterPortrait() {
   return (
     <div
       className={cn(
-        'relative z-10 shrink-0 overflow-hidden rounded-md',
+        'relative z-10 shrink-0 overflow-hidden rounded-md ml-2.5',
         'h-[5.5rem] w-[5.5rem] sm:h-28 sm:w-28',
         'border-2 border-slate-400/55 dark:border-slate-500/60',
         'shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_4px_12px_rgba(0,0,0,0.25)]',
@@ -70,15 +102,34 @@ function CharacterPortrait() {
 
 const StarRpgDialogPanel: React.FC = () => {
   const byId = useMemo(() => buildDialogMap(dialog), [])
+  const maintainerFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'maintainer-1'), [byId])
+  const userFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'user-1'), [byId])
   const [currentId, setCurrentId] = useState<string | number>(INITIAL_ID)
+  const [branchStepCount, setBranchStepCount] = useState(0)
 
   const step = byId.get(currentId)
   const hasChoices = step && step.a && step.a.length > 0
+  const currentBranch = getBranchFromStepId(currentId)
+  const shouldShowHeaderMeta = currentId !== 1 && currentId !== 2 && currentBranch !== null
+  const activePath = currentBranch === 'maintainer' ? maintainerFirstPath : currentBranch === 'user' ? userFirstPath : []
+  const activePathLength = activePath.length
+  const completionPercent =
+    activePathLength > 0 ? Math.min(100, Math.round((branchStepCount / activePathLength) * 100)) : 0
 
   const goTo = (next: number | string) => {
     if (byId.has(next)) {
+      const nextBranch = getBranchFromStepId(next)
+      setBranchStepCount((prev) => {
+        if (!nextBranch) return 0
+        return prev + 1
+      })
       setCurrentId(next)
     }
+  }
+
+  const resetDialog = () => {
+    setCurrentId(INITIAL_ID)
+    setBranchStepCount(0)
   }
 
   return (
@@ -91,19 +142,53 @@ const StarRpgDialogPanel: React.FC = () => {
       aria-label="Dialogue"
     >
       {/* Character row: portrait + title; panel below overlaps bottom 15% of portrait (z-20) */}
-      <div className="flex flex-row items-start gap-3 sm:gap-4">
+      <div className="flex flex-row items-end gap-3 sm:gap-4">
         <CharacterPortrait />
-        <div className="min-w-0 flex-1 pt-0.5">
-          <p className="truncate text-base font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-lg">
+        <div className="min-w-0 flex-1 pb-5 sm:pb-6">
+          <p className="truncate text-base font-bold leading-tight text-slate-900/50 dark:text-slate-100/50 sm:text-lg">
             Medet Ahmetson
           </p>
-          <p className="mt-1 text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
-            Maintainer of CascadeFund —{' '}
-            <Link uri="/about" className="text-xs sm:text-sm">
-              /about
-            </Link>{' '}
-            for more information.
-          </p>
+          <div className="mt-1 flex items-center justify-between gap-2 text-xs leading-snug text-slate-600 dark:text-slate-400 sm:text-sm">
+            <p className="min-w-0 truncate">
+              Maintainer of CascadeFund {' '}
+              <Tooltip content="About Ara Foundation">
+                <Link
+                  uri="https://ara.foundation/about"
+                  className="inline-flex items-center align-middle text-blue-700 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-100"
+                >
+                  {getIcon({
+                    iconType: 'globe',
+                    className: 'w-3.5 h-3.5 sm:w-4 sm:h-4 -translate-y-[0.5px]',
+                  })}
+                </Link>
+              </Tooltip>{' '}
+            </p>
+            {shouldShowHeaderMeta && (
+              <div className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap">
+                <span>Talking to {currentBranch === 'user' ? 'User' : 'Maintainer'}</span>
+                <span>
+                  <NumberFlow
+                    value={completionPercent}
+                    locales="en-US"
+                    format={{ style: 'decimal', maximumFractionDigits: 0 }}
+                  />
+                  %
+                </span>
+                <Tooltip content="Reset dialog">
+                  <button
+                    type="button"
+                    onClick={resetDialog}
+                    className="inline-flex items-center text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+                    aria-label="Reset dialog"
+                  >
+                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4">
+                      ↺
+                    </span>
+                  </button>
+                </Tooltip>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -165,7 +250,7 @@ const StarRpgDialogPanel: React.FC = () => {
                         <p className="mb-1 w-full text-xs text-slate-500 dark:text-slate-400">
                           End of this branch.
                         </p>
-                        <Button variant="default" size="sm" outline onClick={() => setCurrentId(INITIAL_ID)}>
+                        <Button variant="default" size="sm" outline onClick={resetDialog}>
                           Start again
                         </Button>
                       </>
