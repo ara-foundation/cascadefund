@@ -1,14 +1,23 @@
 ---
-import MinimalDarkLayout from "@/layouts/MinimalDarkLayout.astro";
-import { companyInfo } from "@/types/ara";
+import GalaxyLayout from "@/layouts/GalaxyLayout.astro";
+import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 
 const contactEmail = "medet@ara.foundation";
 const contactUrl = `mailto:${contactEmail}`;
 const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
 ---
 
-<MinimalDarkLayout title="Support Cascadefund">
+<GalaxyLayout
+  active={MenuName.ProjectName}
+  hideLinks={Object.keys(MenuName)}
+  hideAuth={true}
+  projectName="Cascadefund"
+  projectX={0}
+  projectY={0}
+  projectGalaxies={[]}
+>
   <div
+    slot="center"
     class="mx-auto max-w-3xl px-6 pb-24 pt-12 text-left md:px-8 md:pt-16 [&_p]:text-pretty [&_li]:text-pretty"
   >
     <section class="space-y-8">
@@ -53,7 +62,8 @@ const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
               aria-hidden="true"
             >
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path>
             </svg>
             <svg
               id="copy-wallet-icon-check"
@@ -151,7 +161,7 @@ const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
         href={contactUrl}
         class="inline-flex items-center justify-center rounded-lg border border-neutral-900 bg-neutral-900 px-6 py-3 text-sm font-medium text-neutral-50 transition-colors hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
       >
-        Contact us
+        Email me
       </a>
     </section>
 
@@ -171,15 +181,6 @@ const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
         </p>
       </div>
     </section>
-
-    <footer
-      class="mt-20 border-t border-neutral-200 pt-10 text-sm text-neutral-600 dark:border-white/10 dark:text-neutral-500"
-      aria-label="Support page footer"
-    >
-      <p class="text-neutral-600 dark:text-neutral-500">
-        © {companyInfo.copyrightYear} Ara Foundation.
-      </p>
-    </footer>
   </div>
 
   <script is:inline define:vars={{ walletAddress }}>
@@ -211,13 +212,19 @@ const walletAddress = "0x7708302f84d225979D55d6857F74837B3d93e30C";
             checkIcon.classList.remove("hidden");
           }
           showCopyHint("Wallet address copied.");
-          setTimeout(() => copyButton.setAttribute("title", "Copy wallet address"), 1500);
+          setTimeout(
+            () => copyButton.setAttribute("title", "Copy wallet address"),
+            1500,
+          );
         } catch {
           copyButton.setAttribute("title", "Copy failed");
           showCopyHint("Could not copy wallet address.");
-          setTimeout(() => copyButton.setAttribute("title", "Copy wallet address"), 1500);
+          setTimeout(
+            () => copyButton.setAttribute("title", "Copy wallet address"),
+            1500,
+          );
         }
       });
     }
   </script>
-</MinimalDarkLayout>
+</GalaxyLayout>
