@@ -2,7 +2,7 @@
  * @todo Create also design tool appearing with the navigation between the dialogs along their first 100 characters in question.
  * If main page receives ?inspector=true and msgId=id|number to show the message.
  */
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export const title = "Cascadefund &ndash; building into open source ecosystem with minimal burnout communication to users.";
 
@@ -41,7 +41,7 @@ export const greetingDialog: Dialog[] = [
 export const maintainerDialog: Dialog[] = [
     {
         id: "maintainer-1",
-        q: "Are you worried there are many similar projects as yours in the market?",
+        q: "Are you worried about similar projects in the market, solving same issue as you?",
         a: [
             { label: "Yes", goto: "maintainer-2" },
             { label: "No", goto: "maintainer-2" },
@@ -49,55 +49,57 @@ export const maintainerDialog: Dialog[] = [
     },
     {
         id: "maintainer-2",
-        content: "Are you worried that you don't keep up with all recent trends in the technology, and you might be behind?",
-        q: "For example, I can't keep up with the all trends going on AI, do you?",
+        content: <><p>Technology is moving fast.</p><p>I can't keep up with the the trends in AI and Web.</p></>,
+        q: "Are you worried you might be behind, as I am?",
         a: [
-            { label: "Yeah, no one can", goto: "maintainer-3" },
-            { label: "No comment, next", goto: "maintainer-3" }
+            { label: "Yes 🙁", goto: "maintainer-3" },
+            { label: "Not that much", goto: "maintainer-3" }
         ]
     },
     {
         id: "maintainer-3",
         content: "You want your app to be popular?",
-        q: "Maybe another one million users use it, and you receive 'thank you' with it?",
+        q: "What if millions use your app and shows gratitude to you?",
         a: [
-            { label: "You want", goto: "maintainer-4" },
-            { label: "Not important", goto: "maintainer-4" }
+            { label: "Yes 😊", goto: "maintainer-4" },
+            { label: "Not really", goto: "maintainer-4" }
         ]
     },
     {
         id: "maintainer-4",
-        q: "What if your users also fund you without any duty?",
+        content: "What if you receive funds automatically from millions of users?",
+        q: "Without much responsibility or commercialization",
         a: [
-            { label: "Yes", goto: "maintainer-6" },
-            { label: "No", goto: "maintainer-6" },
-            { label: "I don't want to commercialize it", goto: "maintainer-5" }
+            { label: "Yes 😃", goto: "maintainer-6" },
+            { label: "Not important", goto: "maintainer-6" },
+            { label: "Sceptical?", goto: "maintainer-5" }
         ]
     },
     {
         id: "maintainer-6",
-        content: "We don't want to turn open-source into a commercial business too. We want to fund the refactoring to make OSS matched to propriety software in quality",
-        q: "We want to bring popularity and grateful people along the fund to you",
+        content: <>I'm against turning each open-source project into a commercial business too.<p className="mt-2">Users fund entire OSS ecosystem as a whole. <br />They are funding your refactoring hours to match propriety software quality</p></>,
+        q: "That's why CascadeFund is launching",
         a: [
-            { label: "How you help me with funding and gaining popularity?", goto: "maintainer-7" }
+            { label: "Quick details", goto: "maintainer-7" }
         ]
     },
     {
         id: "maintainer-7",
-        content: "We solve it by turning open-source projects into a single ecosystem.",
-        q: "You want to be part of bigger movement where you impact with your project, set standards and protocols?",
+        content: <>We as open-source maintainers solve OSS sustainability by creating a single coherent ecosystem.<p className="mt-2">Where maintainers impact the ecosystem, set standards and protocols by ourselves</p></>,
+        q: "Do you want your project to be part of something bigger?",
         a: [
             { label: "Yes", goto: "maintainer-8" },
-            { label: "No", goto: "maintainer-8" }
+            { label: "Not sure 🤷", goto: "maintainer-8" }
         ]
     },
     {
         id: "maintainer-8",
-        content: "Fair point, you want to find people who are like minded instead building alone?",
-        q: "For example, if you are building game engine, connect with a maintainer who builds 3D modelling app",
+        content: <>Right, do you want to find like-minded people instead building alone?
+            <p className="mt-2">For example, if you are developing a game engine, how about connecting with a maintainer of 3D modelling app?</p></>,
+        q: "Together, you create seamless OSS experience for game developers, without vendor locking?",
         a: [
-            { label: "Yes", goto: "maintainer-9" },
-            { label: "No", goto: "maintainer-9" }
+            { label: "Yes 🥰", goto: "maintainer-9" },
+            { label: "Maybe", goto: "maintainer-9" }
         ]
     },
     {
