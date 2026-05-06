@@ -24,13 +24,13 @@ export const greetingDialog: Dialog[] = [
         q: "Are you maintaining an open source project?",
         a: [
             { label: "Yes", goto: "maintainer-1" },
-            { label: "No", goto: "user-1" },
+            { label: "No, I'm using them", goto: "user-1" },
             { label: "I do both", goto: 2 }
         ],
     },
     {
         id: 2,
-        q: "You want to know what CascadeFund gives to open-source users first, or to maintainers?",
+        q: "Should I explain CascadeFund first",
         a: [
             { label: "To users", goto: "user-1" },
             { label: "To maintainers", goto: "maintainer-1" }

@@ -24,6 +24,7 @@ const DIALOG_PORTRAITS: string[] = [
   '/images/ahmetson/dialog/07-dsc02680-edit.webp',
 ]
 type BranchType = 'user' | 'maintainer'
+type DialogId = string | number
 
 function buildDialogMap(entries: Dialog[]): Map<string | number, Dialog> {
   const m = new Map<string | number, Dialog>()
@@ -85,6 +86,15 @@ function buildFirstAnswerPath(byId: Map<string | number, Dialog>, rootId: string
   return path
 }
 
+function getInspectorHref(id: DialogId) {
+  const params = new URLSearchParams()
+  params.set('inspector', 'true')
+  if (id !== INITIAL_ID) {
+    params.set('msgId', String(id))
+  }
+  return `?${params.toString()}`
+}
+
 /** Small circular avatar with subtle ring; image optional */
 function CharacterPortrait({ imageSrc }: { imageSrc?: string }) {
   return (
@@ -118,7 +128,8 @@ const StarRpgDialogPanel: React.FC = () => {
   const byId = useMemo(() => buildDialogMap(dialog), [])
   const maintainerFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'maintainer-1'), [byId])
   const userFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'user-1'), [byId])
-  const [currentId, setCurrentId] = useState<string | number>(INITIAL_ID)
+  const [currentId, setCurrentId] = useState<DialogId>(INITIAL_ID)
+  const [isInspectorMode, setIsInspectorMode] = useState(false)
   const [branchStepCount, setBranchStepCount] = useState(0)
   const [portraitSrc, setPortraitSrc] = useState<string | undefined>(undefined)
 
@@ -148,6 +159,77 @@ const StarRpgDialogPanel: React.FC = () => {
   }
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const params = window.location.search ? new URLSearchParams(window.location.search) : new URLSearchParams()
+    const inspectorFlag = (params.get('inspector') ?? params.get('inspecter') ?? '').toLowerCase() === 'true'
+    setIsInspectorMode(inspectorFlag)
+    if (!inspectorFlag) return
+
+    const msgIdParam = params.get('msgId')
+    if (!msgIdParam) return
+
+    const parsedMsgId: DialogId = /^\d+$/.test(msgIdParam) ? Number(msgIdParam) : msgIdParam
+    if (!byId.has(parsedMsgId)) return
+    setCurrentId(parsedMsgId)
+  }, [byId])
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isInspectorMode) return
+    const params = new URLSearchParams(window.location.search)
+    params.set('inspector', 'true')
+    params.delete('inspecter')
+    if (currentId === INITIAL_ID) {
+      params.delete('msgId')
+    } else {
+      params.set('msgId', String(currentId))
+    }
+    const nextSearch = params.toString()
+    const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ''}${window.location.hash}`
+    window.history.replaceState({}, '', nextUrl)
+  }, [currentId, isInspectorMode])
+
+  const inspectorListRows = useMemo(() => {
+    const rows: Array<{ kind: 'node' | 'answer'; depth: number; id?: DialogId; label: string; goto?: DialogId }> = []
+    const visited = new Set<DialogId>()
+
+    const walk = (nodeId: DialogId, depth: number, path: Set<DialogId>) => {
+      const stepForId = byId.get(nodeId)
+      if (!stepForId) return
+
+      const isCycle = path.has(nodeId)
+      const wasVisited = visited.has(nodeId)
+      rows.push({
+        kind: 'node',
+        depth,
+        id: nodeId,
+        label: isCycle ? '(cycle)' : wasVisited ? '(already shown)' : '',
+      })
+      if (isCycle || wasVisited) return
+
+      visited.add(nodeId)
+      const nextPath = new Set(path)
+      nextPath.add(nodeId)
+
+      stepForId.a.forEach((answer) => {
+        rows.push({
+          kind: 'answer',
+          depth: depth + 1,
+          label: answer.label || '(empty answer)',
+          goto: answer.goto,
+        })
+
+        if (byId.has(answer.goto)) {
+          walk(answer.goto, depth + 2, nextPath)
+        }
+      })
+    }
+
+    walk(INITIAL_ID, 0, new Set<DialogId>())
+    return rows
+  }, [byId])
+
+  useEffect(() => {
     if (DIALOG_PORTRAITS.length === 0) {
       setPortraitSrc(undefined)
       return
@@ -157,14 +239,61 @@ const StarRpgDialogPanel: React.FC = () => {
   }, [currentId])
 
   return (
-    <div
-      className={cn(
-        'fixed left-1/2 bottom-16 z-30 w-[min(100%,36rem)] sm:w-[min(100%,40rem)] -translate-x-1/2 px-3 sm:px-4',
-        'pointer-events-auto',
+    <>
+      {isInspectorMode && (
+        <aside
+          className={cn(
+            'fixed left-4 top-24 bottom-6 z-30 w-[min(36rem,calc(100vw-2rem))]',
+            'overflow-auto rounded-xl border border-slate-300/40 bg-white/80 p-3 shadow-xl backdrop-blur',
+            'dark:border-slate-600/40 dark:bg-slate-900/80',
+          )}
+          aria-label="Dialog inspector navigation"
+        >
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+            Dialog flow (ids + answers)
+          </p>
+          <nav className="flex flex-col gap-1 overflow-auto pb-2">
+            {inspectorListRows.map((row, index) =>
+              row.kind === 'node' ? (
+                <a
+                  key={`node-${index}-${String(row.id)}`}
+                  href={getInspectorHref(row.id ?? INITIAL_ID)}
+                  className={cn(
+                    'rounded-md border px-2 py-1 text-xs leading-snug transition-colors',
+                    row.id === currentId
+                      ? 'border-sky-400/70 bg-sky-500/15 text-slate-900 dark:text-slate-100'
+                      : 'border-slate-300/40 text-slate-700 hover:bg-slate-200/30 dark:border-slate-600/40 dark:text-slate-300 dark:hover:bg-slate-700/30',
+                  )}
+                  style={{ marginLeft: `${row.depth * 12}px` }}
+                >
+                  <span className="font-semibold text-sky-700 dark:text-sky-300">id {String(row.id)}</span>
+                  {row.label ? <span className="ml-2 text-amber-600 dark:text-amber-300">{row.label}</span> : null}
+                </a>
+              ) : (
+                <div
+                  key={`answer-${index}-${String(row.goto)}`}
+                  className="rounded-md border border-dashed border-slate-300/40 px-2 py-1 text-xs leading-snug text-slate-700 dark:border-slate-600/40 dark:text-slate-300"
+                  style={{ marginLeft: `${row.depth * 12}px` }}
+                >
+                  <span className="font-semibold">{row.label}</span>
+                  <span className="mx-1 text-slate-400 dark:text-slate-500">{'->'}</span>
+                  <span className={cn(byId.has(row.goto ?? '') ? 'text-sky-700 dark:text-sky-300' : 'text-rose-600 dark:text-rose-300')}>
+                    {String(row.goto)}
+                  </span>
+                </div>
+              ),
+            )}
+          </nav>
+        </aside>
       )}
-      role="region"
-      aria-label="Dialogue"
-    >
+      <div
+        className={cn(
+          'fixed left-1/2 bottom-16 z-30 w-[min(100%,36rem)] sm:w-[min(100%,40rem)] -translate-x-1/2 px-3 sm:px-4',
+          'pointer-events-auto',
+        )}
+        role="region"
+        aria-label="Dialogue"
+      >
       {/* Character row: small avatar with inline name/title; panel remains below */}
       <div className="flex flex-row items-center gap-3 sm:gap-4">
         <CharacterPortrait imageSrc={portraitSrc} />
@@ -285,7 +414,8 @@ const StarRpgDialogPanel: React.FC = () => {
           </BasePanel>
         </motion.div>
       </AnimatePresence>
-    </div>
+      </div>
+    </>
   )
 }
 
