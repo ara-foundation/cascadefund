@@ -7,6 +7,10 @@ export interface JoinWaitlistRequestModel {
     occupation: string
     workApps: string
     monthlyAmount: string
+    /** When present, guest name collected from RPG dialog modal. */
+    displayName?: string
+    /** e.g. `landing` (full form) vs `dialog-panel` (email + optional name). */
+    source?: string
     createdAt: number
 }
 

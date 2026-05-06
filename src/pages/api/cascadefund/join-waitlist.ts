@@ -13,15 +13,22 @@ function asRequiredString(value: unknown): string | null {
     return trimmed.length > 0 ? trimmed : null
 }
 
+function asOptionalTrimmed(value: unknown): string | undefined {
+    if (typeof value !== 'string') {
+        return undefined
+    }
+    const t = value.trim()
+    return t.length > 0 ? t : undefined
+}
+
 export const POST: APIRoute = async ({ request }) => {
     try {
         const payload = await request.json()
         const email = asRequiredString(payload?.email)
-        const occupation = asRequiredString(payload?.occupation)
-        const workApps = asRequiredString(payload?.workApps)
-        const monthlyAmount = asRequiredString(payload?.monthlyAmount)
 
-        if (!email || !occupation || !workApps || !monthlyAmount) {
+        const isMinimal = payload?.minimal === true || payload?.source === 'dialog-panel'
+
+        if (!email) {
             return new Response(
                 JSON.stringify({ code: 'INVALID_PAYLOAD', message: 'Missing required fields.' }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } },
@@ -39,11 +46,45 @@ export const POST: APIRoute = async ({ request }) => {
             )
         }
 
+        if (isMinimal) {
+            const displayName = asOptionalTrimmed(payload?.name ?? payload?.displayName)
+            const created = await createJoinWaitlistRequest({
+                email,
+                occupation: '—',
+                workApps: '—',
+                monthlyAmount: '—',
+                ...(displayName ? { displayName } : {}),
+                source: 'dialog-panel',
+            })
+            if (!created) {
+                return new Response(
+                    JSON.stringify({ code: 'CREATE_FAILED', message: 'Failed to save request.' }),
+                    { status: 500, headers: { 'Content-Type': 'application/json' } },
+                )
+            }
+            return new Response(JSON.stringify({ success: true }), {
+                status: 201,
+                headers: { 'Content-Type': 'application/json' },
+            })
+        }
+
+        const occupation = asRequiredString(payload?.occupation)
+        const workApps = asRequiredString(payload?.workApps)
+        const monthlyAmount = asRequiredString(payload?.monthlyAmount)
+
+        if (!occupation || !workApps || !monthlyAmount) {
+            return new Response(
+                JSON.stringify({ code: 'INVALID_PAYLOAD', message: 'Missing required fields.' }),
+                { status: 400, headers: { 'Content-Type': 'application/json' } },
+            )
+        }
+
         const created = await createJoinWaitlistRequest({
             email,
             occupation,
             workApps,
             monthlyAmount,
+            source: 'landing',
         })
 
         if (!created) {

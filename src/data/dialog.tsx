@@ -3,6 +3,7 @@
  * If main page receives ?inspector=true and msgId=id|number to show the message.
  */
 import { type ReactNode } from "react";
+import { JoinWaitlistDialogRegistration } from "@/components/star/JoinWaitlistDialogRegistration";
 import { MaintainerConvinceFeedback } from "@/components/star/MaintainerConvinceFeedback";
 import { MaintainerJoinRegistration } from "@/components/star/MaintainerJoinRegistration";
 import SocialLink from "@/components/utilitified_decorations/SocialLink";
@@ -23,6 +24,130 @@ export type Dialog = {
     q: string;
     a: Answer[];
     content?: ReactNode;
+}
+
+/** Same `href`s as `landing.astro` hero-network rows (Google / Apple / Microsoft / Meta). */
+const landingHeroBigTechAppIcons: { src: string; alt: string }[][] = [
+    [
+        { src: "https://cdn.simpleicons.org/gmail", alt: "Gmail" },
+        { src: "https://cdn.simpleicons.org/googledrive", alt: "Google Drive" },
+        { src: "https://cdn.simpleicons.org/googledocs", alt: "Google Docs" },
+        { src: "https://cdn.simpleicons.org/googlecalendar", alt: "Google Calendar" },
+        { src: "https://cdn.simpleicons.org/googlemaps", alt: "Google Maps" },
+        { src: "https://cdn.simpleicons.org/youtube", alt: "YouTube" },
+    ],
+    [
+        { src: "https://cdn.simpleicons.org/appstore", alt: "App Store" },
+        { src: "https://cdn.simpleicons.org/safari", alt: "Safari" },
+        { src: "https://cdn.simpleicons.org/imessage", alt: "iMessage" },
+        { src: "https://img.icons8.com/color/48/facetime.png", alt: "FaceTime" },
+        { src: "https://cdn.simpleicons.org/icloud", alt: "iCloud" },
+        { src: "https://cdn.simpleicons.org/applemusic", alt: "Apple Music" },
+    ],
+    [
+        { src: "https://img.icons8.com/color/48/azure-1.png", alt: "Azure" },
+        { src: "https://img.icons8.com/color/48/xbox.png", alt: "Xbox" },
+        { src: "https://img.icons8.com/color/48/microsoft-outlook-2019.png", alt: "Outlook" },
+        { src: "https://img.icons8.com/color/48/microsoft-teams.png", alt: "Microsoft Teams" },
+        { src: "https://img.icons8.com/color/48/microsoft-onedrive-2019.png", alt: "OneDrive" },
+        { src: "https://img.icons8.com/color/48/windows-11.png", alt: "Windows 11" },
+    ],
+    [
+        { src: "https://cdn.simpleicons.org/facebook", alt: "Facebook" },
+        { src: "https://cdn.simpleicons.org/instagram", alt: "Instagram" },
+        { src: "https://cdn.simpleicons.org/messenger", alt: "Messenger" },
+        { src: "https://cdn.simpleicons.org/threads", alt: "Threads" },
+        { src: "https://cdn.simpleicons.org/whatsapp", alt: "WhatsApp" },
+    ],
+] as const;
+
+const landingHeroGoogleRowIcons = landingHeroBigTechAppIcons[0];
+const landingHeroAppleRowIcons = landingHeroBigTechAppIcons[1];
+const landingHeroMicrosoftRowIcons = landingHeroBigTechAppIcons[2];
+const landingHeroMetaRowIcons = landingHeroBigTechAppIcons[3];
+
+function LandingHeroDiagramAppIcon({
+    src,
+    alt,
+}: {
+    src: string;
+    alt: string;
+}) {
+    return (
+        <img
+            src={src}
+            alt={alt}
+            width={16}
+            height={16}
+            className="h-[1em] w-[1em] shrink-0 object-contain align-middle opacity-[0.88] shadow-[0_1px_2px_rgba(15,23,42,0.14)] dark:opacity-90"
+            loading="lazy"
+            decoding="async"
+        />
+    );
+}
+
+/** Inline headset glyph matching the last Meta slot in `landing.astro` hero SVG. */
+function LandingHeroMetaVrDiagramIcon() {
+    return (
+        <svg
+            viewBox="0 0 28 28"
+            width={16}
+            height={16}
+            className="h-[1em] w-[1em] shrink-0 align-middle opacity-[0.88] dark:opacity-90"
+            aria-hidden
+        >
+            <rect x="0" y="0" width="28" height="28" rx="7" className="fill-slate-800 dark:fill-slate-950" />
+            <ellipse
+                cx="14"
+                cy="14"
+                rx="8.5"
+                ry="5.5"
+                fill="none"
+                stroke="#a5f3fc"
+                strokeWidth="1.4"
+            />
+            <circle cx="10.5" cy="14" r="1.1" fill="#a5f3fc" />
+            <circle cx="17.5" cy="14" r="1.1" fill="#a5f3fc" />
+        </svg>
+    );
+}
+
+function LandingHeroBigTechDiagramBlock({
+    brand,
+    companyLogoSrc,
+    companyLogoAlt,
+    appIcons,
+    withMetaVrSuffix,
+}: {
+    brand: string;
+    companyLogoSrc: string;
+    companyLogoAlt: string;
+    appIcons: { src: string; alt: string }[];
+    /** Meta row ends with the landing hero’s inline VR headset glyph (no raster URL). */
+    withMetaVrSuffix?: boolean;
+}) {
+    return (
+        <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm leading-normal text-slate-500 last:mb-0 md:text-base">
+            <span className="inline-flex shrink-0 items-center gap-1.5">
+                <img
+                    src={companyLogoSrc}
+                    alt={companyLogoAlt}
+                    width={16}
+                    height={16}
+                    className="h-[1em] w-[1em] object-contain opacity-90"
+                    loading="lazy"
+                    decoding="async"
+                />
+                <strong className="text-slate-600 dark:text-slate-100">{brand}</strong>
+            </span>
+            <span className="inline-flex min-w-0 flex-wrap items-center gap-1">
+                {appIcons.map((icon) => (
+                    <LandingHeroDiagramAppIcon key={icon.src} src={icon.src} alt={icon.alt} />
+                ))}
+                {withMetaVrSuffix ? <LandingHeroMetaVrDiagramIcon /> : null}
+            </span>
+        </div>
+    );
 }
 
 export const greetingDialog: Dialog[] = [
@@ -321,7 +446,7 @@ export const maintainerDialog: Dialog[] = [
                 <SocialLink link={socialLinks.linkedin} className={maintainerEndSocialIconClass} />
                 <SocialLink link={socialLinks.github} className={maintainerEndSocialIconClass} />
             </div></>,
-        q: "Click on social media links to see how to tag CascadeFund. 😊",
+        q: "Click on social media links to see our ID, and use it to tag CascadeFund. 😊",
         a: []
     }
 ]
@@ -329,23 +454,24 @@ export const maintainerDialog: Dialog[] = [
 export const userDialogs: Dialog[] = [
     {
         id: "user-1",
-        q: "Do you think open-source deserve funding and recognition in the world?",
+        q: "Do you think open source deserves funding and recognition in the world?",
         a: [
-            { label: "No", goto: "user-2" },
-            { label: "Yes", goto: "helpful-1" }
+            { label: "Yes", goto: "helpful-1" },
+            { label: "No", goto: "user-2" }
         ]
     },
     {
         id: "user-2",
-        q: "Open-source is running the world thanklessly. With getting closer to users and funded it can do more",
-        a: [{ label: "Ok", goto: "user-3" }]
+        content: "Open source is running the world, thanklessly.",
+        q: "Getting closer to web users and funded it can do more than just running commercial apps.",
+        a: [{ label: "Yeah 🤯", goto: "user-3" }]
     },
     {
         id: "user-3",
-        q: "Do you still think open-source needs funding and recognition by everyone?",
+        q: "Do you think now, open source needs funding and recognition by world?",
         a: [
-            { label: "No", goto: "sceptic-1" },
-            { label: "Yes", goto: "helpful-1" }
+            { label: "Yeah 🙌", goto: "helpful-1" },
+            { label: "Nah 😒", goto: "sceptic-1" }
         ]
     }
 ]
@@ -356,14 +482,46 @@ export const userDialogs: Dialog[] = [
 export const userSpecticalDialog: Dialog[] = [
     {
         id: "sceptic-1",
-        q: "Come back in few months. I'll try to convince you. Meanwhile could you follow our social media, your subscription will motivate me to keep it social media channels",
+        content: <>Come back later. I'll try to convince you 😉.
+            <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                Sincerely,
+                Medet Ahmetson!
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="text-sm text-slate-800 dark:text-slate-100">From </span>
+                <a
+                    href="https://ara.foundation"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-700 underline decoration-sky-500/50 underline-offset-2 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-200"
+                >
+                    <img
+                        src="/ara_logo.png"
+                        alt="Ara logo"
+                        className="h-4 w-4 rounded-sm object-contain"
+                    />
+                    <span>Ara</span>
+                </a>
+                <span className="text-sm text-slate-800 dark:text-slate-100">project</span>
+                <span className="text-slate-400 dark:text-slate-500" aria-hidden="true">
+                    ·
+                </span>
+                <SocialLink link={socialLinks.twitter} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.bluesky} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.linkedin} className={maintainerEndSocialIconClass} />
+                <SocialLink link={socialLinks.github} className={maintainerEndSocialIconClass} />
+            </div>
+        </>,
+        q: "I recommend to follow on social media 👍. You'll witness the first open source ecosystem evolution on Internet 👀.",
         a: [],
     },
 
     {
         id: "sceptic-2",
-        q: "I totally agree. Why you pay when other users benefit from it for free? We don't charity too. That's why CascadeFund exist",
-        a: [{ label: "Okay, give me elevator pitch", goto: "helpful-2" }]
+        content: <>Yeah, why would you pay when others don't, but benefit from your funding for free?
+            <p className="mt-2">I don't want to rely on charity either.</p></>,
+        q: "That's why CascadeFund exist",
+        a: [{ label: "Quick details", goto: "helpful-19" }]
     }
 ]
 
@@ -374,7 +532,7 @@ export const userSpecticalDialog: Dialog[] = [
 export const userHelpfulDialog: Dialog[] = [
     {
         id: "helpful-1",
-        q: "How much would you would spend monthly on open-source projects?",
+        q: "If you have no money issue, how much would you spend monthly on open source?",
         a: [{
             label: "$1",
             goto: "helpful-2"
@@ -385,101 +543,123 @@ export const userHelpfulDialog: Dialog[] = [
             label: "$10",
             goto: "helpful-2"
         }, {
-            label: "More",
+            label: "More 💰",
             goto: "helpful-2"
         }, {
-            label: "Why should I pay if its for free?",
+            label: "Likely $0 🤷‍♂️",
             goto: "sceptic-2"
         }],
     },
     {
         id: "helpful-2",
-        q: "With CascadeFund you get stable apps that won't wont make you adapt to interface every time. You could add new features that pops up in your mind on apps you use daily. You get open-source apps that work seamlessly together",
+        content: <>With CascadeFund you get stable apps that won't push breaking changes unless you vote yes.
+            <p className="mt-2">You could request new features on apps you use daily.</p></>,
+        q: "CascadeFund is ecosystem of open source projects that work seamlessly together.",
         a: [
-            { label: "I would pay monthly", goto: "helpful-3" },
-            { label: "Give me more details", goto: "helpful-4" },
-        ]
-    },
-    {
-        id: "helpful-18",
-        content: "CascadeFund is not for charity. I'll give you elevator pitch and what you get for funding.",
-        q: "",
-        a: [
-            { label: "Give me elevator pitch", goto: "helpful-19" },
+            { label: "Quick details", goto: "helpful-4" },
         ]
     },
     {
         id: "helpful-19",
-        q: "With CascadeFund you get stable apps that won't wont make you adapt to interface every time. You could add new features that pops up in your mind on apps you use daily. You get open-source apps that work seamlessly together",
+        content: <>With CascadeFund you get stable apps that won't push breaking changes unless you vote yes.
+            <p className="mt-2">You could request new features on apps you use daily.</p></>,
+        q: "CascadeFund is ecosystem of open source projects that work seamlessly together.",
         a: [
-            { label: "Give me more details", goto: "helpful-4" },
+            { label: "Would pay 😌", goto: "helpful-3" },
+            { label: "Few more details", goto: "helpful-4" },
         ]
     },
-    /**
-     * @todo change helpful-2 link to another one.
-     */
     {
         id: "helpful-3",
-        q: "How much would you would spend monthly on open-source projects?",
+        q: "If you have no money issue, how much would you spend monthly on open source?",
         a: [{
             label: "$1",
-            goto: "helpful-2"
+            goto: "helpful-4"
         }, {
             label: "$5",
-            goto: "helpful-2"
+            goto: "helpful-4"
         }, {
             label: "$10",
-            goto: "helpful-2"
+            goto: "helpful-4"
         }, {
-            label: "More",
-            goto: "helpful-2"
+            label: "More 💰",
+            goto: "helpful-4"
         }
         ],
     },
     {
         id: "helpful-4",
-        q: "CascadeFund is alliance of maintainers who create user-centric OS ecosystem. You know well-known corporations have ecosystem of apps?",
+        content: "CascadeFund is not a centralized platform. It's an ecosystem of maintainers building user-centric open-source projects.",
+        q: "You know tech corporations are walled garden of apps that work seamlessly together?",
         a: [
-            { label: "Give me example", goto: "helpful-5" },
-            { label: "Yeah, I know", goto: "helpful-6" },
+            { label: "For Example", goto: "helpful-5" },
+            { label: "Yeah", goto: "helpful-6" },
         ]
     },
-    /**
-     * @todo need to update, use the landing page's hero section with the icons and graphs to each of the corporation names.
-     */
     {
         id: "helpful-5",
-        content: "Here are examples of coherent seamless experiences. Apple has iPhone, Mac, iCloud, FinalCut, and many more apps working seamlessly." +
-            "Microsoft has Windows, Office, Team, Azure, GitHub, Bing, Edge and many more apps working seamlessly." +
-            "Meta has Facebook, Instagram, WhatsApp, Messenger, Oculus, and many more apps working seamlessly." +
-            "There are many more examples, Google, Adobe, Autodesk, Amazon, you know some other well known umbrella corporations?",
-        q: "Can you say it for open-source, are they ecosystem of apps that work seamlessly together?",
+        content: (
+            <>
+                <p className="mb-3 text-slate-500 dark:text-slate-300 md:text-base leading-relaxed">
+                    For example,
+                </p>
+                <LandingHeroBigTechDiagramBlock
+                    brand="Google"
+                    companyLogoSrc="https://cdn.simpleicons.org/google"
+                    companyLogoAlt="Google"
+                    appIcons={landingHeroGoogleRowIcons}
+                />
+                <LandingHeroBigTechDiagramBlock
+                    brand="Apple"
+                    companyLogoSrc="https://cdn.simpleicons.org/apple"
+                    companyLogoAlt="Apple"
+                    appIcons={landingHeroAppleRowIcons}
+                />
+                <LandingHeroBigTechDiagramBlock
+                    brand="Microsoft"
+                    companyLogoSrc="https://img.icons8.com/color/48/microsoft.png"
+                    companyLogoAlt="Microsoft"
+                    appIcons={landingHeroMicrosoftRowIcons}
+                />
+                <LandingHeroBigTechDiagramBlock
+                    brand="Meta"
+                    companyLogoSrc="https://cdn.simpleicons.org/meta"
+                    companyLogoAlt="Meta"
+                    appIcons={landingHeroMetaRowIcons}
+                    withMetaVrSuffix
+                />
+                <p className="mb-0 text-slate-500 dark:text-slate-300 md:text-base leading-relaxed">
+                    and every major corporation has dozens of apps that only work seamlessly together.
+                </p>
+            </>
+        ),
+        q: "Do you know an open-source ecosystem with dozens of apps that work seamlessly together?",
         a: [
-            { label: "No", goto: "helpful-6" },
+            { label: "No 🥺", goto: "helpful-6" },
+            { label: "There are some 🤔", goto: "helpful-20" },
         ]
+    },
+    {
+        id: "helpful-20",
+        content: <>There are open source ecosystems.
+            <p className="mt-2">Tech giants are initiating them and support them by giving away internally developed projects. I'm thankful for their benefit to society.</p>
+            <p className="mt-2">The OSS ecosystems such as Eclipse, GNOME, KDE, Apache, Mozilla are for developers or they specialize in a narrow domain led by organization.</p></>,
+        q: "I mean do you know OSS ecosystem built around you; without any organization but by users and maintainers together?",
+        a: [{ label: "No 🫡", goto: "helpful-6" }]
     },
     {
         id: "helpful-6",
-        content: "CascadeFund makes it happen as an open-source community itself" +
-            "You pay monthly to open-source ecosystem via CascadeFund, that is distributed automatically to maintainers.",
-        q: "You know what you get?",
-        a: [{ label: "What?", goto: "helpful-7" }]
+        content: <>CascadeFund is an open-source ecosystem of maintainers and users. Maintainers agree on user-centric principles.
+            <p className="mt-2">To be part of community, you pay a monthly fee. Your open source apps begin working seamlessly together,<br />while funds distributed automatically to maintainers.</p></>,
+        q: "You know what you get for funding?",
+        a: [{ label: "Yeah", goto: "helpful-7" }]
     },
     {
         id: "helpful-7",
-        q: "You fund ecosystem. If big corporations are walled garden, then CascadeFund ecosystem is amazon forest." +
-            "Whether you use one app or one hundred apps that you found on web, price same but they work seamlessly",
-        a: [{
-            label: "I didn't answer what you get for funding? :)",
-            goto: "helpful-8"
-        }]
-    },
-    {
-        id: "helpful-8",
-        content: "You get three things, and most importantly you become part of open-source community itself",
-        q: "The last thing is the best thing you get for funding.",
+        content: "You get three things that no corporation could give you.",
+        q: "The last thing is the best part 🤫",
         a: [
-            { label: "What's first thing?", goto: "helpful-9" },
+            { label: "The first thing", goto: "helpful-9" },
         ]
     },
     /**
@@ -487,96 +667,139 @@ export const userHelpfulDialog: Dialog[] = [
      */
     {
         id: "helpful-9",
-        content: "Whenever open-source wants to push update you have option to cancel it." +
-            "Perhaps 'don't change UI you get used to it', don't deprecate API it will break your workflow." +
-            "When 51% of users vote, then maintainers won't deprecate the changes",
+        content: <>You can prevent breaking changes.
+            <p className="mt-2">Perhaps, app wants to change UI, or deprecate API, feature you use</p>
+            If 51% users vote against, then maintainers won't even start coding it</>,
         q: "Can you influence tech giants or open-source now?",
         a: [
-            { label: "No. Whats second thing I get?", goto: "helpful-11" },
-            { label: "Examples?", goto: "helpful-10" },
+            { label: "Nope, the second thing", goto: "helpful-11" },
+            { label: "Examples", goto: "helpful-10" },
         ]
     },
     {
         id: "helpful-10",
-        content: "How many imcopatible versions of the same app you encountered? " +
-            "For example, Python pushed third version, while its being popular and widely using Python 2.7. " +
-            "If CascadeFund was launched earlier, then we will be using Python 2 still without breaking or migrating code.",
-        q: "You probably encountered this situation multiple times?",
+        content: <>
+            For example, Python pushed 3rd version, while everyone was using Python 2.7.
+            <p className="mt-2">If CascadeFund was launched earlier, then we would be still using Python 2 without painful migration or version nightmares.</p></>,
+        q: "In your life how many incompatible versions of the same app you've encountered?",
         a: [
-            { label: "Yes, what's second thing?", goto: "helpful-11" },
+            { label: "Got it 🙏, the second thing", goto: "helpful-11" },
         ]
     },
     {
         id: "helpful-11",
-        content: "Whenever you want app feature, let's say support MCP to connect to your AI agent, or allow a support of export in PDF format, apps will implement it.",
-        q: "Can you push it in tech giants or open-source now?",
+        content: <>Whenever you want a new app feature, developers will implement it.
+            <p className="mt-2">For example:</p>
+            <ul className="mt-1 list-disc space-y-0.5 pl-5 text-slate-500 dark:text-slate-300 marker:text-slate-400 dark:marker:text-slate-500">
+                <li>Support the MCP protocol so the app can talk to your AI agent.</li>
+                <li>Allow exporting to PDF format.</li>
+            </ul>
+            <p className="mt-2">CascadeFund makes it possible.</p></>,
+        q: "Can you guarantee tech giants will add the feature you want?",
         a: [
             {
-                label: "No, I can't. Whats third thing?", goto: "helpful-13",
+                label: "Nope, the third thing", goto: "helpful-13",
             },
             {
-                label: "How it works?", goto: "helpful-12",
+                label: "Quick details", goto: "helpful-12",
             }
         ]
     },
     {
         id: "helpful-12",
-        content: "It's a weekly email communication with CascadeFund. You reply to our email with the desires, and CascadeFund delivers them to the maintainers in a clear way." +
-            "Since open-source ecosystem is funded amazon forest, there would be path to present compatible alternative, or someone will patch without waiting the maintainers time",
-        q: "",
+        content: (
+            <>
+                CascadeFund sends you a weekly email. Reply to them with the desires and wishes.
+                They will be delivered to maintainers in a technical format.
+                <p className="mt-2">
+                    If corporations are walled garden, open source ecosystem is Amazon forest. There is a compatible alternative with the feature, or a contributor can patch it and get funded for it.
+                </p>
+            </>
+        ),
+        q: "In a funded ecosystem, there are contributors who will do it if maintainers don't want to",
         a: [{
-            label: "What's the third thing you get?", goto: "helpful-13",
+            label: "Yeah, the third thing", goto: "helpful-13",
         }]
     },
     {
         id: "helpful-13",
-        content: "You fund apps to be seamless. We communicate weekly emails with you. You send us on email what open-source apps you use along or wish to have open-source alternative." +
-            "CascadeFund finds the alternatives, and connect their authors to make them seamless together.",
-        q: "Can you imagine corporations work on seamless experience between their products for you?",
+        content: <>Reply to the CascadeFund's weekly email with apps you use or wish to find open-source alternative
+            <p className="mt-2">CascadeFund finds the alternatives, connect their maintainers and make them seamless with existing OSS apps you use.</p></>,
+        q: "Can you imagine corporations work together on a seamless experience between their products for you?",
         a: [
-            { label: "No. I said its the best thing, whats best about it?", goto: "helpful-14" },
+            { label: "No, where is the best part 🤔", goto: "helpful-14" },
         ]
     },
     {
         id: "helpful-14",
-        content: "Technically, to make apps compatible their authors work on shared protocols, and standardized APIs. This unified experience naturally decouples data from app logic and interface: " +
-            "Your data becomes local, while all apps changeable." +
-            "Can you imagine all your data is on one place, instead scattered across softwares on web?" +
-            "Can you imagine what your AI can do when data in one place, while apps are discoverable and not bound to workflow?",
-        q: "",
+        content: <>To provide unified experience across OSS, maintainers design shared protocols, and standardized APIs.
+            <p className="mt-2">Technically, this modularizes apps to decouple data, interface and logic.</p>
+            <p className="mt-2">All your data is local, instead of scattering across web-apps.</p>
+        </>,
+        q: "Imagine, what can AI do when your data is independent of apps and all in one place, while apps are discoverable",
         a: [
-            { label: "You still don't get the point to fund?", goto: "sceptic-1" },
-            { label: "Yes, I got it", goto: "helpful-15" },
+            { label: "Sounds amazing 🙌", goto: "helpful-15" },
         ]
     },
     {
         id: "helpful-15",
-        content: "Join our waitlist. We will notify you when CascadeFund launches. Could you write your email, and on the social media begin community, it will help us to know what you use and we can reach out the developers of those apps to join CascadeFund when its launched",
-        q: "I said with funding you become part of open-source community itself, few messages ago.",
+        content: (
+            <p className="mb-0 text-slate-500 dark:text-slate-300 md:text-base leading-relaxed">
+                CascadeFund is launching soon. <JoinWaitlistDialogRegistration /> and I'll email you when it launches.
+            </p>
+        ),
+        q: "Meanwhile, you can grow and lead CascadeFund ecosystem from your side.",
         a: [
-            { label: "Do you want to know more?", goto: "helpful-16" },
+            { label: "Quick details", goto: "helpful-16" },
         ]
     },
     {
         id: "helpful-16",
-        content: "You are aligning and building community with people who share the same apps as you." +
-            "All in community are funding, and want to have effective outcomes. It's not a bullshit, but pragmatic people." +
-            "Together, with you create and share work experience, align a movement to use same app choices and fund the same stack of apps." +
-            "Impact of these coordinated effort in open-source ecosystem is huge.",
-        q: "How I begin it?",
+        content: <>Users in CascadeFund align by common interest: they use the same multiple as you.
+            <p className="mt-2">Funding users want to have effective outcomes. It won't be bullshit, but pragmatic collaboration.</p>
+            <p className="mt-2">Find people who use the same apps as you, start sharing your work experience, and prepare an organized funding for the same stack.</p>
+        </>,
+        q: "One person will have an impact, a group of people will have a significant impact.",
         a: [
-            { label: "You don't have to wait me, you can initiate movement yourself as equal to me", goto: "helpful-17" },
+            { label: "Start", goto: "helpful-17" },
         ]
     },
     {
         id: "helpful-17",
-        content: "You don't have to wait me to lead the movement with email. Its communication of equals." +
-            "You don't have to wait when CascadeFund launches as we." +
-            "Tag Ara the project of CascadeFund, so that people know you are initiating community." +
-            "Then, type two open-source projects you use, and wish to have seamless experience between them.",
-        q: "Want to know people who use same apps and find you for your apps and share tips and tricks and start communication now",
-        a: [
-        ]
+        content:
+            <>To start community, post on social media about your OSS experience. Tag CascadeFund, and two open-source projects you used recently.
+                <p className="mt-2">The tag lets other users of Ecosystem to recognize you, especially those who use the same apps as you.</p>
+                <p className="mt-2">Then, I will be manually contacting their maintainers, and together with them start working on a seamless experience for you.</p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                    Sincerely,
+                    Medet Ahmetson!
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <span className="text-sm text-slate-800 dark:text-slate-100">From </span>
+                    <a
+                        href="https://ara.foundation"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-700 underline decoration-sky-500/50 underline-offset-2 hover:text-sky-600 dark:text-sky-300 dark:hover:text-sky-200"
+                    >
+                        <img
+                            src="/ara_logo.png"
+                            alt="Ara logo"
+                            className="h-4 w-4 rounded-sm object-contain"
+                        />
+                        <span>Ara</span>
+                    </a>
+                    <span className="text-sm text-slate-800 dark:text-slate-100">project</span>
+                    <span className="text-slate-400 dark:text-slate-500" aria-hidden="true">
+                        ·
+                    </span>
+                    <SocialLink link={socialLinks.twitter} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.bluesky} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.linkedin} className={maintainerEndSocialIconClass} />
+                    <SocialLink link={socialLinks.github} className={maintainerEndSocialIconClass} />
+                </div></>,
+        q: "Click on social media links to see our ID, and use it to tag CascadeFund. 😊",
+        a: []
     }
 ]
 
