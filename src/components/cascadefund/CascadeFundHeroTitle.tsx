@@ -31,7 +31,7 @@ const CascadeFundHeroTitle: React.FC = () => {
         </GradientText>
       </motion.div>
       <motion.p
-        className="max-w-2xl text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-400"
+        className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
