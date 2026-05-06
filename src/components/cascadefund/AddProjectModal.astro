@@ -21,7 +21,7 @@ import SocialLink from "@/components/utilitified_decorations/SocialLink";
       </form>
     </div>
     <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-      Our service is just kicstarting, we will email you once CascadeFund gets
+      Our service is just kickstarting, we will email you once CascadeFund gets
       launched.
     </p>
 
@@ -198,7 +198,8 @@ import SocialLink from "@/components/utilitified_decorations/SocialLink";
           id="add-project-form-error"
           class="hidden text-sm text-red-600 dark:text-red-400"
           aria-live="polite"
-        ></p>
+        >
+        </p>
         <button
           id="add-project-submit-button"
           type="submit"
@@ -207,11 +208,9 @@ import SocialLink from "@/components/utilitified_decorations/SocialLink";
           <span
             id="add-project-submit-spinner"
             class="hidden h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
-            aria-hidden="true"
-          ></span>
+            aria-hidden="true"></span>
           <span id="add-project-submit-label">Add your project</span>
-        </button
-        >
+        </button>
       </div>
     </form>
   </div>
@@ -250,15 +249,17 @@ import SocialLink from "@/components/utilitified_decorations/SocialLink";
         <ul class="flex flex-wrap items-center gap-3">
           {
             Object.values(socialLinks)
-              .filter((link) => link.type !== "telegram" && link.type !== "discord")
+              .filter(
+                (link) => link.type !== "telegram" && link.type !== "discord",
+              )
               .map((link) => (
-              <li>
-                <SocialLink
-                  link={link}
-                  className="flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 bg-white/70 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900/70 dark:hover:bg-neutral-800"
-                />
-              </li>
-            ))
+                <li>
+                  <SocialLink
+                    link={link}
+                    className="flex h-9 w-9 items-center justify-center rounded-md border border-neutral-200 bg-white/70 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900/70 dark:hover:bg-neutral-800"
+                  />
+                </li>
+              ))
           }
         </ul>
       </div>
@@ -278,7 +279,9 @@ import SocialLink from "@/components/utilitified_decorations/SocialLink";
   const addProjectSubmitSpinner = document.getElementById(
     "add-project-submit-spinner",
   );
-  const addProjectSubmitLabel = document.getElementById("add-project-submit-label");
+  const addProjectSubmitLabel = document.getElementById(
+    "add-project-submit-label",
+  );
   const addProjectFormError = document.getElementById("add-project-form-error");
 
   function setAddProjectLoading(isLoading: boolean) {
