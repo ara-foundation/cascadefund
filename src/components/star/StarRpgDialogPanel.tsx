@@ -12,6 +12,7 @@ import { getIcon } from '@/components/icon'
 import { dialog, greetingDialog, type Dialog } from '@/data/dialog'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
+import { DialogWalkthroughProvider } from '@/components/star/DialogWalkthroughContext'
 
 const INITIAL_ID = greetingDialog[0].id
 const DIALOG_PORTRAITS: string[] = [
@@ -129,6 +130,7 @@ const StarRpgDialogPanel: React.FC = () => {
   const maintainerFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'maintainer-1'), [byId])
   const userFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'user-1'), [byId])
   const [currentId, setCurrentId] = useState<DialogId>(INITIAL_ID)
+  const [walkthroughDialogs, setWalkthroughDialogs] = useState<DialogId[]>([INITIAL_ID])
   const [isInspectorMode, setIsInspectorMode] = useState(false)
   const [branchStepCount, setBranchStepCount] = useState(0)
   const [portraitSrc, setPortraitSrc] = useState<string | undefined>(undefined)
@@ -155,6 +157,7 @@ const StarRpgDialogPanel: React.FC = () => {
 
   const resetDialog = () => {
     setCurrentId(INITIAL_ID)
+    setWalkthroughDialogs([INITIAL_ID])
     setBranchStepCount(0)
   }
 
@@ -172,7 +175,17 @@ const StarRpgDialogPanel: React.FC = () => {
     const parsedMsgId: DialogId = /^\d+$/.test(msgIdParam) ? Number(msgIdParam) : msgIdParam
     if (!byId.has(parsedMsgId)) return
     setCurrentId(parsedMsgId)
+    setWalkthroughDialogs([parsedMsgId])
   }, [byId])
+
+  useEffect(() => {
+    setWalkthroughDialogs((prev) => {
+      if (prev.length > 0 && prev[prev.length - 1] === currentId) {
+        return prev
+      }
+      return [...prev, currentId]
+    })
+  }, [currentId])
 
   useEffect(() => {
     if (typeof window === 'undefined' || !isInspectorMode) return
@@ -239,7 +252,8 @@ const StarRpgDialogPanel: React.FC = () => {
   }, [currentId])
 
   return (
-    <>
+    <DialogWalkthroughProvider value={walkthroughDialogs}>
+      <>
       {isInspectorMode && (
         <aside
           className={cn(
@@ -406,7 +420,8 @@ const StarRpgDialogPanel: React.FC = () => {
         </motion.div>
       </AnimatePresence>
       </div>
-    </>
+      </>
+    </DialogWalkthroughProvider>
   )
 }
 

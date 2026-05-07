@@ -49,7 +49,8 @@ const { className, imgClassName, noLink = false } = Astro.props;
           id="hoveredLogoImg"
           alt="Ara Logo"
           class="w-full h-full absolute inset-0"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="low"
           decoding="async"
         />
       </div>
@@ -57,27 +58,27 @@ const { className, imgClassName, noLink = false } = Astro.props;
   )
 }
 <style>
-  :global(.hyperlink) #logoImg {
+  #logo.hyperlink #logoImg {
     display: block;
   }
-  :global(.hyperlink) #hoveredLogoImg {
+  #logo.hyperlink #hoveredLogoImg {
     display: none;
   }
-  :global(.hyperlink) #logoSubtitle {
+  #logo.hyperlink #logoSubtitle {
     display: block;
     transition: font-size 0.1s ease-out;
   }
 
-  :global(.hyperlink):hover #logoSubtitle {
+  #logo.hyperlink:hover #logoSubtitle {
     opacity: 0.4;
     font-size: 0.65rem;
   }
 
-  :global(.hyperlink):hover #logoImg {
+  #logo.hyperlink:hover #logoImg {
     display: none;
   }
 
-  :global(.hyperlink):hover #hoveredLogoImg {
+  #logo.hyperlink:hover #hoveredLogoImg {
     display: block;
   }
 </style>

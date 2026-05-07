@@ -11,9 +11,10 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
   hideAuth={true}
   title="Cascadefund"
 >
-  <HeaderDialogAction type="join" slot="header-actions" client:only="react" />
+  <HeaderDialogAction type="join" dialogList={[]} slot="header-actions" client:only="react" />
   <HeaderDialogAction
     type="add-project"
+    dialogList={[]}
     slot="header-actions"
     client:only="react"
   />
@@ -80,6 +81,7 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
             </p>
             <HeaderDialogAction
               type="add-project"
+              dialogList={[]}
               client:only="react"
               className="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
             />
@@ -616,6 +618,7 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
           </p>
           <HeaderDialogAction
             type="join"
+            dialogList={[]}
             client:only="react"
             className="mt-4 inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-5 py-2.5 text-sm font-semibold text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
           />
@@ -878,6 +881,7 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
       </div>
       <HeaderDialogAction
         type="add-project"
+        dialogList={[]}
         client:only="react"
         className="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
       />

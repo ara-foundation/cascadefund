@@ -6,10 +6,16 @@ import tailwindcss from '@tailwindcss/vite';
 import node from '@astrojs/node';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+const runtimeMode = (process.env.NODE_ENV || 'development').toLowerCase();
+console.info(`[Initial setup] Running in ${runtimeMode} mode`);
+
 // https://astro.build/config
 // @ts-ignore
 export default defineConfig({
   integrations: [react()],
+  devToolbar: {
+    enabled: false,
+  },
   output: 'server',
   // Only set outDir for local development; Vercel adapter manages .vercel/output itself
   ...(process.env.NODE_ENV === "DEVELOPMENT" && { outDir: './dist' }),

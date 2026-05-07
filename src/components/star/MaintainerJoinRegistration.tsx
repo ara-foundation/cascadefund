@@ -6,6 +6,7 @@ import BasePanel from '@/components/panel/Panel'
 import Button from '@/components/custom-ui/Button'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
+import { useDialogWalkthrough } from '@/components/star/DialogWalkthroughContext'
 
 const MODAL_BACKDROP_Z = 'z-[10050]'
 const MODAL_SHEET_Z = 'z-[10060]'
@@ -15,16 +16,21 @@ type Phase = 'form' | 'success'
 export function MaintainerJoinRegistration({
   className,
   triggerLabel = 'Register project 📋',
+  dialogList,
 }: {
   className?: string
   triggerLabel?: string
+  dialogList?: Array<string | number>
 }) {
+  const walkthroughDialogList = useDialogWalkthrough()
+  const effectiveDialogList = dialogList ?? walkthroughDialogList ?? []
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState<Phase>('form')
   const [email, setEmail] = useState('')
   const [projectUrl, setProjectUrl] = useState('')
   const [allowSocialTag, setAllowSocialTag] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  const [formError, setFormError] = useState('')
   const titleId = useId()
 
   const resetAndClose = useCallback(() => {
@@ -34,24 +40,74 @@ export function MaintainerJoinRegistration({
     setProjectUrl('')
     setAllowSocialTag(true)
     setSubmitting(false)
+    setFormError('')
   }, [])
 
   useEffect(() => {
     if (!open) return
+    console.log('[MaintainerJoin] dialog list', effectiveDialogList)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') resetAndClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, resetAndClose])
+  }, [effectiveDialogList, open, resetAndClose])
 
   const submit = async () => {
+    setFormError('')
     setSubmitting(true)
-    console.log('[MaintainerJoin] request', { email, projectUrl, allowSocialTag })
-    await new Promise((r) => setTimeout(r, 500))
-    console.log('[MaintainerJoin] response success')
-    setSubmitting(false)
-    setPhase('success')
+    const projectName = (() => {
+      try {
+        const parsed = new URL(projectUrl)
+        const segments = parsed.pathname.split('/').filter(Boolean)
+        return segments[segments.length - 1] || parsed.hostname
+      } catch {
+        return projectUrl
+      }
+    })()
+    const payload = {
+      email,
+      fundsMethod: 'non-crypto',
+      projectName,
+      repositoryUrl: projectUrl,
+      projectType: 'shared-tool',
+      targetAudience: 'developers',
+      allowSocialTag,
+      dialogList: effectiveDialogList,
+    }
+    console.log('[MaintainerJoin] request payload', payload)
+
+    const controller = new AbortController()
+    const timeoutId = window.setTimeout(() => controller.abort(), 10_000)
+    try {
+      const response = await fetch('/api/cascadefund/add-project', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      })
+
+      if (response.status === 409) {
+        setFormError('This email already submitted an add project request.')
+        return
+      }
+
+      if (!response.ok) {
+        setFormError('Could not save your request. Please try again.')
+        return
+      }
+
+      setPhase('success')
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        setFormError('Request timed out. Please try again.')
+        return
+      }
+      setFormError('Network error. Please try again.')
+    } finally {
+      window.clearTimeout(timeoutId)
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -191,6 +247,16 @@ export function MaintainerJoinRegistration({
                           Allow to tag your project on social media and brag that you are part of ecosystem?
                         </span>
                       </label>
+
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        Dialog list: [{effectiveDialogList.map(String).join(', ')}]
+                      </p>
+
+                      {formError ? (
+                        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
+                          {formError}
+                        </p>
+                      ) : null}
 
                       <Button variant="primary" size="sm" disabled={submitting}>
                         {submitting ? 'Sending…' : 'Submit'}

@@ -9,6 +9,7 @@ export interface AddProjectRequestModel {
     repositoryUrl: string
     projectType: string
     targetAudience: string
+    dialogList?: Array<string | number>
     createdAt: number
 }
 

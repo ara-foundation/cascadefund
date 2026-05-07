@@ -16,8 +16,8 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
     projectY={0}
     projectGalaxies={[]}
 >
-    <HeaderDialogAction type="join" slot="header-actions" client:only="react" />
-    <HeaderDialogAction type="add-project" slot="header-actions" client:only="react" />
+    <HeaderDialogAction type="join" dialogList={[]} slot="header-actions" client:only="react" />
+    <HeaderDialogAction type="add-project" dialogList={[]} slot="header-actions" client:only="react" />
 
     <CascadeFundHeroTitle slot="center" client:only="react" />
 

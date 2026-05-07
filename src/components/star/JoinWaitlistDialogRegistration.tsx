@@ -6,6 +6,7 @@ import BasePanel from '@/components/panel/Panel'
 import Button from '@/components/custom-ui/Button'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
+import { useDialogWalkthrough } from '@/components/star/DialogWalkthroughContext'
 
 const MODAL_BACKDROP_Z = 'z-[10050]'
 const MODAL_SHEET_Z = 'z-[10060]'
@@ -13,7 +14,15 @@ const MODAL_SHEET_Z = 'z-[10060]'
 type Phase = 'form' | 'success'
 
 /** Inline waitlist signup for RPG dialog (`helpful-15`), mirrors `MaintainerJoinRegistration` UX. */
-export function JoinWaitlistDialogRegistration({ className }: { className?: string }) {
+export function JoinWaitlistDialogRegistration({
+  className,
+  dialogList,
+}: {
+  className?: string
+  dialogList?: Array<string | number>
+}) {
+  const walkthroughDialogList = useDialogWalkthrough()
+  const effectiveDialogList = dialogList ?? walkthroughDialogList ?? []
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState<Phase>('form')
   const [email, setEmail] = useState('')
@@ -33,16 +42,24 @@ export function JoinWaitlistDialogRegistration({ className }: { className?: stri
 
   useEffect(() => {
     if (!open) return
+    console.log('[JoinWaitlist] dialog list', effectiveDialogList)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') resetAndClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, resetAndClose])
+  }, [effectiveDialogList, open, resetAndClose])
 
   const submit = async () => {
     setFormError('')
     setSubmitting(true)
+    const payload = {
+      email,
+      ...(name.trim() ? { name: name.trim() } : {}),
+      minimal: true,
+      dialogList: effectiveDialogList,
+    }
+    console.log('[JoinWaitlist] request payload', payload)
 
     const controller = new AbortController()
     const timeoutId = window.setTimeout(() => controller.abort(), 10_000)
@@ -51,11 +68,7 @@ export function JoinWaitlistDialogRegistration({ className }: { className?: stri
       const response = await fetch('/api/cascadefund/join-waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          ...(name.trim() ? { name: name.trim() } : {}),
-          minimal: true,
-        }),
+        body: JSON.stringify(payload),
         signal: controller.signal,
       })
 

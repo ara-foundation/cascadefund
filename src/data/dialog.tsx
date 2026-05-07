@@ -202,9 +202,9 @@ export const maintainerDialog: Dialog[] = [
         content: "What if you receive funds automatically from millions of users?",
         q: "Without much responsibility or commercialization",
         a: [
-            { label: "Yes 😃", goto: "maintainer-6" },
-            { label: "Not important", goto: "maintainer-6" },
-            { label: "Skeptical?", goto: "maintainer-5" }
+            { label: "Yes 😃", goto: "maintainer-8" },
+            { label: "Not important", goto: "maintainer-8" },
+            { label: "Skeptical?", goto: "maintainer-6" }
         ]
     },
     {

@@ -6,6 +6,7 @@ import BasePanel from '@/components/panel/Panel'
 import Button from '@/components/custom-ui/Button'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
+import { useDialogWalkthrough } from '@/components/star/DialogWalkthroughContext'
 
 const MODAL_BACKDROP_Z = 'z-[10050]'
 const MODAL_SHEET_Z = 'z-[10060]'
@@ -15,15 +16,20 @@ type Phase = 'form' | 'success'
 export function MaintainerConvinceFeedback({
   className,
   triggerLabel = 'Comment 💬',
+  dialogList,
 }: {
   className?: string
   triggerLabel?: string
+  dialogList?: Array<string | number>
 }) {
+  const walkthroughDialogList = useDialogWalkthrough()
+  const effectiveDialogList = dialogList ?? walkthroughDialogList ?? []
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState<Phase>('form')
   const [email, setEmail] = useState('')
   const [feedback, setFeedback] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [formError, setFormError] = useState('')
   const titleId = useId()
 
   const resetAndClose = useCallback(() => {
@@ -32,24 +38,61 @@ export function MaintainerConvinceFeedback({
     setEmail('')
     setFeedback('')
     setSubmitting(false)
+    setFormError('')
   }, [])
 
   useEffect(() => {
     if (!open) return
+    console.log('[MaintainerFeedback] dialog list', effectiveDialogList)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') resetAndClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, resetAndClose])
+  }, [effectiveDialogList, open, resetAndClose])
 
   const submit = async () => {
+    setFormError('')
     setSubmitting(true)
-    console.log('[MaintainerFeedback] request', { email, feedback })
-    await new Promise((r) => setTimeout(r, 500))
-    console.log('[MaintainerFeedback] response success')
-    setSubmitting(false)
-    setPhase('success')
+    const payload = {
+      email,
+      feedback,
+      dialogList: effectiveDialogList,
+    }
+    console.log('[MaintainerFeedback] request', payload)
+
+    const controller = new AbortController()
+    const timeoutId = window.setTimeout(() => controller.abort(), 10_000)
+    try {
+      const response = await fetch('/api/cascadefund/maintainer-convince-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      })
+
+      if (response.status === 409) {
+        setFormError('This email already submitted feedback.')
+        return
+      }
+
+      if (!response.ok) {
+        setFormError('Could not save your feedback. Please try again.')
+        return
+      }
+
+      console.log('[MaintainerFeedback] response success')
+      setPhase('success')
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        setFormError('Request timed out. Please try again.')
+        return
+      }
+      setFormError('Network error. Please try again.')
+    } finally {
+      window.clearTimeout(timeoutId)
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -172,6 +215,12 @@ export function MaintainerConvinceFeedback({
                           placeholder="What could we improve?"
                         />
                       </div>
+
+                      {formError ? (
+                        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
+                          {formError}
+                        </p>
+                      ) : null}
 
                       <Button variant="primary" size="sm" disabled={submitting}>
                         {submitting ? 'Sending…' : 'Complete'}

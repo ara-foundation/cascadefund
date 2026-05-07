@@ -1,11 +1,14 @@
 ---
 import SpeedInsights from "@vercel/speed-insights/astro";
 
-// Only load analytics in production
+// Only load analytics outside development mode
+const nodeEnv = (import.meta.env?.NODE_ENV ?? "").toUpperCase();
+const isDevelopment = nodeEnv === "DEVELOPMENT" || nodeEnv === "DEV";
 const isProduction = import.meta.env.PROD;
+const shouldLoadAnalytics = isProduction && !isDevelopment;
 ---
 
-{isProduction && (
+{shouldLoadAnalytics && (
     <>
         <SpeedInsights />
         <!-- Google tag (gtag.js) - Deferred and non-blocking -->

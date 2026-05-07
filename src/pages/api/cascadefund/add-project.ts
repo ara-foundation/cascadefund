@@ -13,9 +13,18 @@ function asRequiredString(value: unknown): string | null {
     return trimmed.length > 0 ? trimmed : null
 }
 
+function asDialogList(value: unknown): Array<string | number> {
+    if (!Array.isArray(value)) {
+        return []
+    }
+    return value.filter((item): item is string | number => typeof item === 'string' || typeof item === 'number')
+}
+
 export const POST: APIRoute = async ({ request }) => {
     try {
         const payload = await request.json()
+        const dialogList = asDialogList(payload?.dialogList)
+        console.log('[API add-project] dialogList', dialogList)
         const email = asRequiredString(payload?.email)
         const fundsMethod = asRequiredString(payload?.fundsMethod)
         const projectName = asRequiredString(payload?.projectName)
@@ -48,6 +57,7 @@ export const POST: APIRoute = async ({ request }) => {
             repositoryUrl,
             projectType,
             targetAudience,
+            ...(dialogList.length > 0 ? { dialogList } : {}),
         })
 
         if (!created) {

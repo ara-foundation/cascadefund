@@ -11,6 +11,7 @@ export interface JoinWaitlistRequestModel {
     displayName?: string
     /** e.g. `landing` (full form) vs `dialog-panel` (email + optional name). */
     source?: string
+    dialogList?: Array<string | number>
     createdAt: number
 }
 

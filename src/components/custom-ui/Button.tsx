@@ -130,13 +130,11 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-
     <BorderBeam size={12} colorFrom={getAnimationColors(variant).colorFrom} colorTo={getAnimationColors(variant).colorTo}>
       <RippleButton
         onClick={onClick}
         disabled={disabled}
         className={`
-          ${disabled ? '' : 'hyperlink'}
           ${disabled ? getDisabledButtonStyles() : getVariantStyles()}
           ${getOutlineStyles()}
           ${focus ? '' : getSizeStyles()}

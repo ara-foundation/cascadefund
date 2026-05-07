@@ -1,20 +1,22 @@
 'use client'
 
-import { MaintainerConvinceFeedback } from '@/components/star/MaintainerConvinceFeedback'
 import { MaintainerJoinRegistration } from '@/components/star/MaintainerJoinRegistration'
+import { JoinWaitlistDialogRegistration } from '@/components/star/JoinWaitlistDialogRegistration'
 
 type HeaderDialogActionType = 'join' | 'add-project'
 
 export function HeaderDialogAction({
   type,
   className,
+  dialogList = [],
 }: {
   type: HeaderDialogActionType
   className?: string
+  dialogList?: Array<string | number>
 }) {
   if (type === 'join') {
-    return <MaintainerJoinRegistration triggerLabel="Join" className={className} />
+    return <JoinWaitlistDialogRegistration className={className} dialogList={dialogList} />
   }
 
-  return <MaintainerConvinceFeedback triggerLabel="Add Project" className={className} />
+  return <MaintainerJoinRegistration triggerLabel="Add Project" className={className} dialogList={dialogList} />
 }

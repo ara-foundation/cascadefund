@@ -31,33 +31,8 @@ const BorderBeam: React.FC<BorderBeamProps> = React.memo(({
   const rainbowColors = ['#ff0000', '#ff8000', '#ffff00', '#80ff00', '#00ff00', '#00ff80', '#00ffff', '#0080ff', '#0000ff', '#8000ff', '#ff00ff', '#ff0080'];
   const shapesList = ['circle', 'square', 'triangle', 'diamond'];
 
-  useEffect(() => {
-    const startAnimation = () => {
-      const timer = setTimeout(() => {
-        if (!isHovered) {
-          setIsVisible(true);
-        }
-      }, Math.floor(Math.random() * 50));
-      return timer;
-    };
-
-    const timer = startAnimation();
-    return () => clearTimeout(timer);
-  }, [isHovered, currentSide]);
-
   const handleAnimationEnd = () => {
     setIsVisible(false);
-    if (!isHovered) {
-      // Move to next side
-      setCurrentSide((prev) => (prev + 1) % 4);
-
-      // Restart animation with constant delay
-      setTimeout(() => {
-        if (!isHovered) {
-          setIsVisible(true);
-        }
-      }, 200); // Small constant delay between sides
-    }
   };
 
   // Moving light effect when hovered
@@ -104,12 +79,7 @@ const BorderBeam: React.FC<BorderBeamProps> = React.memo(({
   const handleMouseLeave = () => {
     setIsHovered(false);
     setShapes([]);
-    // Restart animation after a short delay
-    setTimeout(() => {
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 300);
-    }, 100);
+    setIsVisible(false);
   };
 
 
@@ -250,8 +220,8 @@ const BorderBeam: React.FC<BorderBeamProps> = React.memo(({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Single beam - one at a time */}
-      {isVisible && !isHovered && (
+      {/* Single beam - shown only while hovered */}
+      {isVisible && isHovered && (
         <div
           ref={beamRef}
           className="absolute z-10"

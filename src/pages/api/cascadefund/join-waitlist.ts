@@ -21,10 +21,19 @@ function asOptionalTrimmed(value: unknown): string | undefined {
     return t.length > 0 ? t : undefined
 }
 
+function asDialogList(value: unknown): Array<string | number> {
+    if (!Array.isArray(value)) {
+        return []
+    }
+    return value.filter((item): item is string | number => typeof item === 'string' || typeof item === 'number')
+}
+
 export const POST: APIRoute = async ({ request }) => {
     try {
         const payload = await request.json()
         const email = asRequiredString(payload?.email)
+        const dialogList = asDialogList(payload?.dialogList)
+        console.log('[API join-waitlist] dialogList', dialogList)
 
         const isMinimal = payload?.minimal === true || payload?.source === 'dialog-panel'
 
@@ -55,6 +64,7 @@ export const POST: APIRoute = async ({ request }) => {
                 monthlyAmount: '—',
                 ...(displayName ? { displayName } : {}),
                 source: 'dialog-panel',
+                ...(dialogList.length > 0 ? { dialogList } : {}),
             })
             if (!created) {
                 return new Response(
@@ -85,6 +95,7 @@ export const POST: APIRoute = async ({ request }) => {
             workApps,
             monthlyAmount,
             source: 'landing',
+            ...(dialogList.length > 0 ? { dialogList } : {}),
         })
 
         if (!created) {
