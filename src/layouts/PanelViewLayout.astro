@@ -66,6 +66,9 @@ if (Astro.locals.session) {
     <div class="z-2 relative">
       <Header hideLinks={hideLinks} hideAuth={hideAuth} additional={additional}>
         <slot name="header-navbar" />
+        <div slot="actions" class="contents">
+          <slot name="header-actions" />
+        </div>
       </Header>
       <section class="mt-6">
         <slot name="hero" />

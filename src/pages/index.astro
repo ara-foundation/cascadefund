@@ -4,6 +4,7 @@ import GalaxyLayout from "@/layouts/GalaxyLayout.astro";
 import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 import StarRpgDialogPanel from "@/components/star/StarRpgDialogPanel";
 import CascadeFundHeroTitle from "@/components/cascadefund/CascadeFundHeroTitle";
+import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction";
 ---
 
 <GalaxyLayout
@@ -15,6 +16,9 @@ import CascadeFundHeroTitle from "@/components/cascadefund/CascadeFundHeroTitle"
     projectY={0}
     projectGalaxies={[]}
 >
+    <HeaderDialogAction type="join" slot="header-actions" client:only="react" />
+    <HeaderDialogAction type="add-project" slot="header-actions" client:only="react" />
+
     <CascadeFundHeroTitle slot="center" client:only="react" />
 
     <StarRpgDialogPanel slot="footer" client:only="react" />

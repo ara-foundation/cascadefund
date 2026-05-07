@@ -128,6 +128,9 @@ const {
     <div data-galaxy-fixed>
       <Header hideLinks={hideLinks} hideAuth={hideAuth} additional={additional}>
         <slot name="header-navbar" />
+        <div slot="actions" class="contents">
+          <slot name="header-actions" />
+        </div>
       </Header>
     </div>
     <!-- Content Container Body - Will be transformed by GalaxyZoomWrapper -->

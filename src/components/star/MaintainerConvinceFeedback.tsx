@@ -12,7 +12,13 @@ const MODAL_SHEET_Z = 'z-[10060]'
 
 type Phase = 'form' | 'success'
 
-export function MaintainerConvinceFeedback({ className }: { className?: string }) {
+export function MaintainerConvinceFeedback({
+  className,
+  triggerLabel = 'Comment 💬',
+}: {
+  className?: string
+  triggerLabel?: string
+}) {
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState<Phase>('form')
   const [email, setEmail] = useState('')
@@ -58,7 +64,7 @@ export function MaintainerConvinceFeedback({ className }: { className?: string }
           className,
         )}
       >
-        Comment 💬
+        {triggerLabel}
       </button>
 
       {open && typeof document !== 'undefined'

@@ -12,7 +12,13 @@ const MODAL_SHEET_Z = 'z-[10060]'
 
 type Phase = 'form' | 'success'
 
-export function MaintainerJoinRegistration({ className }: { className?: string }) {
+export function MaintainerJoinRegistration({
+  className,
+  triggerLabel = 'Register project 📋',
+}: {
+  className?: string
+  triggerLabel?: string
+}) {
   const [open, setOpen] = useState(false)
   const [phase, setPhase] = useState<Phase>('form')
   const [email, setEmail] = useState('')
@@ -60,7 +66,7 @@ export function MaintainerJoinRegistration({ className }: { className?: string }
           className,
         )}
       >
-        Register project 📋
+        {triggerLabel}
       </button>
 
       {open && typeof document !== 'undefined'

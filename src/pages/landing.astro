@@ -3,8 +3,7 @@ import Layout from "@/layouts/PanelViewLayout.astro";
 import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 import Space from "@/components/all-stars/Space";
 import { mockUserStars } from "@/types/mock-data";
-import AddProjectModal from "@/components/cascadefund/AddProjectModal.astro";
-import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro";
+import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction";
 ---
 
 <Layout
@@ -12,6 +11,13 @@ import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro"
   hideAuth={true}
   title="Cascadefund"
 >
+  <HeaderDialogAction type="join" slot="header-actions" client:only="react" />
+  <HeaderDialogAction
+    type="add-project"
+    slot="header-actions"
+    client:only="react"
+  />
+
   <div
     class="fixed top-0 left-0 w-screen h-screen z-10 pointer-events-none"
     id="galaxy-space"
@@ -72,13 +78,11 @@ import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro"
               We are onboarding the first projects. Join us, to turn the web
               into an open-source ecosystem.
             </p>
-            <button
-              type="button"
-              data-open-dialog="add-project-modal"
-              class="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
-            >
-              Add your project
-            </button>
+            <HeaderDialogAction
+              type="add-project"
+              client:only="react"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
+            />
           </div>
 
           <div class="hero-network flex justify-center lg:justify-end">
@@ -610,13 +614,11 @@ import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro"
           >
             Email will be sent to you when subscription will be available.
           </p>
-          <button
-            type="button"
-            data-open-dialog="join-waitlist-modal"
-            class="mt-4 inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-5 py-2.5 text-sm font-semibold text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
-          >
-            Join waitlist
-          </button>
+          <HeaderDialogAction
+            type="join"
+            client:only="react"
+            className="mt-4 inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-5 py-2.5 text-sm font-semibold text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
+          />
         </article>
       </div>
     </section>
@@ -874,41 +876,14 @@ import JoinWaitlistModal from "@/components/cascadefund/JoinWaitlistModal.astro"
           happen via emails.
         </p>
       </div>
-      <button
-        type="button"
-        data-open-dialog="add-project-modal"
-        class="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
-      >
-        Add your project
-      </button>
+      <HeaderDialogAction
+        type="add-project"
+        client:only="react"
+        className="inline-flex items-center justify-center rounded-lg border border-slate-300/40 bg-slate-900/50 px-6 py-3 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:border-sky-400/50 hover:bg-slate-800/60 dark:border-slate-600/50 dark:bg-slate-950/40 dark:text-slate-100 dark:hover:border-sky-400/40 dark:hover:bg-slate-900/60"
+      />
     </section>
 
   </div>
-
-  <AddProjectModal />
-  <JoinWaitlistModal />
-
-  <script>
-    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
-    dialogButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const dialogId = button.getAttribute("data-open-dialog");
-        if (!dialogId) return;
-        const dialog = document.getElementById(dialogId);
-        if (!(dialog instanceof HTMLDialogElement)) return;
-        dialog.showModal();
-      });
-    });
-
-    const dialogs = document.querySelectorAll("dialog");
-    dialogs.forEach((dialog) => {
-      dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) {
-          dialog.close();
-        }
-      });
-    });
-  </script>
 
   <style>
     .hero-network svg {
