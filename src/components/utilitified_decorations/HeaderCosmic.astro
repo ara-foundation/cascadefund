@@ -40,12 +40,17 @@ const { active, hideLinks, hideAuth, additional } = Astro.props;
         <WorkNavbar
           tabIndex="-1"
           additional={additional}
-          className="menu menu-sm dropdown-content bg-base-100 dark:bg-slate-800 rounded-box z-1 mt-3 w-52 p-2 shadow dark:shadow-slate-700"
+          className="menu menu-sm dropdown-content bg-base-100 dark:bg-slate-800 rounded-box z-1 mt-3 w-60 p-2 shadow dark:shadow-slate-700"
           active={active ? (active as MenuName) : undefined}
           hideLinks={hideLinks ? (hideLinks as MenuName[]) : undefined}
           vertical={true}
         >
           <slot />
+          <div
+            class="empty:hidden mt-2 flex flex-col items-stretch gap-2 border-t border-slate-300/60 px-1 pt-3 dark:border-slate-600/60"
+          >
+            <slot name="mobile-actions" />
+          </div>
         </WorkNavbar>
       </div>
       <Logo />
@@ -60,7 +65,9 @@ const { active, hideLinks, hideAuth, additional } = Astro.props;
       </WorkNavbar>
     </div>
     <div class="navbar-end flex h-6 items-center gap-3">
-      <slot name="actions" />
+      <div class="hidden lg:flex items-center gap-3">
+        <slot name="actions" />
+      </div>
       {!hideAuth && <AuthHeader className="py-2! px-2!" client:only="react" />}
     </div>
   </div>

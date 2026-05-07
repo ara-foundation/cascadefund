@@ -69,6 +69,9 @@ if (Astro.locals.session) {
         <div slot="actions" class="contents">
           <slot name="header-actions" />
         </div>
+        <Fragment slot="mobile-actions">
+          <slot name="header-mobile-actions" />
+        </Fragment>
       </Header>
       <section class="mt-6">
         <slot name="hero" />

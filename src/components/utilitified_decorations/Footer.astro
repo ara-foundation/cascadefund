@@ -3,9 +3,9 @@ import Link from "@/components/custom-ui/Link";
 ---
 
 <footer
-  class={`backdrop-blur-lg text-slate-500 dark:text-slate-500 flex justify-between p-2 items-center overflow-hidden`}
+  class={`backdrop-blur-lg text-slate-500 dark:text-slate-500 flex justify-between gap-2 p-2 items-center overflow-hidden text-xs sm:text-sm`}
 >
-  <div class={`flex space-x-4`}>
+  <div class={`flex min-w-0 flex-wrap gap-2 sm:gap-4`}>
     <Link
       uri="/"
       className=" text-slate-600 dark:text-slate-400 transition-colors"
@@ -23,7 +23,7 @@ import Link from "@/components/custom-ui/Link";
     >
   </div>
 
-  <div class="text-sm">
+  <div class="ms-auto shrink-0 whitespace-nowrap">
     (c) Part of <a
       href="https://ara.foundation"
       target="_blank"
