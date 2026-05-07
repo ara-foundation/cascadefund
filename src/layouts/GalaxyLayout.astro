@@ -10,7 +10,6 @@ import { MenuItemProps } from "@/components/menu/MenuItem";
 import { GravityStarsBackground } from "@/components/animate-ui/components/backgrounds/gravity-stars";
 import { GradientBackground } from "@/components/animate-ui/components/backgrounds/gradient";
 import Galaxy from "@/components/Galaxy";
-import GalaxyLayoutBody from "@/components/all-stars/GalaxyLayoutBody";
 import Space from "@/components/all-stars/Space";
 import { UserStar as UserStarData } from "@/types/all-stars";
 import PageTransitionProvider from "@/components/navigation/PageTransitionProvider";
@@ -53,10 +52,6 @@ const {
   hideAuth,
   additional,
   projectName,
-  initialZoom,
-  minZoom,
-  maxZoom,
-  maxGalaxyContent,
   stars,
   projectId,
   projectGalaxies,
@@ -66,13 +61,6 @@ const {
   randomSlot = ["left", "center", "right"],
   randomItems = [],
 } = Astro.props;
-
-if (Astro.locals.session) {
-  console.log("User is authenticated");
-} else {
-  // Redirect to login page if the user is not authenticated
-  console.log("User is not authenticated");
-}
 ---
 
 <!doctype html>

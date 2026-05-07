@@ -55,13 +55,6 @@ const {
   randomSlot = ["left", "center", "right"],
   randomItems = [],
 } = Astro.props;
-
-if (Astro.locals.session) {
-  console.log("User is authenticated");
-} else {
-  // Redirect to login page if the user is not authenticated
-  console.log("User is not authenticated");
-}
 ---
 
 <!doctype html>
