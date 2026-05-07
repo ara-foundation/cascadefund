@@ -1,13 +1,6 @@
 # CascadeFund
-## CascadeFund is open-source community building platform.
+CascadeFund is building ecosystem of open-source maintainers and users.
 Landing page is in dialog with the CascadeFund founder.
-
-[![License](https://img.shields.io/badge/License-MPL--2.0-brightgreen)](https://github.com/ara-foundation/app/blob/main/LICENSE)
-[![pnpm](https://img.shields.io/badge/pnpm-required-blue)](https://pnpm.io)
-[![Status](https://img.shields.io/badge/status-live-success)](https://ara.foundation)
-[![Testnet](https://img.shields.io/badge/testnet-live-orange)](https://ara.foundation)
-[![Raise Issues &
-Ownership](https://img.shields.io/badge/raise%20issues%20%7C%20earn%20ownership%20%7C%20non--speculative-purple)](https://ara.foundation/galaxy)
 
 -   🚀 **App URL:** https://cascadefund.org/
 
