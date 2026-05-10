@@ -10,9 +10,21 @@ import { cn } from '@/lib/utils'
  * Title uses {@link GradientText} (inline gradient + `background-clip: text`) so the
  * gradient always renders; Tailwind-only `bg-gradient` on `motion.h1` was not applying reliably here.
  */
-const CascadeFundHeroTitle: React.FC = () => {
+type CascadeFundHeroTitleProps = {
+  /** Tighter vertical layout without min-height; use when stacking copy below this block. */
+  compact?: boolean
+}
+
+const CascadeFundHeroTitle: React.FC<CascadeFundHeroTitleProps> = ({ compact = false }) => {
   return (
-    <div className="relative z-30 flex flex-col items-center justify-center text-center px-4 py-8 pointer-events-none select-none min-h-[min(50vh,28rem)] w-full max-w-4xl mx-auto">
+    <div
+      className={cn(
+        'relative z-30 flex flex-col items-center text-center px-4 pointer-events-none select-none w-full max-w-4xl mx-auto',
+        compact
+          ? 'pt-8 pb-1'
+          : 'justify-center py-8 min-h-[min(50vh,28rem)]',
+      )}
+    >
       <motion.div
         className="mb-5 md:mb-6 flex justify-center"
         initial={{ opacity: 0, y: 24 }}
@@ -30,14 +42,6 @@ const CascadeFundHeroTitle: React.FC = () => {
           Cascadefund
         </GradientText>
       </motion.div>
-      <motion.p
-        className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-      >
-        building open source into an ecosystem with minimal burnout communication to users
-      </motion.p>
     </div>
   )
 }

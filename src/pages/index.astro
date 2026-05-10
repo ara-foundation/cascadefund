@@ -16,13 +16,59 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
     projectY={0}
     projectGalaxies={[]}
 >
-    <HeaderDialogAction type="join" dialogList={[]} slot="header-actions" client:only="react" />
-    <HeaderDialogAction type="add-project" dialogList={[]} slot="header-actions" client:only="react" />
+    <HeaderDialogAction
+        type="join"
+        dialogList={[]}
+        slot="header-actions"
+        client:only="react"
+    />
+    <HeaderDialogAction
+        type="add-project"
+        dialogList={[]}
+        slot="header-actions"
+        client:only="react"
+    />
 
-    <HeaderDialogAction type="join" dialogList={[]} slot="header-mobile-actions" client:only="react" />
-    <HeaderDialogAction type="add-project" dialogList={[]} slot="header-mobile-actions" client:only="react" />
+    <HeaderDialogAction
+        type="join"
+        dialogList={[]}
+        slot="header-mobile-actions"
+        client:only="react"
+    />
+    <HeaderDialogAction
+        type="add-project"
+        dialogList={[]}
+        slot="header-mobile-actions"
+        client:only="react"
+    />
 
-    <CascadeFundHeroTitle slot="center" client:only="react" />
+    <div slot="center" class="flex w-full flex-col items-center">
+        <CascadeFundHeroTitle compact client:only="react" />
+        <section
+            aria-label="About CascadeFund"
+            class="relative z-30 mx-auto w-full max-w-2xl mt-4 space-y-4 px-4 pb-6 text-center pointer-events-none select-none sm:pb-8"
+        >
+            <p
+                class="text-base leading-relaxed text-slate-600 dark:text-slate-400"
+            >
+                Massive layoffs are common now. Especially after the AI boom.
+                Economic future is unpredictable.
+            </p>
+            <p
+                class="text-base leading-relaxed text-slate-600 dark:text-slate-400"
+            >
+                Finding a job is hard. Instead, build your own stuff.
+                CascadeFund helps you by directly connecting to users.
+            </p>
+            <p
+                class="text-base leading-relaxed text-slate-600 dark:text-slate-400"
+            >
+                Be part of an open-source ecosystem where you work on passionate
+                projects and earn from them. Want to know more? Start a dialogue
+                below.
+            </p>
+        </section>
+    </div>
 
     <StarRpgDialogPanel slot="footer" client:only="react" />
 </GalaxyLayout>
