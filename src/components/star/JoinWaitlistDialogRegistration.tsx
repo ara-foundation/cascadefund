@@ -17,9 +17,12 @@ type Phase = 'form' | 'success'
 export function JoinWaitlistDialogRegistration({
   className,
   dialogList,
+  triggerLabel = 'Join waitlist ✉️',
 }: {
   className?: string
   dialogList?: Array<string | number>
+  /** Overrides the visible trigger button label (defaults to emoji waitlist label). */
+  triggerLabel?: string
 }) {
   const walkthroughDialogList = useDialogWalkthrough()
   const effectiveDialogList = dialogList ?? walkthroughDialogList ?? []
@@ -107,7 +110,7 @@ export function JoinWaitlistDialogRegistration({
           className,
         )}
       >
-        Join waitlist ✉️
+        {triggerLabel}
       </button>
 
       {open && typeof document !== 'undefined'

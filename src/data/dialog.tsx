@@ -3,6 +3,8 @@
  * If main page receives ?inspector=true and msgId=id|number to show the message.
  */
 import { type ReactNode } from "react";
+import { MaintainerSummaryFooter } from "@/components/cascadefund/MaintainerSummaryFooter";
+import { NonDeveloperSummaryFooter } from "@/components/cascadefund/NonDeveloperSummaryFooter";
 import { JoinWaitlistDialogRegistration } from "@/components/star/JoinWaitlistDialogRegistration";
 import { MaintainerConvinceFeedback } from "@/components/star/MaintainerConvinceFeedback";
 import { MaintainerJoinRegistration } from "@/components/star/MaintainerJoinRegistration";
@@ -169,6 +171,143 @@ export const greetingDialog: Dialog[] = [
         ]
     }
 ]
+
+/** Bullet lines after “CascadeFund is for you” (landing + modal). */
+export const MAINTAINER_WHY_LINES = [
+    "if you are worried about similar projects.",
+    "If you are worried you can't keep up with the trends.",
+    "If you want your app to be used by millions of users.",
+    "If you want to be paid without commercialization. No hustle, no marketing.",
+    "If you want to network with builders: if you are a game engine maintainer, connect with 3D modelling or multiplayer library authors.",
+    "If you want to be part of something bigger, that changes the world and people recognize it in realtime.",
+] as const
+
+/** Teaser bullets shown before “Read more” on the Developers tab (first five lines only). */
+export const MAINTAINER_WHY_TEASER_COUNT = 5
+
+function MaintainerWhyBulletList({
+    lines,
+    className = "list-disc space-y-2 pl-5 marker:text-slate-400 dark:marker:text-slate-500",
+}: {
+    lines: readonly string[]
+    className?: string
+}) {
+    return (
+        <ul className={className}>
+            {lines.map((text) => (
+                <li key={text}>{text}</li>
+            ))}
+        </ul>
+    )
+}
+
+/** Short landing copy: title + teaser bullets (“Read more” opens {@link MaintainerSummary}). */
+export function MaintainerSummaryTeaser() {
+    return (
+        <div className="space-y-3 text-left text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p className="font-medium text-slate-800 dark:text-slate-100">CascadeFund is for you</p>
+            <MaintainerWhyBulletList lines={MAINTAINER_WHY_LINES.slice(0, MAINTAINER_WHY_TEASER_COUNT)} />
+        </div>
+    )
+}
+
+/** Full maintainer-facing summary (modal body on the landing page Developers tab). */
+export function MaintainerSummary() {
+    return (
+        <article className="space-y-4 text-left text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p className="font-medium text-slate-800 dark:text-slate-100">CascadeFund is for you</p>
+            <MaintainerWhyBulletList lines={MAINTAINER_WHY_LINES} />
+            <p>Ecosystem membership is free for you, and paid monthly by OSS users.</p>
+            <p>
+                Communication goes via weekly emails. No burnout, cut to the chase.
+            </p>
+            <p>Three types of discussions in those emails:</p>
+            <ul className="list-disc space-y-2 pl-5 marker:text-slate-400 dark:marker:text-slate-500">
+                <li>
+                    <strong>Breaking changes.</strong> You announce before coding. If 51% of users vote no, the change doesn't ship.
+                </li>
+                <li>
+                    <strong>New features.</strong> CascadeFund aggregates user feedback into a list of features. Implement,
+                    delegate, or simply skip.
+                </li>
+                <li>
+                    <strong>Ecosystem building.</strong>
+                    We send you contacts of projects in the same category. Reach out directly and build the seamless experience together: more popular, more funded, more recognized.
+                </li>
+            </ul>
+            <MaintainerSummaryFooter />
+        </article>
+    );
+}
+
+export const USER_WHY_LINES = [
+    "if you use open-source and want to support it",
+    "If you want to avoid breaking changes and deprecated functions.",
+    "If you want a new feature in the app.",
+    "If you want a seamless experience among apps you choose.",
+    "If you want your data to be local, not scattered across web services.",
+    "If you want to be part of something bigger, that changes the world, and people recognize it in realtime.",
+] as const
+
+/** Collapsed “Non developers” tab shows bullets through seamless apps (first four). */
+export const USER_WHY_TEASER_COUNT = 4
+
+function NonDeveloperWhyBulletList({ lines }: { lines: readonly string[] }) {
+    return (
+        <ul className="list-disc space-y-2 pl-5 marker:text-slate-400 dark:marker:text-slate-500">
+            {lines.map((text) => (
+                <li key={text}>{text}</li>
+            ))}
+        </ul>
+    )
+}
+
+/** Teaser: walled-garden intro + “CascadeFund is for you,” + first {@link USER_WHY_TEASER_COUNT} bullets. */
+export function NonDeveloperSummaryTeaser() {
+    return (
+        <article className="space-y-4 text-left text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p>
+                If tech giants have a walled garden, then CascadeFund creates the Amazon forest of open-source that
+                works seamlessly together.
+            </p>
+            <p className="font-medium text-slate-800 dark:text-slate-100">CascadeFund is for you,</p>
+            <NonDeveloperWhyBulletList lines={USER_WHY_LINES.slice(0, USER_WHY_TEASER_COUNT)} />
+        </article>
+    )
+}
+
+/** Non-developer / OSS-user narrative on CascadeFund landing (Non developers tab, expanded). */
+export function NonDeveloperSummary() {
+    return (
+        <article className="space-y-4 text-left text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+            <p>
+                If tech giants have a walled garden, then CascadeFund creates the Amazon forest of open-source that
+                works seamlessly together.
+            </p>
+            <p className="font-medium text-slate-800 dark:text-slate-100">CascadeFund is for you,</p>
+            <NonDeveloperWhyBulletList lines={USER_WHY_LINES} />
+            <p>
+                For users it is a monthly fee, while maintainers ship code. All communication goes via weekly emails
+                initiated by CascadeFund. No burnout, cut to the chase. Three types of emails to discuss only:
+            </p>
+            <ul className="list-disc space-y-2 pl-5 marker:text-slate-400 dark:marker:text-slate-500">
+                <li>
+                    <strong>Breaking changes.</strong> Before any breaking change ships, you vote. If 51% vote no, the
+                    change doesn't ship.
+                </li>
+                <li>
+                    <strong>New features.</strong> Reply to the weekly email with what you need. CascadeFund delivers it
+                    to maintainers in a technical format. They implement, delegate to a contributor, or skip.
+                </li>
+                <li>
+                    <strong>Ecosystem building.</strong> Reply with apps you use or wish had an open-source alternative.
+                    CascadeFund connects their maintainers and makes them work seamlessly together.
+                </li>
+            </ul>
+            <NonDeveloperSummaryFooter />
+        </article>
+    )
+}
 
 export const maintainerDialog: Dialog[] = [
     {

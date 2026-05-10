@@ -4,6 +4,7 @@ import GalaxyLayout from "@/layouts/GalaxyLayout.astro";
 import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 import StarRpgDialogPanel from "@/components/star/StarRpgDialogPanel";
 import CascadeFundHeroTitle from "@/components/cascadefund/CascadeFundHeroTitle";
+import CascadeFundAudienceTabs from "@/components/cascadefund/CascadeFundAudienceTabs";
 import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction";
 ---
 
@@ -42,13 +43,17 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
         client:only="react"
     />
 
-    <div slot="center" class="flex w-full flex-col items-center">
+    <div
+        id="cascadefund-center-stack"
+        slot="center"
+        class="cfcenter flex w-full flex-col items-center"
+    >
         <CascadeFundHeroTitle compact client:only="react" />
         <section
             aria-label="About CascadeFund"
             class="relative z-30 mx-auto w-full max-w-2xl mt-4 space-y-4 px-4 pb-6 text-center pointer-events-none select-none sm:pb-8"
         >
-            <p
+            <!-- <p
                 class="text-base leading-relaxed text-slate-600 dark:text-slate-400"
             >
                 Massive layoffs are common now. Especially after the AI boom.
@@ -59,21 +64,38 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
             >
                 Finding a job is hard. Instead, build your own stuff.
                 CascadeFund helps you by directly connecting to users.
-            </p>
+            </p> -->
             <p
                 class="text-base leading-relaxed text-slate-600 dark:text-slate-400"
             >
-                Be part of an open-source ecosystem where you work on passionate
-                projects and earn from them. Want to know more? Start a dialogue
-                below.
+                An open-source ecosystem of maintainers and users.
             </p>
         </section>
+        <CascadeFundAudienceTabs client:only="react" />
     </div>
 
-    <StarRpgDialogPanel slot="footer" client:only="react" />
+    <StarRpgDialogPanel
+        suppressWhenDeveloperSummaryExpanded={true}
+        slot="footer"
+        client:only="react"
+    />
 </GalaxyLayout>
 
 <style is:global>
+    #cascadefund-center-stack.cfcenter {
+        padding-bottom: min(28rem, 55svh);
+    }
+
+    @media (min-width: 640px) {
+        #cascadefund-center-stack.cfcenter {
+            padding-bottom: min(30rem, 50svh);
+        }
+    }
+
+    #cascadefund-center-stack.cf-hide-rpg.cfcenter {
+        padding-bottom: 1.5rem;
+    }
+
     html,
     body {
         scrollbar-width: none;

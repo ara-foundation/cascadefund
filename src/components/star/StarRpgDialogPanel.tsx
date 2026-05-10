@@ -12,6 +12,8 @@ import { getIcon } from '@/components/icon'
 import { dialog, greetingDialog, type Dialog } from '@/data/dialog'
 import { BorderSize, RoundedSize, ShadowSize } from '@/types/eventTypes'
 import { cn } from '@/lib/utils'
+import { useCascadeFundDeveloperSummaryExpanded } from '@/lib/useCascadeFundDeveloperSummaryExpanded'
+import { useCascadeFundUserSummaryExpanded } from '@/lib/useCascadeFundUserSummaryExpanded'
 import { DialogWalkthroughProvider } from '@/components/star/DialogWalkthroughContext'
 
 const INITIAL_ID = greetingDialog[0].id
@@ -125,7 +127,17 @@ function CharacterPortrait({ imageSrc }: { imageSrc?: string }) {
   )
 }
 
-const StarRpgDialogPanel: React.FC = () => {
+type StarRpgDialogPanelProps = {
+  /**
+   * When true (CascadeFund landing), footer dialogue is omitted while a maintainer or user
+   * landing summary is expanded inline so content is not stacked on top.
+   */
+  suppressWhenDeveloperSummaryExpanded?: boolean
+}
+
+const StarRpgDialogPanel: React.FC<StarRpgDialogPanelProps> = ({
+  suppressWhenDeveloperSummaryExpanded = false,
+}) => {
   const byId = useMemo(() => buildDialogMap(dialog), [])
   const maintainerFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'maintainer-1'), [byId])
   const userFirstPath = useMemo(() => buildFirstAnswerPath(byId, 'user-1'), [byId])
@@ -134,6 +146,11 @@ const StarRpgDialogPanel: React.FC = () => {
   const [isInspectorMode, setIsInspectorMode] = useState(false)
   const [branchStepCount, setBranchStepCount] = useState(0)
   const [portraitSrc, setPortraitSrc] = useState<string | undefined>(undefined)
+
+  const developerSummaryExpanded = useCascadeFundDeveloperSummaryExpanded()
+  const userSummaryExpanded = useCascadeFundUserSummaryExpanded()
+  const hideMainDialogUi =
+    suppressWhenDeveloperSummaryExpanded && (developerSummaryExpanded || userSummaryExpanded)
 
   const step = byId.get(currentId)
   const hasChoices = step && step.a && step.a.length > 0
@@ -300,6 +317,7 @@ const StarRpgDialogPanel: React.FC = () => {
           </nav>
         </aside>
       )}
+      {!hideMainDialogUi ? (
       <div
         className={cn(
           'fixed left-1/2 bottom-16 z-30 w-[min(100%,36rem)] sm:w-[min(100%,40rem)] -translate-x-1/2 px-3 sm:px-4',
@@ -420,6 +438,7 @@ const StarRpgDialogPanel: React.FC = () => {
         </motion.div>
       </AnimatePresence>
       </div>
+      ) : null}
       </>
     </DialogWalkthroughProvider>
   )
