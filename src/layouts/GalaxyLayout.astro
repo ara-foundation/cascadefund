@@ -15,6 +15,7 @@ import { UserStar as UserStarData } from "@/types/all-stars";
 import PageTransitionProvider from "@/components/navigation/PageTransitionProvider";
 import Analytics from "./Analytics.astro";
 import RandomSlotDistributor from "@/components/layout/RandomSlotDistributor";
+import SiteSeo from "@/components/seo/SiteSeo.astro";
 import type { Galaxy as GalaxyType } from "@/types/galaxy";
 
 interface Props {
@@ -46,6 +47,12 @@ interface Props {
   random?: boolean;
   randomSlot?: string[];
   randomItems?: GalaxyType[];
+  /** When set, replaces the default `'ProjectName' star galaxy` document title */
+  documentTitle?: string;
+  /** Enables meta/OG/Twitter + JSON-LD when provided */
+  seoDescription?: string;
+  canonicalPath?: string;
+  ogImagePath?: string;
 }
 const {
   hideLinks,
@@ -60,7 +67,14 @@ const {
   random = false,
   randomSlot = ["left", "center", "right"],
   randomItems = [],
+  documentTitle,
+  seoDescription,
+  canonicalPath,
+  ogImagePath,
 } = Astro.props;
+
+const resolvedTitle =
+  documentTitle ?? "'" + projectName + "' star galaxy";
 ---
 
 <!doctype html>
@@ -70,7 +84,17 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/ara_logo.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>{"'" + projectName + "' star galaxy"}</title>
+    <title>{resolvedTitle}</title>
+    {
+      seoDescription ? (
+        <SiteSeo
+          title={resolvedTitle}
+          description={seoDescription}
+          canonicalPath={canonicalPath ?? Astro.url.pathname}
+          ogImagePath={ogImagePath}
+        />
+      ) : null
+    }
     <ClientRouter />
     <Analytics />
   </head>

@@ -12,6 +12,7 @@ import { GradientBackground } from "@/components/animate-ui/components/backgroun
 import BrowseTracker from "@/components/navigation/BrowseTracker";
 import PageTransitionProvider from "@/components/navigation/PageTransitionProvider";
 import Analytics from "./Analytics.astro";
+import SiteSeo from "@/components/seo/SiteSeo.astro";
 
 interface Props {
   active?: string;
@@ -19,8 +20,19 @@ interface Props {
   hideAuth?: boolean;
   additional?: MenuItemProps[];
   title?: string;
+  seoDescription?: string;
+  canonicalPath?: string;
+  ogImagePath?: string;
 }
-const { hideLinks, hideAuth, additional, title = "CascadeFund" } = Astro.props;
+const {
+  hideLinks,
+  hideAuth,
+  additional,
+  title = "CascadeFund",
+  seoDescription,
+  canonicalPath,
+  ogImagePath,
+} = Astro.props;
 
 if (Astro.locals.session) {
   console.log("User is authenticated");
@@ -38,6 +50,16 @@ if (Astro.locals.session) {
     <link rel="icon" type="image/png" href="/ara_logo.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {
+      seoDescription ? (
+        <SiteSeo
+          title={title}
+          description={seoDescription}
+          canonicalPath={canonicalPath ?? Astro.url.pathname}
+          ogImagePath={ogImagePath}
+        />
+      ) : null
+    }
     <style is:global>
       @import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
     </style>

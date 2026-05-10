@@ -4,12 +4,18 @@ import { MenuName } from "@/components/navbar/WorkNavbar.astro";
 import Space from "@/components/all-stars/Space";
 import { mockUserStars } from "@/types/mock-data";
 import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction";
+import {
+  CASCADE_FUND_LANDING_DESCRIPTION,
+  CASCADE_FUND_META_DESCRIPTION,
+} from "@/constants/cascadeFundSeo";
 ---
 
 <Layout
   hideLinks={Object.keys(MenuName)}
   hideAuth={true}
-  title="Cascadefund"
+  title="CascadeFund — Landing"
+  seoDescription={`${CASCADE_FUND_META_DESCRIPTION} ${CASCADE_FUND_LANDING_DESCRIPTION}`}
+  canonicalPath="/landing"
 >
   <HeaderDialogAction type="join" dialogList={[]} slot="header-actions" client:only="react" />
   <HeaderDialogAction

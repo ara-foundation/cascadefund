@@ -1,0 +1,27 @@
+CascadeFund
+=============
+
+CascadeFund is building an open-source ecosystem that connects maintainers and users. It is part of the Ara project (https://ara.foundation).
+
+Tagline: An open-source ecosystem of maintainers and users.
+
+Problem
+-------
+Large technology companies offer coherent product ecosystems—many integrated apps and services with polished user experience. Open-source often does not: projects are marketed mainly as “open-source alternatives,” can lack consistent UX, may be poorly integrated with each other, and struggle with long-term sustainability for maintainers.
+
+Approach
+--------
+CascadeFund works toward a semantic web of open-source: helping maintainers stay sustainable, reducing unnecessary fragmentation and complexity across OSS, and growing adoption through a connected experience rather than isolated projects.
+
+Status
+------
+The team is onboarding early projects and inviting contributors and communities to grow the ecosystem.
+
+Where to read more
+------------------
+- Website: https://cascadefund.org/
+- Landing page (longer narrative): https://cascadefund.org/landing
+- This file (plain text): https://cascadefund.org/about.txt
+- Markdown equivalent: https://cascadefund.org/summary.md
+- Machine-oriented index: https://cascadefund.org/llms.txt
+- Source code: https://github.com/ara-foundation/cascadefund

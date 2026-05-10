@@ -1,0 +1,75 @@
+---
+import { getSiteOrigin } from '@/lib/siteOrigin'
+
+interface Props {
+  /** Matches `<title>` for OG/Twitter consistency */
+  title: string
+  description: string
+  canonicalPath: string
+  ogImagePath?: string
+}
+
+const site = getSiteOrigin()
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImagePath = '/ara_logo.png',
+} = Astro.props
+
+const path =
+  canonicalPath === '' || canonicalPath.startsWith('/')
+    ? canonicalPath || '/'
+    : `/${canonicalPath}`
+const canonicalUrl = `${site}${path === '/' ? '/' : path}`
+const ogImageUrl =
+  ogImagePath.startsWith('http://') || ogImagePath.startsWith('https://')
+    ? ogImagePath
+    : `${site}${ogImagePath.startsWith('/') ? '' : '/'}${ogImagePath}`
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site}/#organization`,
+      name: 'CascadeFund',
+      url: site,
+      description,
+      parentOrganization: {
+        '@type': 'Organization',
+        name: 'Ara Project',
+        url: 'https://ara.foundation',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site}/#website`,
+      name: 'CascadeFund',
+      url: site,
+      description,
+      publisher: { '@id': `${site}/#organization` },
+      inLanguage: 'en',
+    },
+  ],
+}
+const jsonLdRaw = JSON.stringify(jsonLd)
+---
+
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:site_name" content="CascadeFund" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<script type="application/ld+json" set:html={jsonLdRaw} />

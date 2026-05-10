@@ -6,6 +6,10 @@ import StarRpgDialogPanel from "@/components/star/StarRpgDialogPanel";
 import CascadeFundHeroTitle from "@/components/cascadefund/CascadeFundHeroTitle";
 import CascadeFundAudienceTabs from "@/components/cascadefund/CascadeFundAudienceTabs";
 import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction";
+import {
+    CASCADE_FUND_HOME_TITLE,
+    CASCADE_FUND_META_DESCRIPTION,
+} from "@/constants/cascadeFundSeo";
 ---
 
 <GalaxyLayout
@@ -16,6 +20,9 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
     projectX={0}
     projectY={0}
     projectGalaxies={[]}
+    documentTitle={CASCADE_FUND_HOME_TITLE}
+    seoDescription={CASCADE_FUND_META_DESCRIPTION}
+    canonicalPath="/"
 >
     <HeaderDialogAction
         type="join"
@@ -48,7 +55,41 @@ import { HeaderDialogAction } from "@/components/cascadefund/HeaderDialogAction"
         slot="center"
         class="cfcenter flex w-full flex-col items-center"
     >
+        <h1 class="sr-only">{CASCADE_FUND_HOME_TITLE}</h1>
         <CascadeFundHeroTitle compact client:only="react" />
+        <noscript>
+            <div
+                class="pointer-events-auto relative z-30 mx-auto mt-4 max-w-2xl space-y-3 rounded-lg border border-slate-300/50 bg-white/90 px-4 py-5 text-center text-slate-800 shadow-sm dark:border-slate-600/50 dark:bg-slate-900/90 dark:text-slate-100"
+            >
+                <p class="text-lg font-semibold tracking-tight">CascadeFund</p>
+                <p class="text-base text-slate-600 dark:text-slate-300">
+                    An open-source ecosystem of maintainers and users. JavaScript
+                    is off or unavailable; use these plain-text entry points for a
+                    full summary:
+                </p>
+                <p class="text-sm">
+                    <a
+                        class="text-sky-600 underline hover:text-sky-500 dark:text-sky-400"
+                        href="/summary.md">summary.md</a
+                    >
+                    {" "}&middot;{" "}
+                    <a
+                        class="text-sky-600 underline hover:text-sky-500 dark:text-sky-400"
+                        href="/about.txt">about.txt</a
+                    >
+                    {" "}&middot;{" "}
+                    <a
+                        class="text-sky-600 underline hover:text-sky-500 dark:text-sky-400"
+                        href="/llms.txt">llms.txt</a
+                    >
+                    {" "}&middot;{" "}
+                    <a
+                        class="text-sky-600 underline hover:text-sky-500 dark:text-sky-400"
+                        href="/landing">Landing page</a
+                    >
+                </p>
+            </div>
+        </noscript>
         <section
             aria-label="About CascadeFund"
             class="relative z-30 mx-auto w-full max-w-2xl mt-4 space-y-4 px-4 pb-6 text-center pointer-events-none select-none sm:pb-8"
